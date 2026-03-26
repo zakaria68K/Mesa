@@ -1,172 +1,173 @@
 from typing import Dict, List, Optional, Any
-import uuid
-from .execution import AgentSession
-from .am3 import Entity, Relationship, Model
-from .planning import WorkflowPlan
+from .execution import AgentSession 
+from .am3 import Entity, Relationship, Model, Server, Tool, Agent
+from .planning import Workflow
+
 
 class MegamodelRegistry:
     """Central registry for the extended AM3 megamodel"""
-    
+
     def __init__(self):
-    
+        # ── Artifacts ──
         self.entities: Dict[str, Entity] = {}
         self.relationships: List[Relationship] = []
-
-        self.mcp_servers: Dict[str, Any] = {}  # Will store MCPServer objects
-        self.tools_by_server: Dict[str, List[Any]] = {}  # Will store MCPTool objects
-        self.sessions: Dict[str, Any] = {}  # Will store AgentSession objects
-        self.workflow_plans: Dict[str, Any] = {}  # Will store WorkflowPlan objects
-        
-        # Indexes for fast lookup
         self._models_by_type: Dict[str, List[Model]] = {
             "reference": [],
             "transformation": [],
             "terminal": []
         }
-        
+
+        # ── Tools ──
+        self.servers: Dict[str, Server] = {}
+        self.tools_by_server: Dict[str, List[Tool]] = {}
+
+        # ── Agents ──
+        self.agents: Dict[str, Agent] = {}
+
+        # ── Workflows ──
+        self.workflows: Dict[str, Workflow] = {}
+
+        # ── Sessions / Traces ──
+        self.sessions: Dict[str, AgentSession] = {}
+
+        # backwards compat
+        self.mcp_servers = self.servers
+        self.workflow_plans = self.workflows
+
+    # ── Entities ───────────────────────────────────────────
 
     def register_entity(self, entity: Entity) -> str:
-        """Register an entity in the megamodel"""
         self.entities[entity.uri] = entity
-        
         if isinstance(entity, Model):
             model_type = entity.model_type.value
             if model_type in self._models_by_type:
                 self._models_by_type[model_type].append(entity)
-        
         return entity.uri
-    
+
     def get_entity(self, uri: str) -> Optional[Entity]:
-        """Get entity by URI"""
         return self.entities.get(uri)
-    
+
     def find_entities_by_type(self, entity_type: type) -> List[Entity]:
-        """Find all entities of a specific type"""
-        return [entity for entity in self.entities.values() 
-                if isinstance(entity, entity_type)]
-    
+        return [e for e in self.entities.values() if isinstance(e, entity_type)]
+
     def register_relationship(self, relationship: Relationship) -> None:
-        """Register a relationship"""
         self.relationships.append(relationship)
-    
-    def find_relationships(self, source_uri: str = None, target_uri: str = None, 
-                          relationship_type: str = None) -> List[Relationship]:
-        """Find relationships matching criteria"""
-        results = []
-        for rel in self.relationships:
-            if (source_uri is None or rel.source.uri == source_uri) and \
-               (target_uri is None or rel.target.uri == target_uri) and \
-               (relationship_type is None or rel.relationship_type == relationship_type):
-                results.append(rel)
-        return results
-    
-    
+
+    def find_relationships(self, source_uri: str = None, target_uri: str = None,
+                           relationship_type: str = None) -> List[Relationship]:
+        return [
+            rel for rel in self.relationships
+            if (source_uri is None or rel.source.uri == source_uri)
+            and (target_uri is None or rel.target.uri == target_uri)
+            and (relationship_type is None or rel.relationship_type == relationship_type)
+        ]
+
+    # ── Servers & Tools ────────────────────────────────────
+
+    def register_server(self, server: Server) -> None:
+        self.servers[server.name] = server
+
     def register_mcp_server(self, name: str, server: Any) -> None:
-        """Register MCP server"""
-        self.mcp_servers[name] = server
+        """Backwards compat"""
+        if not hasattr(server, 'metadata'):
+            server.metadata = {}
+        self.servers[name] = server
         self.tools_by_server[name] = getattr(server, 'tools', [])
-    
+
     def register_mcp_server_with_script(self, name: str, server: Any, script_path: str) -> None:
-        """Register MCP server with script path for async client connection"""
-        # Add script path to server metadata
         if not hasattr(server, 'metadata'):
             server.metadata = {}
         server.metadata['script_path'] = script_path
         self.register_mcp_server(name, server)
-    
+
+    def register_tools_for_server(self, server_name: str, tools: List[Tool]) -> None:
+        self.tools_by_server[server_name] = tools
+
     def get_mcp_server(self, name: str) -> Optional[Any]:
-        """Get MCP server by name"""
-        return self.mcp_servers.get(name)
-    
-    def discover_tools(self, server_name: str = None) -> List[Any]:
-        """Discover available tools from MCP servers"""
+        return self.servers.get(name)
+
+    def discover_tools(self, server_name: str = None) -> List[Tool]:
         if server_name:
             return self.tools_by_server.get(server_name, [])
-        # Return all tools from all servers
-        all_tools = []
-        for tools in self.tools_by_server.values():
-            all_tools.extend(tools)
-        return all_tools
-    
-    def find_tools_by_capability(self, input_type: str = None, 
-                                output_type: str = None) -> List[Any]:
-        """Find tools that can handle specific input/output types"""
-        matching_tools = []
-        for server_name, server in self.mcp_servers.items():
-            capabilities = getattr(server, 'capabilities', [])
-            for capability in capabilities:
-                input_types = getattr(capability, 'input_types', [])
-                output_types = getattr(capability, 'output_types', [])
-                if (input_type is None or input_type in input_types) and \
-                   (output_type is None or output_type in output_types):
-                    matching_tools.extend(self.tools_by_server[server_name])
-        return matching_tools
-    
-    #  Session & Workflow Management 
-    def create_session(self, context: Dict[str, Any] = None) -> Any:
-        """Create new agent session"""
+        return [tool for tools in self.tools_by_server.values() for tool in tools]
+
+    def find_tools_by_capability(self, input_type: str = None,
+                                  output_type: str = None) -> List[Tool]:
+        matching = []
+        for server_name, server in self.servers.items():
+            for cap in getattr(server, 'capabilities', []):
+                if (input_type is None or input_type in getattr(cap, 'input_types', [])) and \
+                   (output_type is None or output_type in getattr(cap, 'output_types', [])):
+                    matching.extend(self.tools_by_server.get(server_name, []))
+        return matching
+
+    # ── Agents ─────────────────────────────────────────────
+
+    def register_agent(self, agent_id: str, agent: Agent) -> None:
+        self.agents[agent_id] = agent
+
+    def get_agent(self, agent_id: str) -> Optional[Agent]:
+        return self.agents.get(agent_id)
+
+    # ── Workflows ──────────────────────────────────────────
+
+    def create_workflow(self, goal: Any, instruction: str = "") -> Workflow:
+        workflow = Workflow(goal=goal, instruction=instruction)
+        self.workflows[workflow.plan_id] = workflow
+        return workflow
+
+    def create_workflow_plan(self, goal: Any) -> Workflow:
+        """Backwards compat"""
+        return self.create_workflow(goal)
+
+    def get_workflow(self, plan_id: str) -> Optional[Workflow]:
+        return self.workflows.get(plan_id)
+
+    def get_workflow_plan(self, plan_id: str) -> Optional[Workflow]:
+        return self.get_workflow(plan_id)
+
+    # ── Sessions ───────────────────────────────────────────
+
+    def create_session(self, context: Dict[str, Any] = None) -> AgentSession:
         session = AgentSession(context=context or {})
         self.sessions[session.session_id] = session
         return session
-    
-    def get_session(self, session_id: str) -> Optional[Any]:
-        """Get session by ID"""
+
+    def get_session(self, session_id: str) -> Optional[AgentSession]:
         return self.sessions.get(session_id)
-    
-    def create_workflow_plan(self, goal: Any) -> Any:
-        """Create workflow plan"""
-        plan = WorkflowPlan(goal=goal)
-        plan_id = str(uuid.uuid4())
-        self.workflow_plans[plan_id] = plan
-        
-        return plan
-    
-    def get_workflow_plan(self, plan_id: str) -> Optional[Any]:
-        """Get workflow plan by ID"""
-        return self.workflow_plans.get(plan_id)
-    
 
+    # ── Queries ────────────────────────────────────────────
 
-    
-    def query_models(self, metamodel_uri: str = None, 
-                    model_type: str = None) -> List[Model]:
-        """Query models by criteria"""
-        models = []
-        
-        if model_type and model_type in self._models_by_type:
-            candidates = self._models_by_type[model_type]
-        else:
-            candidates = self.find_entities_by_type(Model)
-        
-        for model in candidates:
-            if metamodel_uri is None or \
-               (hasattr(model, 'conformsTo') and model.conformsTo and 
-                model.conformsTo.uri == metamodel_uri):
-                models.append(model)
-        
-        return models
-    
+    def query_models(self, metamodel_uri: str = None,
+                     model_type: str = None) -> List[Model]:
+        candidates = (
+            self._models_by_type[model_type]
+            if model_type and model_type in self._models_by_type
+            else self.find_entities_by_type(Model)
+        )
+        return [
+            m for m in candidates
+            if metamodel_uri is None or (
+                hasattr(m, 'conformsTo') and m.conformsTo and
+                m.conformsTo.uri == metamodel_uri
+            )
+        ]
+
     def get_execution_statistics(self) -> Dict[str, Any]:
-        """Get execution statistics across all sessions"""
-        total_sessions = len(self.sessions)
-        total_plans = len(self.workflow_plans)
-        
         total_invocations = 0
         successful_invocations = 0
-        
         for session in self.sessions.values():
             for trace in session.execution_traces:
-                total_invocations += len(trace.invocations)
-                successful_invocations += sum(1 for inv in trace.invocations if inv.success)
-        
+                for step in trace.trace_steps:
+                    total_invocations += len(step.invocations)
+                    successful_invocations += sum(1 for inv in step.invocations if not inv.is_error)
         return {
-            "total_sessions": total_sessions,
-            "total_workflow_plans": total_plans,
+            "total_sessions": len(self.sessions),
+            "total_workflows": len(self.workflows),
             "total_invocations": total_invocations,
             "successful_invocations": successful_invocations,
             "success_rate": (successful_invocations / total_invocations * 100) if total_invocations > 0 else 0,
             "registered_entities": len(self.entities),
             "registered_relationships": len(self.relationships),
-            "active_mcp_servers": len(self.mcp_servers)
+            "active_servers": len(self.servers)
         }
-    

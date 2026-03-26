@@ -1,25 +1,27 @@
-import os, sys
+import os
 import json
 import subprocess
 from .server_config.server_integrator import MCPServerIntegrator
-from .am3 import ReferenceModel
+from .am3 import ReferenceModel, TransformationModel, Server, Status
 from .server_config.client import MCPClient
 from mcp_servers.atl.atl_server import fetch_transformations
 
 
-from megamodel.am3 import TransformationModel
-
 async def populate_registry(registry):
     integrator = MCPServerIntegrator(registry)
-    # Get server script paths
-    atl_server_script = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "mcp_servers", "atl", "atl_server.py"))
-    #emf_server_script = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."), 'mcp_servers', 'emf_server', 'emf','stateless_emf_server.py')
 
-    # Setup servers with script paths in metadata
-    atl_server = integrator.setup_atl_server()
-    atl_server.metadata["script_path"] = atl_server_script
+    atl_server_script = os.path.abspath(
+        os.path.join(os.path.dirname(__file__), "..", "mcp_servers", "atl", "atl_server.py")
+    )
 
-    # Get ATL tools
+    # Setup ATL server and register as Server object
+    atl_server_raw = integrator.setup_atl_server()
+    atl_server_raw.metadata["script_path"] = atl_server_script
+
+    atl_server_obj = Server(name="atl_server", port=8080, status=Status.CONNECTED)
+    registry.register_server(atl_server_obj)
+
+    # Discover tools via MCP client
     atl_client = MCPClient()
     tools = []
     try:
@@ -29,14 +31,12 @@ async def populate_registry(registry):
         tools = response.tools
     finally:
         await atl_client.cleanup()
-    atl_tools = tools
 
-    # Register tools with the megamodel registry
-    registry.tools_by_server["atl_server"] = atl_tools
-    # Call ATL server to get enabled transformations
+    registry.register_tools_for_server("atl_server", tools)
+
+    # Fetch enabled transformations
     enabled_transformations = fetch_transformations()
 
-    # Register transformation tools for ATL server
     def get_or_register_metamodel(uri, name):
         mm = registry.get_entity(uri)
         if not mm:
@@ -44,31 +44,36 @@ async def populate_registry(registry):
             registry.register_entity(mm)
         return mm
 
-    # Fetch samples once from ATL server
+    # Fetch sample sources
     try:
-        samples_raw = subprocess.run([
-            'curl', '-s', '-X', 'GET', 'http://localhost:8080/transformations/samples'
-        ], capture_output=True, text=True, check=True)
+        samples_raw = subprocess.run(
+            ['curl', '-s', '-X', 'GET', 'http://localhost:8080/transformations/samples'],
+            capture_output=True, text=True, check=True
+        )
         samples_data = json.loads(samples_raw.stdout)
-        # Map name -> sampleSources
-        samples_by_name = {entry.get('name'): entry.get('sampleSources', []) for entry in (samples_data or [])}
+        samples_by_name = {
+            entry.get('name'): entry.get('sampleSources', [])
+            for entry in (samples_data or [])
+        }
     except Exception:
         samples_by_name = {}
+
+    # Register transformation entities
     for transfo_data in enabled_transformations:
         transfo_name = transfo_data.get('name')
-        # Input metamodels
-        input_mms = transfo_data.get('input_metamodels', [])
+
         source_ref = None
+        input_mms = transfo_data.get('input_metamodels', [])
         if input_mms:
             mm = input_mms[0]
             source_ref = get_or_register_metamodel(mm.get('path'), mm.get('name', mm.get('path')))
-        # Output metamodels
-        output_mms = transfo_data.get('output_metamodels', [])
+
         target_ref = None
+        output_mms = transfo_data.get('output_metamodels', [])
         if output_mms:
             mm = output_mms[0]
             target_ref = get_or_register_metamodel(mm.get('path'), mm.get('name', mm.get('path')))
-        # Register transformation with references
+
         transfo_entity = TransformationModel(
             uri=transfo_data.get('atlFile', transfo_data.get('name', 'unknown')),
             name=transfo_data.get('name', 'unknown'),
