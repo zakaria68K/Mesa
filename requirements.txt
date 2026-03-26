@@ -1,0 +1,22 @@
+openai-agents
+langchain
+langchain-community
+langsmith
+langchain_ollama
+langgraph
+tqdm
+pandas
+matplotlib
+fastapi
+mcp
+langchain-mcp-adapters
+langchain-openai
+python-dotenv
+docarray
+# For dataset analysis
+nltk
+scikit-learn
+scipy
+seaborn
+umap-learn
+openai
