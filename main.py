@@ -39,15 +39,7 @@ async def main():
         print(f"\n Score: {score:.2f}")
         print(f"   Expected : {[e['api_name'] for e in sample['relevant_apis']]}")
         print(f"   Got      : {[c['api_name'] for c in actual_calls]}")
-        print(f"   Output   : {output[:200]}...")
 
-    print("\n" + "="*60)
-    print("Evaluation History:")
-    for entry in agent.evaluation_history:
-        print(f"  Iteration {entry['iteration']} — Score: {entry['score']:.2f}")
-    avg = sum(e["score"] for e in agent.evaluation_history) / len(agent.evaluation_history)
-    print(f"\n  Overall Average Score: {avg:.2f}")
-    print("="*60)
 
 
 if __name__ == "__main__":

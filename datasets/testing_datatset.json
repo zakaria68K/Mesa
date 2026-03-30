@@ -1,36 +1,4 @@
-   [{
-    "level" : 3,
-    "pattern": "apply",
-    "instruction": "Transform this model at '/Users/zakariahachm/Downloads/atl_zoo/Table2MicrosoftOfficeExcel/modelsExamples/TableModelExample.xmi' into MSOfficeExcel_SpreadsheetMLSimplified",
-    "relevant_apis": [
-      {
-        "api_name": "apply_Table2SpreadsheetMLSimplified_transformation_tool",
-        "arguments": "/Users/zakariahachm/Downloads/atl_zoo/Table2MicrosoftOfficeExcel/modelsExamples/TableModelExample.xmi"
-      }
-    ]
-  },
-  {
-    "level" : 2,
-    "pattern": "apply",
-    "instruction": "Transform the Table model to MSOfficeExcel_SpreadsheetMLSimplified, model located at /Users/zakariahachm/Downloads/atl_zoo/Table2MicrosoftOfficeExcel/modelsExamples/TableModelExample.xmi",
-    "relevant_apis": [
-      {
-        "api_name": "apply_Table2SpreadsheetMLSimplified_transformation_tool",
-        "arguments": "/Users/zakariahachm/Downloads/atl_zoo/Table2MicrosoftOfficeExcel/modelsExamples/TableModelExample.xmi"
-      }
-    ]
-  },
-  {
-    "level" : 2,
-    "pattern": "apply",
-    "instruction": "Transform the Table model at /Users/zakariahachm/Downloads/atl_zoo/Table2MicrosoftOfficeExcel/modelsExamples/TableModelExample.xmi into an MSOfficeExcel_SpreadsheetMLSimplified model",
-    "relevant_apis": [
-      {
-        "api_name": "apply_Table2SpreadsheetMLSimplified_transformation_tool",
-        "arguments": "/Users/zakariahachm/Downloads/atl_zoo/Table2MicrosoftOfficeExcel/modelsExamples/TableModelExample.xmi"
-      }
-    ]
-  },
+   [
   {
     "pattern": "apply",
     "instruction": "Transform this Class model /Users/zakariahachm/Documents/Phd_Zakaria/Scripts/atl-server/sample sources/Class.xmi to A relational model using the ATL transformation available in the ATL server",
@@ -38,34 +6,6 @@
       {
         "api_name": "apply_Class2Relational_transformation_tool",
         "arguments": "/Users/zakariahachm/Documents/Phd_Zakaria/Scripts/atl-server/sample sources/Class.xmi"
-      }
-    ]
-  },
-    {
-    "pattern": "get>get",
-    "instruction": "Show me the configuration settings of the transformation from Table to TabularHTML, and then Inspect the configuration settings of the transformation from JavaSource to Table.",
-    "relevant_apis": [
-      {
-        "api_name": "get_Table2TabularHTML_transformation_tool",
-        "arguments": ""
-      },
-      {
-        "api_name": "get_JavaSource2Table_transformation_tool",
-        "arguments": ""
-      }
-    ]
-  },
-    {
-    "pattern": "get>apply",
-    "instruction": "Show me the configuration of the PetriNet to PNML transformation.\nApply the KM3-to-EMF transformation with /Users/zakariahachm/Downloads/atl_zoo/KM32EMF/Sample-KM3.xmi to EMF model.",
-    "relevant_apis": [
-      {
-        "api_name": "get_PetriNet2PNML_transformation_tool",
-        "arguments": ""
-      },
-      {
-        "api_name": "apply_KM32EMF_transformation_tool",
-        "arguments": "/Users/zakariahachm/Downloads/atl_zoo/KM32EMF/Sample-KM3.xmi"
       }
     ]
   }
