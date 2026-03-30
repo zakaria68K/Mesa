@@ -1,27 +1,54 @@
 import asyncio
+import json
 from dotenv import load_dotenv
-load_dotenv() 
+load_dotenv()
+
 from megamodel.megamodel import MegamodelRegistry
 from megamodel.megamodel_instance import populate_registry
-
-
 from modeling_agents.generic_agent import GenericModelingAgent
 
+
 async def main():
-    load_dotenv()  # Load environment variables from .env
     print("MESA Megamodel Instance Initialization")
-    # Create registry and populate it
+
     registry = MegamodelRegistry()
     await populate_registry(registry)
     print("MESA Megamodel Instance is ready with the following servers:")
     for server_name in registry.mcp_servers.keys():
         print(f" - {server_name}")
-    
-    # Instantiate the agent: 
-    agent = GenericModelingAgent(mcp_server_script="mcp_servers/atl/atl_server.py")
-    agent_result = await agent.run(task = "Transform this Class model /Users/zakariahachm/Documents/Phd_Zakaria/Scripts/atl-server/sample sources/Class.xmi to A relational model using the ATL transformation available in the ATL server.")
 
-    print("\nAgent Result:\n", agent_result)
+    # Load dataset from JSON file
+    with open("/Users/zakariahachm/Documents/Phd_Zakaria/MESA/datasets/testing_datatset.json", "r") as f:
+        dataset = json.load(f)
+    print(f"\nLoaded {len(dataset)} samples from dataset.")
+
+    agent = GenericModelingAgent(mcp_server_script="mcp_servers/atl/atl_server.py")
+
+    print("\n" + "="*60)
+    print("Running evaluation over dataset...")
+    print("="*60)
+
+    for i, sample in enumerate(dataset):
+        print(f"\n[Sample {i+1}/{len(dataset)}] Pattern: {sample.get('pattern')} | Level: {sample.get('level', 'N/A')}")
+        print(f"Instruction: {sample['instruction']}")
+        print("-" * 40)
+
+        output, actual_calls = await agent.run(sample["instruction"])
+        score = agent.evaluate(actual_calls, sample["relevant_apis"])
+
+        print(f"\n Score: {score:.2f}")
+        print(f"   Expected : {[e['api_name'] for e in sample['relevant_apis']]}")
+        print(f"   Got      : {[c['api_name'] for c in actual_calls]}")
+        print(f"   Output   : {output[:200]}...")
+
+    print("\n" + "="*60)
+    print("Evaluation History:")
+    for entry in agent.evaluation_history:
+        print(f"  Iteration {entry['iteration']} — Score: {entry['score']:.2f}")
+    avg = sum(e["score"] for e in agent.evaluation_history) / len(agent.evaluation_history)
+    print(f"\n  Overall Average Score: {avg:.2f}")
+    print("="*60)
+
 
 if __name__ == "__main__":
     asyncio.run(main())
