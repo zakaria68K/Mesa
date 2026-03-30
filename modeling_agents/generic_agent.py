@@ -1,5 +1,16 @@
-from agents import Agent, Runner
+from agents import Agent, RunHooks, Runner
 from agents.mcp import MCPServerStdio
+from langsmith import traceable
+
+
+class PrintingHooks(RunHooks):
+    async def on_tool_start(self, context, agent, tool_call):
+        print(f"\n --- Tool call: {tool_call.name}")
+        print(f"-- Description: {tool_call.description}")
+
+    async def on_tool_end(self, context, agent, tool_call, result):
+        print(f" Tool done: {tool_call.name}")
+        print(f"   Output: {result}")
 
 class GenericModelingAgent:
     """
@@ -33,10 +44,18 @@ class GenericModelingAgent:
             ]
         )
 
+
     async def run(self, task: str) -> str:
         agent = self.build_agent()
-        result = await Runner.run(agent, task)
-        return result.final_output
+        # Connect to available MCP servers 
+        for server in agent.mcp_servers:
+            await server.connect()
+        try:
+            result = await Runner.run(agent, task, hooks=PrintingHooks())
+            return result.final_output
+        finally:
+            for server in agent.mcp_servers:
+                await server.cleanup()
 
     def evaluate(self, output: str, expected: str) -> float:
         """
