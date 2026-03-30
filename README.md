@@ -41,15 +41,3 @@ Generates and executes modeling workflows automatically.
 ### Execution Traces
 
 Support iterative refinement of agent strategies based on runtime behavior.
-
-## Goal
-
-The goal of MESA is to enable automatic creation and continuous improvement of modeling agents directly from MCP tool ecosystems.
-
-The system pipeline should generate: 
-
-- Agent identity
-- Capabilities
-- Allowed tools
-- Decision constraints
-- Failure handling strategy

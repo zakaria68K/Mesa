@@ -129,5 +129,3 @@ class Workflow:
             return True
         return False
 
-
-WorkflowPlan = Workflow

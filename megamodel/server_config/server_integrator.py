@@ -1,7 +1,7 @@
 
 from typing import Any
 
-from .server_infra import MCPServer, MCPCapability
+from .server_infra import MCPServer
 
 class MCPServerIntegrator:
     """Simple integrator for MCP servers"""
@@ -16,14 +16,7 @@ class MCPServerIntegrator:
             port=port, 
             name="atl_server",
             tools_port=tools_port
-        )
-        
-        atl_server.add_capability(MCPCapability(
-            input_types=["ecore", "xmi"],
-            output_types=["ecore", "xmi"], 
-            can_execute=True,
-            description="ATL transformations"
-        ))
+        )       
         
         self.registry.register_mcp_server("atl_server", atl_server)
         return atl_server
@@ -35,14 +28,6 @@ class MCPServerIntegrator:
             port=port, 
             name="emf_server",
             tools_port=tools_port
-        )
-        
-        emf_server.add_capability(MCPCapability(
-            input_types=["ecore", "xmi"],
-            output_types=["ecore", "xmi"],
-            can_execute=True,
-            description="EMF model operations"
-        ))
-        
+        )        
         self.registry.register_mcp_server("emf_server", emf_server)
         return emf_server

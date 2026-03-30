@@ -15,14 +15,6 @@ class HttpMethod(Enum):
     PUT = "PUT"
     DELETE = "DELETE"
 
-@dataclass
-class MCPCapability:
-    """Capability exposed by MCP server"""
-    input_types: List[str]
-    output_types: List[str] 
-    can_execute: bool = True
-    description: str = ""
-
 
 @dataclass
 class MCPTool:
@@ -49,7 +41,6 @@ class MCPServer:
     name: str = ""
     tools_port: int = None  # Separate port for tools discovery
     status: ServerStatus = ServerStatus.DISCONNECTED
-    capabilities: List[MCPCapability] = field(default_factory=list)
     tools: List[MCPTool] = field(default_factory=list)
     resources: List[MCPResource] = field(default_factory=list)
     metadata: Dict[str, Any] = field(default_factory=dict)
@@ -91,10 +82,6 @@ class MCPServer:
             return False
     
 
-
-    def add_capability(self, capability: MCPCapability) -> None:
-        """Add a capability to this server"""
-        self.capabilities.append(capability)
     
     def get_server_info(self) -> Dict[str, Any]:
         """Get comprehensive server information"""
@@ -105,21 +92,12 @@ class MCPServer:
             "status": self.status.value,
             "tools_count": len(self.tools),
             "tools": [tool.name for tool in self.tools],
-            "capabilities_count": len(self.capabilities),
-            "capabilities": [
-                {
-                    "input_types": cap.input_types,
-                    "output_types": cap.output_types,
-                    "can_execute": cap.can_execute
-                } for cap in self.capabilities
-            ],
             "resources_count": len(self.resources),
             "metadata": self.metadata
         }
 
 # Simple test block
 if __name__ == "__main__":
-    # Change port to 8081 for ATL or 8082 for EMF MCP server
     server = MCPServer(host="localhost", port=8081, name="atl_server")
     connected = server.connect()
     print(f"Connected: {connected}, Status: {server.status}")
