@@ -1,6 +1,5 @@
-
 import json
-from zipfile import Path
+from pathlib import Path
 from openai import OpenAI
 from modeling_agents.generic_agent import GenericModelingAgent
 
@@ -38,7 +37,7 @@ class MetaAgent:
                 print("Threshold met. Specialization complete.")
                 break
 
-        return self.file  # return path, not self.file()
+        return self.file
 
     def evaluate(self, actual_tool_calls: list[dict], expected_apis: list[dict]) -> float:
         if not expected_apis:
@@ -49,16 +48,25 @@ class MetaAgent:
                 if actual["api_name"] != expected["api_name"]:
                     continue
                 expected_args = expected.get("arguments")
-                actual_args = (
-                    actual.get("arguments", {}).get("file_path")
-                    if isinstance(actual.get("arguments"), dict)
-                    else actual.get("arguments")
-                )
+                actual_args = actual.get("arguments", {})
+
+                # normalize expected: could be a string path or dict
                 if isinstance(expected_args, str):
                     try:
                         expected_args = json.loads(expected_args)
-                    except json.JSONDecodeError:
-                        pass
+                    except (json.JSONDecodeError, TypeError):
+                        pass  # keep as string
+
+                # normalize actual: extract file path value from dict
+                if isinstance(actual_args, dict):
+                    actual_args = (
+                        actual_args.get("file_path")
+                        or actual_args.get("source_file")
+                        or actual_args.get("input_file")
+                        or actual_args.get("path")
+                        or next(iter(actual_args.values()), None)
+                    )
+
                 if expected_args == actual_args:
                     match_found = True
                     break
@@ -70,24 +78,24 @@ class MetaAgent:
         client = OpenAI()
 
         refinement_prompt = f"""
-        This is the old content of the agent definition file (Agents.md):
+This is the old content of the agent definition file (Agents.md):
 
-        {self.prompt_content}
+{self.prompt_content}
 
-        Based on the performance of the agent on the task and the API calls it made, refine the content of the agent definition file to improve its performance in future iterations.
+Based on the performance of the agent on the task and the API calls it made, refine the content of the agent definition file to improve its performance in future iterations.
 
-        ## Refinement (iteration {self.iteration})
+## Refinement (iteration {self.iteration})
 
-        For tasks like:
-        "{task}"
+For tasks like:
+"{task}"
 
-        Expected API calls:
-        {expected_apis}
+Expected API calls:
+{expected_apis}
 
-        Actual API calls made:
-        {actual_calls}
+Actual API calls made:
+{actual_calls}
 
-        Return a refined file, no explanations, just the content of the file in markdown format.
+Return a refined file, no explanations, just the content of the file in markdown format.
 """
 
         response = client.responses.create(
