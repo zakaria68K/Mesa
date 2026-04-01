@@ -5,7 +5,7 @@ load_dotenv()
 
 from megamodel.megamodel import MegamodelRegistry
 from megamodel.megamodel_instance import populate_registry
-from modeling_agents.generic_agent import GenericModelingAgent
+from modeling_agents.meta_agent import MetaAgent
 
 
 async def main():
@@ -17,29 +17,39 @@ async def main():
     for server_name in registry.mcp_servers.keys():
         print(f" - {server_name}")
 
-    # Load dataset from JSON file
     with open("/Users/zakariahachm/Documents/Phd_Zakaria/MESA/datasets/testing_datatset.json", "r") as f:
         dataset = json.load(f)
     print(f"\nLoaded {len(dataset)} samples from dataset.")
 
-    agent = GenericModelingAgent(mcp_server_script="mcp_servers/atl/atl_server.py")
+    meta = MetaAgent(file="Agents.md")
 
     print("\n" + "="*60)
     print("Running evaluation over dataset...")
     print("="*60)
+
+    actual_calls = []
 
     for i, sample in enumerate(dataset):
         print(f"\n[Sample {i+1}/{len(dataset)}] Pattern: {sample.get('pattern')} | Level: {sample.get('level', 'N/A')}")
         print(f"Instruction: {sample['instruction']}")
         print("-" * 40)
 
-        output, actual_calls = await agent.run(sample["instruction"])
-        score = agent.evaluate(actual_calls, sample["relevant_apis"])
+        print(">>> Starting Gemini CLI subprocess...")
+        try:
+            output, actual_calls = meta.agent.run(sample["instruction"], meta.file)
+            print(f" Gemini finished.")
+            print(f">>> Raw output: {output}")
+            print(f">>> Tool calls captured: {actual_calls}")
+        except RuntimeError as e:
+            print(f" Gemini CLI raised an error:\n{e}")
+        except Exception as e:
+            print(f">>> Unexpected error: {type(e).__name__}: {e}")
 
-        print(f"\n Score: {score:.2f}")
+        score = meta.evaluate(actual_calls, sample["relevant_apis"])
+
+        print(f"\n  Score: {score:.2f}")
         print(f"   Expected : {[e['api_name'] for e in sample['relevant_apis']]}")
         print(f"   Got      : {[c['api_name'] for c in actual_calls]}")
-
 
 
 if __name__ == "__main__":
