@@ -25,6 +25,36 @@ class GenericModelingAgent:
                 }
             }
         }
+
+        # def _build_opencode_config(self, mcp_server_script: str) -> dict:
+        # return {
+        #     "$schema": "https://opencode.ai/config.json",
+        #     "model": f"ollama/llama3.2:latest",
+        #     "provider": {
+        #         "ollama": {
+        #             "npm": "@ai-sdk/openai-compatible",
+        #             "name": "Ollama (local)",
+        #             "options": {
+        #                 "baseURL": os.getenv("OLLAMA_HOST", "http://localhost:11434") + "/v1"
+        #             },
+        #             "models": {
+        #                 "llama3.2:latest": {
+        #                     "name": "llama3.2:latest"
+        #                 }
+        #             }
+        #         }
+        #     },
+        #     "mcp": {
+        #         "modeling_server": {
+        #             "type": "local",
+        #             "command": [
+        #                 "python3",
+        #                 str(Path(mcp_server_script).resolve())
+        #             ],
+        #             "enabled": True
+        #         }
+        #     }
+        # }
     def _extract_skills_used(self, stderr: str) -> list[str]:
         ansi = re.compile(r'\x1b?\[[\d;]*m')
         skills = []
