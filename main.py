@@ -22,27 +22,17 @@ async def main():
     print(f"\nLoaded {len(dataset)} samples from dataset.")
 
     meta = MetaAgent()
-    actual_calls = []
 
-    for i, sample in enumerate(dataset):
-        print(f"\n[Sample {i+1}/{len(dataset)}] Pattern: {sample.get('pattern')} | Level: {sample.get('level', 'N/A')}")
-        print(f"Instruction: {sample['instruction']}")
-        print("-" * 40)
+    print("\n>>> Starting specialization loop...")
+    apply_skill, get_skill = meta.specialize_agent(dataset, threshold=0.5)
 
-        print(">>> Starting opencode subprocess...")
-        try:
-            output, actual_calls = meta.agent.run(sample["instruction"], None)
-            print(f">>> opencode finished. Tool calls captured: {actual_calls}")
-        except RuntimeError as e:
-            print(f"opencode subprocess raised an error:\n{e}")
-        except Exception as e:
-            print(f">>> Unexpected error: {type(e).__name__}: {e}")
-
-        score = meta.evaluate(actual_calls, sample["relevant_apis"])
-
-        print(f"\n  Score: {score:.2f}")
-        print(f"   Expected : {[e['api_name'] for e in sample['relevant_apis']]}")
-        print(f"   Got      : {[c['api_name'] for c in actual_calls]}")
+    print("\n>>> Specialization complete. Final skill files:")
+    print(f"  Apply skill : {apply_skill}")
+    print(f"  Get skill   : {get_skill}")
+    print("\n>>> Apply skill content:")
+    print(open(apply_skill).read())
+    print("\n>>> Get skill content:")
+    print(open(get_skill).read())
 
 
 if __name__ == "__main__":

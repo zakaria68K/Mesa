@@ -25,7 +25,6 @@ class GenericModelingAgent:
                 }
             }
         }
-
         # def _build_opencode_config(self, mcp_server_script: str) -> dict:
         # return {
         #     "$schema": "https://opencode.ai/config.json",

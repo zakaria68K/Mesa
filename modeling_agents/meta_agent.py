@@ -20,7 +20,7 @@ class MetaAgent:
             return self.get_skill
         return self.apply_skill
 
-    def specialize_agent(self, dataset: list[dict], threshold: float = 0.8):
+    def specialize_agent(self, dataset: list[dict], threshold: float = 0.5):
         while True:
             scores = []
             for sample in dataset:
@@ -35,15 +35,24 @@ class MetaAgent:
                     "expected": expected_apis,
                     "actual": actual_calls
                 })
-                if score < threshold:
-                    self.refine_agent_definition(sample["instruction"], actual_calls,
-                                                 expected_apis, self._skill_for(expected_apis))
 
             avg_score = sum(scores) / len(scores)
             print(f"Iteration {self.iteration} — avg score: {avg_score:.2f}")
+
             if avg_score >= threshold:
                 print("Threshold met. Specialization complete.")
                 break
+
+            # Refine only samples that scored below threshold
+            for sample, score in zip(dataset, scores):
+                if score < threshold:
+                    skill_file = self._skill_for(sample["relevant_apis"])
+                    self.refine_agent_definition(
+                        sample["instruction"],
+                        self.agent.evaluation_history[-len(dataset)]["actual"],
+                        sample["relevant_apis"],
+                        skill_file
+                    )
 
         return self.apply_skill, self.get_skill
 
@@ -59,7 +68,7 @@ class MetaAgent:
                     continue
                 expected_args = expected.get("arguments")
                 actual_args = actual.get("arguments", {}).get("file_path")
-                # normalize expected: could be a string path or dict
+
                 if isinstance(expected_args, str):
                     try:
                         expected_args = json.loads(expected_args)
