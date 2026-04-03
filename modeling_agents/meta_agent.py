@@ -1,5 +1,6 @@
 import json
 from pathlib import Path
+import sys
 from openai import OpenAI
 from modeling_agents.generic_agent import GenericModelingAgent
 
@@ -45,11 +46,11 @@ class MetaAgent:
         for expected in expected_apis:
             match_found = False
             for actual in actual_tool_calls:
+                actual["api_name"] = actual["api_name"].removeprefix("server_")
                 if actual["api_name"] != expected["api_name"]:
                     continue
                 expected_args = expected.get("arguments")
-                actual_args = actual.get("arguments", {})
-
+                actual_args = actual.get("arguments", {}).get("file_path")
                 # normalize expected: could be a string path or dict
                 if isinstance(expected_args, str):
                     try:

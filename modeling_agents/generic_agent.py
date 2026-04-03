@@ -1,103 +1,80 @@
+import datetime
 import json
+import os
 import subprocess
 import tempfile
-import os
+import time
 from pathlib import Path
-from dotenv import load_dotenv
-
-load_dotenv()
-
+import re
 
 class GenericModelingAgent:
     def __init__(self, mcp_server_script: str, prompt: str = None):
         self.mcp_server_script = mcp_server_script
         self.evaluation_history = []
 
-    def _build_gemini_settings(self, mcp_server_script: str) -> dict:
+    def _build_opencode_config(self, mcp_server_script: str) -> dict:
         return {
-            "mcpServers": {
+            "$schema": "https://opencode.ai/config.json",
+            "mcp": {
                 "modeling_server": {
-                    "command": "python3",
-                    "args": [str(Path(mcp_server_script).resolve())]
+                    "type": "local",
+                    "command": [
+                        "python3",
+                        str(Path(mcp_server_script).resolve())
+                    ],
+                    "enabled": True
                 }
-            },       
-            "model": { "name": "gemini-2.5-flash"
-            },
-        "autoUpdate": False,
-        "selectedAuthType": "apiKey"
             }
+        }
 
-    def _parse_tool_calls_from_activity_log(self, log_path: Path) -> list[dict]:
-        if not log_path.exists():
-            return []
 
-        tool_calls = []
-        for line in log_path.read_text().splitlines():
-            try:
-                event = json.loads(line)
-            except json.JSONDecodeError:
-                continue
 
-            payload = event.get("payload", {})
-            bodies = [
-                payload.get("response", {}).get("body", ""),
-                payload.get("chunk", {}).get("data", ""),
-            ]
+    def _parse_tool_calls_from_stderr(self, stderr: str) -> list[dict]:
+        ansi = re.compile(r'\x1b?\[[\d;]*m')
+        strip_prefix = lambda n: re.sub(r'^[^_]+_', '', n, count=1)
+        tool_calls, seen = [], set()
+        for line in (ansi.sub('', l).strip() for l in stderr.splitlines()):
+            m = re.search(r'service=permission\s+permission=(modeling_server_\S+)\s+pattern=', line) \
+            or re.search(r'[⚙✦*]\s+(modeling_server_\S+)\s+(\{.*\})', line)
+            if not m: continue
+            name = strip_prefix(m.group(1))
+            args = json.loads(m.group(2)) if m.lastindex == 2 else {}
 
-            for body in filter(None, bodies):
-                for sse_line in body.splitlines():
-                    if not sse_line.startswith("data:"):
-                        continue
-                    try:
-                        data = json.loads(sse_line[5:])
-                    except json.JSONDecodeError:
-                        continue
-
-                    for candidate in data.get("candidates", []):
-                        for part in candidate.get("content", {}).get("parts", []):
-                            if fc := part.get("functionCall"):
-                                tool_calls.append({
-                                    "api_name": fc.get("name"),
-                                    "arguments": fc.get("args", {}),
-                                })
+            existing = next((t for t in tool_calls if t["api_name"] == name and not t["arguments"]), None)
+            if existing and args:
+                seen.discard((name, "{}"))
+                existing["arguments"] = args
+                seen.add((name, json.dumps(args, sort_keys=True)))
+            elif (name, json.dumps(args, sort_keys=True)) not in seen:
+                seen.add((name, json.dumps(args, sort_keys=True)))
+                tool_calls.append({"api_name": name, "arguments": args})
         return tool_calls
-    
-    def _run_gemini_with_mcp(self, task: str) -> tuple[str, list[dict]]:
-        settings = self._build_gemini_settings(self.mcp_server_script)
+
+    def _run_opencode_with_mcp(self, task: str) -> tuple[str, list[dict]]:
+        config = self._build_opencode_config(self.mcp_server_script)
 
         with tempfile.TemporaryDirectory() as tmp_dir:
-            tmp_path = Path(tmp_dir)
-            settings_path = tmp_path / "settings.json"
-            settings_path.write_text(json.dumps(settings, indent=2))
-            activity_log_path = tmp_path / "activity.jsonl"
-
+            config_path = Path(tmp_dir) / "opencode.json"
+            config_path.write_text(json.dumps(config, indent=2))
             env = os.environ.copy()
-            env["GEMINI_CONFIG_DIR"] = tmp_dir
-            env["GEMINI_API_KEY"] = os.getenv("GEMINI_API_KEY", "").strip()
-            env["GEMINI_CLI_ACTIVITY_LOG_TARGET"] = str(activity_log_path)
-
-
+            env["OPENCODE_CONFIG"] = str(config_path)
+            env["OLLAMA_HOST"] = os.getenv("OLLAMA_HOST", "http://localhost:11434")
             result = subprocess.run(
-                ["gemini", "-p", task, "--output-format", "json", "--yolo",
-                 "--model", "gemini-2.5-flash"],
+                ["opencode", "run", task],
                 capture_output=True,
                 text=True,
                 timeout=300,
                 env=env,
             )
 
-            actual_calls = self._parse_tool_calls_from_activity_log(activity_log_path)          
-            print(f">>> Tool calls from activity log: {actual_calls}")
-
         if result.returncode != 0:
-            raise RuntimeError(f"Gemini CLI error:\n{result.stderr.strip()}")
+            raise RuntimeError(f"opencode error:\n{result.stderr[:500]}")
+        tool_calls = self._parse_tool_calls_from_stderr(result.stderr)
+        print(f">>> Tool calls parsed: {tool_calls}")
 
-        gemini_json = json.loads(result.stdout)
-        final_output = gemini_json.get("response", "")
-
-        return final_output, actual_calls
+        return result.stdout.strip(), tool_calls
 
     def run(self, task: str, file: str) -> tuple[str, list[dict]]:
         agents_md = Path(file).read_text()
         full_task = f"{agents_md}\n\nTask: {task}"
-        return self._run_gemini_with_mcp(full_task)
+        return self._run_opencode_with_mcp(full_task)

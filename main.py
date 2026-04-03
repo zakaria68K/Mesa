@@ -29,12 +29,12 @@ async def main():
         print(f"Instruction: {sample['instruction']}")
         print("-" * 40)
 
-        print(">>> Starting Gemini CLI subprocess...")
+        print(">>> Starting opencode subprocess...")
         try:
             output, actual_calls = meta.agent.run(sample["instruction"], meta.file)
-            print(f">>> Gemini finished. Tool calls captured: {actual_calls}")
+            print(f">>> opencode finished. Tool calls captured: {actual_calls}")
         except RuntimeError as e:
-            print(f" Gemini CLI raised an error:\n{e}")
+            print(f" opencode subprocess raised an error:\n{e}")
         except Exception as e:
             print(f">>> Unexpected error: {type(e).__name__}: {e}")
 
