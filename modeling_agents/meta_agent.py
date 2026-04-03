@@ -7,9 +7,9 @@ from modeling_agents.generic_agent import GenericModelingAgent
 class MetaAgent:
 
     def __init__(self, agent_class=GenericModelingAgent,
-                 apply_skill=".opencode/skills/mde-apply/SKILL.md",
-                 get_skill=".opencode/skills/mde-get/SKILL.md",
-                 iteration=0):
+        apply_skill=".opencode/skills/mde-apply/SKILL.md",
+        get_skill=".opencode/skills/mde-get/SKILL.md",
+        iteration=0):
         self.apply_skill = apply_skill
         self.get_skill = get_skill
         self.iteration = iteration

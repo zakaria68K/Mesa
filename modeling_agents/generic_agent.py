@@ -11,7 +11,6 @@ class GenericModelingAgent:
     def __init__(self, mcp_server_script: str, prompt: str = None):
         self.mcp_server_script = mcp_server_script
         self.evaluation_history = []
-
     def _build_opencode_config(self, mcp_server_script: str) -> dict:
         return {
             "$schema": "https://opencode.ai/config.json",
@@ -26,8 +25,6 @@ class GenericModelingAgent:
                 }
             }
         }
-
-
     def _extract_skills_used(self, stderr: str) -> list[str]:
         ansi = re.compile(r'\x1b?\[[\d;]*m')
         skills = []
@@ -68,6 +65,8 @@ class GenericModelingAgent:
             env["OPENCODE_CONFIG"] = str(config_path)
             env["OLLAMA_HOST"] = os.getenv("OLLAMA_HOST", "http://localhost:11434")
 
+            log_path = Path("opencode_logs") / f"opencode_6.txt"
+            log_path.parent.mkdir(exist_ok=True)
 
             result = subprocess.run(
                 ["opencode", "run", "--print-logs", "--dir", str(Path.cwd()), task],
@@ -76,6 +75,9 @@ class GenericModelingAgent:
                 timeout=300,
                 env=env,
             )
+
+            log_path.write_text(f"=== STDOUT ===\n{result.stdout}\n\n=== STDERR ===\n{result.stderr}")
+            print(f">>> Logs written to: {log_path}")
 
         skills_used = self._extract_skills_used(result.stderr)
         print(f">>> Skills used: {skills_used}")
