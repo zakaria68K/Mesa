@@ -2,8 +2,8 @@ import datetime
 import json
 import os
 import subprocess
+import sys
 import tempfile
-import time
 from pathlib import Path
 import re
 
@@ -28,6 +28,14 @@ class GenericModelingAgent:
         }
 
 
+    def _extract_skills_used(self, stderr: str) -> list[str]:
+        ansi = re.compile(r'\x1b?\[[\d;]*m')
+        skills = []
+        for line in (ansi.sub('', l).strip() for l in stderr.splitlines()):
+            m = re.search(r'[→⚙✦*]\s+[Ss]kill\s+"([^"]+)"', line)
+            if m:
+                skills.append(m.group(1))
+        return skills
 
     def _parse_tool_calls_from_stderr(self, stderr: str) -> list[dict]:
         ansi = re.compile(r'\x1b?\[[\d;]*m')
@@ -59,22 +67,29 @@ class GenericModelingAgent:
             env = os.environ.copy()
             env["OPENCODE_CONFIG"] = str(config_path)
             env["OLLAMA_HOST"] = os.getenv("OLLAMA_HOST", "http://localhost:11434")
+
+
             result = subprocess.run(
-                ["opencode", "run", task],
+                ["opencode", "run", "--print-logs", "--dir", str(Path.cwd()), task],
                 capture_output=True,
                 text=True,
                 timeout=300,
                 env=env,
             )
 
+        skills_used = self._extract_skills_used(result.stderr)
+        print(f">>> Skills used: {skills_used}")
         if result.returncode != 0:
             raise RuntimeError(f"opencode error:\n{result.stderr[:500]}")
         tool_calls = self._parse_tool_calls_from_stderr(result.stderr)
         print(f">>> Tool calls parsed: {tool_calls}")
 
         return result.stdout.strip(), tool_calls
-
+    
     def run(self, task: str, file: str) -> tuple[str, list[dict]]:
-        agents_md = Path(file).read_text()
-        full_task = f"{agents_md}\n\nTask: {task}"
+        full_task = (
+            "Before doing anything, load the appropriate skill using the skill tool. "
+            "Then use the MCP tools as instructed by the skill.\n\n"
+            f"Task: {task}"
+        )
         return self._run_opencode_with_mcp(full_task)

@@ -1,24 +1,30 @@
 import json
 from pathlib import Path
-import sys
 from openai import OpenAI
 from modeling_agents.generic_agent import GenericModelingAgent
 
 
 class MetaAgent:
 
-    def __init__(self, agent_class=GenericModelingAgent, file="./Agents.md", iteration=0):
-        self.agent_class = agent_class
-        self.file = file
-        self.prompt_content = open(file).read()
+    def __init__(self, agent_class=GenericModelingAgent,
+                 apply_skill=".opencode/skills/mde-apply/SKILL.md",
+                 get_skill=".opencode/skills/mde-get/SKILL.md",
+                 iteration=0):
+        self.apply_skill = apply_skill
+        self.get_skill = get_skill
         self.iteration = iteration
         self.agent = agent_class(mcp_server_script="mcp_servers/atl/atl_server.py")
+
+    def _skill_for(self, expected_apis: list[dict]) -> str:
+        if any("list" in e["api_name"] for e in expected_apis):
+            return self.get_skill
+        return self.apply_skill
 
     def specialize_agent(self, dataset: list[dict], threshold: float = 0.8):
         while True:
             scores = []
             for sample in dataset:
-                output, actual_calls = self.agent.run(sample["instruction"], self.file)
+                output, actual_calls = self.agent.run(sample["instruction"], None)
                 expected_apis = sample["relevant_apis"]
                 score = self.evaluate(actual_calls, expected_apis)
                 print(f"  Score: {score:.2f} | Expected: {expected_apis} | Got: {actual_calls}")
@@ -30,7 +36,8 @@ class MetaAgent:
                     "actual": actual_calls
                 })
                 if score < threshold:
-                    self.refine_agent_definition(sample["instruction"], actual_calls, expected_apis)
+                    self.refine_agent_definition(sample["instruction"], actual_calls,
+                                                 expected_apis, self._skill_for(expected_apis))
 
             avg_score = sum(scores) / len(scores)
             print(f"Iteration {self.iteration} — avg score: {avg_score:.2f}")
@@ -38,11 +45,12 @@ class MetaAgent:
                 print("Threshold met. Specialization complete.")
                 break
 
-        return self.file
+        return self.apply_skill, self.get_skill
 
     def evaluate(self, actual_tool_calls: list[dict], expected_apis: list[dict]) -> float:
         if not expected_apis:
             return 1.0
+        print(f">>> Evaluating. Expected APIs: {expected_apis}, Actual tool calls: {actual_tool_calls}")
         for expected in expected_apis:
             match_found = False
             for actual in actual_tool_calls:
@@ -56,9 +64,8 @@ class MetaAgent:
                     try:
                         expected_args = json.loads(expected_args)
                     except (json.JSONDecodeError, TypeError):
-                        pass  # keep as string
+                        pass
 
-                # normalize actual: extract file path value from dict
                 if isinstance(actual_args, dict):
                     actual_args = (
                         actual_args.get("file_path")
@@ -68,6 +75,9 @@ class MetaAgent:
                         or next(iter(actual_args.values()), None)
                     )
 
+                expected_args = expected_args or None
+                actual_args = actual_args or None
+
                 if expected_args == actual_args:
                     match_found = True
                     break
@@ -75,15 +85,17 @@ class MetaAgent:
                 return 0.0
         return 1.0
 
-    def refine_agent_definition(self, task: str, actual_calls: list[dict], expected_apis: list[dict]) -> str:
+    def refine_agent_definition(self, task: str, actual_calls: list[dict],
+                                expected_apis: list[dict], skill_file: str) -> str:
         client = OpenAI()
+        prompt_content = Path(skill_file).read_text()
 
-        refinement_prompt = f"""
-This is the old content of the agent definition file (Agents.md):
+        response = client.responses.create(
+            model="gpt-4.1-mini",
+            input=f"""
+This is the current skill definition:
 
-{self.prompt_content}
-
-Based on the performance of the agent on the task and the API calls it made, refine the content of the agent definition file to improve its performance in future iterations.
+{prompt_content}
 
 ## Refinement (iteration {self.iteration})
 
@@ -96,20 +108,12 @@ Expected API calls:
 Actual API calls made:
 {actual_calls}
 
-Return a refined file, no explanations, just the content of the file in markdown format.
-"""
-
-        response = client.responses.create(
-            model="gpt-4.1-mini",
-            input=refinement_prompt,
+Return a refined SKILL.md including the frontmatter, no explanations.
+""",
             temperature=0.3
         )
 
         refined_content = response.output_text
-        self.prompt_content = refined_content
         self.iteration += 1
-
-        # Write refined content back to Agents.md so Gemini picks it up next run
-        Path(self.file).write_text(refined_content)
-
+        Path(skill_file).write_text(refined_content)
         return refined_content

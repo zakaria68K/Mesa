@@ -21,7 +21,7 @@ async def main():
         dataset = json.load(f)
     print(f"\nLoaded {len(dataset)} samples from dataset.")
 
-    meta = MetaAgent(file="Agents.md")
+    meta = MetaAgent()
     actual_calls = []
 
     for i, sample in enumerate(dataset):
@@ -31,10 +31,10 @@ async def main():
 
         print(">>> Starting opencode subprocess...")
         try:
-            output, actual_calls = meta.agent.run(sample["instruction"], meta.file)
+            output, actual_calls = meta.agent.run(sample["instruction"], None)
             print(f">>> opencode finished. Tool calls captured: {actual_calls}")
         except RuntimeError as e:
-            print(f" opencode subprocess raised an error:\n{e}")
+            print(f"opencode subprocess raised an error:\n{e}")
         except Exception as e:
             print(f">>> Unexpected error: {type(e).__name__}: {e}")
 
@@ -43,5 +43,7 @@ async def main():
         print(f"\n  Score: {score:.2f}")
         print(f"   Expected : {[e['api_name'] for e in sample['relevant_apis']]}")
         print(f"   Got      : {[c['api_name'] for c in actual_calls]}")
+
+
 if __name__ == "__main__":
     asyncio.run(main())

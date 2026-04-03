@@ -1,11 +1,11 @@
    [
   {
     "pattern": "apply",
-    "instruction": "Transform this Class model /Users/zakariahachm/Documents/Phd_Zakaria/Scripts/atl-server/sample sources/Class.xmi to A relational model using the ATL transformation available in the ATL server",
+    "instruction": "Get the details of the transformation Class2Relational.",
     "relevant_apis": [
       {
-        "api_name": "apply_Class2Relational_transformation_tool",
-        "arguments": "/Users/zakariahachm/Documents/Phd_Zakaria/Scripts/atl-server/sample sources/Class.xmi"
+        "api_name": "list_transformation_Class2Relational_tool",
+        "arguments": ""
       }
     ]
   }
