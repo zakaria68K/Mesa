@@ -46,11 +46,11 @@
     "instruction": "Show me the configuration settings of the transformation from Table to TabularHTML, and then Inspect the configuration settings of the transformation from JavaSource to Table.",
     "relevant_apis": [
       {
-        "api_name": "get_Table2TabularHTML_transformation_tool",
+        "api_name": "list_transformation_Table2TabularHTML_tool",
         "arguments": ""
       },
       {
-        "api_name": "get_JavaSource2Table_transformation_tool",
+        "api_name": "list_transformation_JavaSource2Table_tool",
         "arguments": ""
       }
     ]
@@ -60,7 +60,7 @@
     "instruction": "Show me the configuration of the PetriNet to PNML transformation.\nApply the KM3-to-EMF transformation with /Users/zakariahachm/Downloads/atl_zoo/KM32EMF/Sample-KM3.xmi to EMF model.",
     "relevant_apis": [
       {
-        "api_name": "get_PetriNet2PNML_transformation_tool",
+        "api_name": "list_transformation_PetriNet2PNML_tool",
         "arguments": ""
       },
       {
