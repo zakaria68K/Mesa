@@ -6,6 +6,9 @@ load_dotenv()
 from megamodel.megamodel import MegamodelRegistry
 from megamodel.megamodel_instance import populate_registry
 from modeling_agents.meta_agent import MetaAgent
+import sys
+sys.path.insert(0, '.opencode/skills')
+from megamodel_toskill import MegamodelToSkill
 
 
 async def main():
@@ -21,18 +24,24 @@ async def main():
         dataset = json.load(f)
     print(f"\nLoaded {len(dataset)} samples from dataset.")
 
-    meta = MetaAgent()
+    # generate skill files from megamodel registry
+    print("\n> Generating skill files from megamodel...")
+    skill_generator = MegamodelToSkill(registry)
+    skill_generator.generate_patterns()
 
-    print("\n>>> Starting specialization loop...")
-    apply_skill, get_skill = meta.specialize_agent(dataset, threshold=0.5)
+    # meta = MetaAgent()
 
-    print("\n>>> Specialization complete. Final skill files:")
-    print(f"  Apply skill : {apply_skill}")
-    print(f"  Get skill   : {get_skill}")
-    print("\n>>> Apply skill content:")
-    print(open(apply_skill).read())
-    print("\n>>> Get skill content:")
-    print(open(get_skill).read())
+    # print("\n>>> Starting specialization loop...")
+    # apply_skill, get_skill = meta.specialize_agent(dataset, threshold=0.5)
+
+    # print("\n>>> Specialization complete. Final skill files:")
+    # print(f"  Apply skill : {apply_skill}")
+    # print(f"  Get skill   : {get_skill}")
+    # print("\n>>> Apply skill content:")
+    # print(open(apply_skill).read())
+    # print("\n>>> Get skill content:")
+    # print(open(get_skill).read())
+
 
 
 if __name__ == "__main__":
