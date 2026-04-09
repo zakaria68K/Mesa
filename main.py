@@ -2,7 +2,6 @@ import asyncio
 import json
 from dotenv import load_dotenv
 load_dotenv()
-
 from megamodel.megamodel import MegamodelRegistry
 from megamodel.megamodel_instance import populate_registry
 from modeling_agents.meta_agent import MetaAgent
@@ -10,8 +9,8 @@ import sys
 sys.path.insert(0, '.opencode/skills')
 from megamodel_toskill import MegamodelToSkill
 
-
 async def main():
+
     print("MESA Megamodel Instance Initialization")
 
     registry = MegamodelRegistry()
@@ -29,20 +28,18 @@ async def main():
     skill_generator = MegamodelToSkill(registry)
     skill_generator.generate_patterns()
 
-    # meta = MetaAgent()
+    meta = MetaAgent()
 
-    # print("\n>>> Starting specialization loop...")
-    # apply_skill, get_skill = meta.specialize_agent(dataset, threshold=0.5)
+    print("\n>>> Starting specialization loop...")
+    apply_skill, get_skill = meta.specialize_agent(dataset, threshold=0.8)
 
-    # print("\n>>> Specialization complete. Final skill files:")
-    # print(f"  Apply skill : {apply_skill}")
-    # print(f"  Get skill   : {get_skill}")
-    # print("\n>>> Apply skill content:")
-    # print(open(apply_skill).read())
-    # print("\n>>> Get skill content:")
-    # print(open(get_skill).read())
-
-
-
+    print("\n>>> Specialization complete. Final skill files:")
+    print(f"  Apply skill : {apply_skill}")
+    print(f"  Get skill   : {get_skill}")
+    print("\n>>> Apply skill content:")
+    print(open(apply_skill).read())
+    print("\n>>> Get skill content:")
+    print(open(get_skill).read())
+    
 if __name__ == "__main__":
     asyncio.run(main())

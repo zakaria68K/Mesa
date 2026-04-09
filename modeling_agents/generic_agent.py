@@ -14,6 +14,7 @@ class GenericModelingAgent:
     def _build_opencode_config(self, mcp_server_script: str) -> dict:
         return {
             "$schema": "https://opencode.ai/config.json",
+            "model": "openai/gpt-4.1-mini",
             "mcp": {
                 "modeling_server": {
                     "type": "local",
@@ -92,7 +93,7 @@ class GenericModelingAgent:
             config_path.write_text(json.dumps(config, indent=2))
             env = os.environ.copy()
             env["OPENCODE_CONFIG"] = str(config_path)
-            env["OLLAMA_HOST"] = os.getenv("OLLAMA_HOST", "http://localhost:11434")
+            #env["OLLAMA_HOST"] = os.getenv("OLLAMA_HOST", "http://localhost:11434")
 
             log_path = Path("opencode_logs") / f"opencode_6.txt"
             log_path.parent.mkdir(exist_ok=True)

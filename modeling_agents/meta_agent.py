@@ -19,16 +19,20 @@ class MetaAgent:
         if any("list" in e["api_name"] for e in expected_apis):
             return self.get_skill
         return self.apply_skill
-
+    
     def specialize_agent(self, dataset: list[dict], threshold: float = 0.5):
+        # Initialize results: None means "not yet run"
+        results = [(sample, None, None) for sample in dataset]
+
         while True:
-            scores = []
-            for sample in dataset:
+            for i, (sample, score, actual_calls) in enumerate(results):
+                if score == 1.0:  # skip already passing samples
+                    continue
                 output, actual_calls = self.agent.run(sample["instruction"], None)
                 expected_apis = sample["relevant_apis"]
                 score = self.evaluate(actual_calls, expected_apis)
                 print(f"  Score: {score:.2f} | Expected: {expected_apis} | Got: {actual_calls}")
-                scores.append(score)
+                results[i] = (sample, score, actual_calls)
                 self.agent.evaluation_history.append({
                     "instruction": sample["instruction"],
                     "score": score,
@@ -36,6 +40,7 @@ class MetaAgent:
                     "actual": actual_calls
                 })
 
+            scores = [r[1] for r in results]
             avg_score = sum(scores) / len(scores)
             print(f"Iteration {self.iteration} — avg score: {avg_score:.2f}")
 
@@ -43,13 +48,12 @@ class MetaAgent:
                 print("Threshold met. Specialization complete.")
                 break
 
-            # Refine only samples that scored below threshold
-            for sample, score in zip(dataset, scores):
-                if score < threshold:
+            for sample, score, actual_calls in results:
+                if score < 1.0:
                     skill_file = self._skill_for(sample["relevant_apis"])
                     self.refine_agent_definition(
                         sample["instruction"],
-                        self.agent.evaluation_history[-len(dataset)]["actual"],
+                        actual_calls,
                         sample["relevant_apis"],
                         skill_file
                     )
@@ -93,32 +97,49 @@ class MetaAgent:
             if not match_found:
                 return 0.0
         return 1.0
-
+    
     def refine_agent_definition(self, task: str, actual_calls: list[dict],
                                 expected_apis: list[dict], skill_file: str) -> str:
         client = OpenAI()
         prompt_content = Path(skill_file).read_text()
 
+        mismatch_analysis = []
+        for expected, actual in zip(expected_apis, actual_calls):
+            if expected["api_name"] != actual["api_name"]:
+                mismatch_analysis.append(
+                    f"- Task segment led to: `{actual['api_name']}` "
+                    f"but expected: `{expected['api_name']}`"
+                )
+        mismatch_str = "\n".join(mismatch_analysis) if mismatch_analysis else "- No matching calls were made."
+
         response = client.responses.create(
             model="gpt-4.1-mini",
             input=f"""
-This is the current skill definition:
+    You are refining an agent skill definition file.
 
-{prompt_content}
+    Current skill:
+    {prompt_content}
 
-## Refinement (iteration {self.iteration})
+    A task failed. Here are the details:
+    - Task: "{task}"
+    - Expected API calls: {expected_apis}
+    - Actual API calls made: {actual_calls}
 
-For tasks like:
-"{task}"
+    ## Key insight about the failure
+    The following tool name mismatches were observed:
+    {mismatch_str}
 
-Expected API calls:
-{expected_apis}
+    Analyze why the agent picked the wrong tools given the task and expected vs actual calls above,
+    then update the skill to prevent this mistake.
 
-Actual API calls made:
-{actual_calls}
-
-Return a refined SKILL.md including the frontmatter, no explanations.
-""",
+    Rewrite the skill as a single clean SKILL.md.
+    Rules:
+    - Keep the frontmatter (---) unchanged.
+    - DO NOT append iteration history or refinement blocks.
+    - DO NOT include any explanation or commentary outside the skill content.
+    - Consolidate all guidance into the existing sections.
+    - Return ONLY the final skill content, nothing else.
+    """,
             temperature=0.3
         )
 
