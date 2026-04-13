@@ -1,8 +1,6 @@
 from pathlib import Path
-import sys
-from typing import List, Dict, Any
+from typing import List, Dict
 import re
-from megamodel.am3 import TransformationModel
 
 class MegamodelToSkill:
     """Query megamodel and generate skill files"""
