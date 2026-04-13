@@ -19,7 +19,7 @@ class MetaAgent:
         if any("list" in e["api_name"] for e in expected_apis):
             return self.get_skill
         return self.apply_skill
-    
+
     def specialize_agent(self, dataset: list[dict], threshold: float = 0.5, max_iterations: int = 10):
         # Initialize results: None means "not yet run"
         results = [(sample, None, None) for sample in dataset]
@@ -102,10 +102,13 @@ class MetaAgent:
             if not match_found:
                 return 0.0
         return 1.0
-    
+
     def refine_agent_definition(self, task: str, actual_calls: list[dict],
                                 expected_apis: list[dict], skill_file: str) -> str:
-        client = OpenAI()
+        client = OpenAI(
+            base_url="https://ollama.kher.nl/v1",
+            api_key="ollama",
+        )
         prompt_content = Path(skill_file).read_text()
 
         def _normalize_api_name(name: str) -> str:
@@ -122,38 +125,43 @@ class MetaAgent:
                 )
         mismatch_str = "\n".join(mismatch_analysis) if mismatch_analysis else "- No matching calls were made."
 
-        response = client.responses.create(
-            model="gpt-4.1-mini",
-            input=f"""
-    You are refining an agent skill definition file.
+        response = client.chat.completions.create(
+            model="gemma4:26b",
+            messages=[
+                {
+                    "role": "user",
+                    "content": f"""
+You are refining an agent skill definition file.
 
-    Current skill:
-    {prompt_content}
+Current skill:
+{prompt_content}
 
-    A task failed. Here are the details:
-    - Task: "{task}"
-    - Expected API calls: {expected_apis}
-    - Actual API calls made: {actual_calls}
+A task failed. Here are the details:
+- Task: "{task}"
+- Expected API calls: {expected_apis}
+- Actual API calls made: {actual_calls}
 
-    ## Key insight about the failure
-    The following tool name mismatches were observed:
-    {mismatch_str}
+## Key insight about the failure
+The following tool name mismatches were observed:
+{mismatch_str}
 
-    Analyze why the agent picked the wrong tools given the task and expected vs actual calls above,
-    then update the skill to prevent this mistake.
+Analyze why the agent picked the wrong tools given the task and expected vs actual calls above,
+then update the skill to prevent this mistake.
 
-    Rewrite the skill as a single clean SKILL.md.
-    Rules:
-    - Keep the frontmatter (---) unchanged.
-    - DO NOT append iteration history or refinement blocks.
-    - DO NOT include any explanation or commentary outside the skill content.
-    - Consolidate all guidance into the existing sections.
-    - Return ONLY the final skill content, nothing else.
-    """,
-            temperature=0.3
+Rewrite the skill as a single clean SKILL.md.
+Rules:
+- Keep the frontmatter (---) unchanged.
+- DO NOT append iteration history or refinement blocks.
+- DO NOT include any explanation or commentary outside the skill content.
+- Consolidate all guidance into the existing sections.
+- Return ONLY the final skill content, nothing else.
+"""
+                }
+            ],
+            temperature=0.3,
         )
 
-        refined_content = response.output_text
+        refined_content = response.choices[0].message.content
         self.iteration += 1
         Path(skill_file).write_text(refined_content)
         return refined_content
