@@ -119,9 +119,18 @@ class GenericModelingAgent:
         return result.stdout.strip(), tool_calls
     
     def run(self, task: str, file: str) -> tuple[str, list[dict]]:
-        full_task = (
-            "Before doing anything, load the appropriate skill using the skill tool. "
-            "Then use the MCP tools as instructed by the skill.\n\n"
-            f"Task: {task}"
-        )
+        skill_name = Path(file).parent.name if file else None
+        if skill_name:
+            full_task = (
+                f'Before doing anything, you MUST load the skill "{skill_name}" with the skill tool. '
+                f'Do not load any other skill unless explicitly asked. '
+                "After loading it, strictly follow that skill and use only the MCP tools required by the task.\n\n"
+                f"Task: {task}"
+            )
+        else:
+            full_task = (
+                "Before doing anything, load the appropriate skill using the skill tool. "
+                "Then use the MCP tools as instructed by the skill.\n\n"
+                f"Task: {task}"
+            )
         return self._run_opencode_with_mcp(full_task)

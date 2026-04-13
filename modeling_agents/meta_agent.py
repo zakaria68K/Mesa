@@ -20,7 +20,7 @@ class MetaAgent:
             return self.get_skill
         return self.apply_skill
     
-    def specialize_agent(self, dataset: list[dict], threshold: float = 0.5):
+    def specialize_agent(self, dataset: list[dict], threshold: float = 0.5, max_iterations: int = 10):
         # Initialize results: None means "not yet run"
         results = [(sample, None, None) for sample in dataset]
 
@@ -28,8 +28,9 @@ class MetaAgent:
             for i, (sample, score, actual_calls) in enumerate(results):
                 if score == 1.0:  # skip already passing samples
                     continue
-                output, actual_calls = self.agent.run(sample["instruction"], None)
                 expected_apis = sample["relevant_apis"]
+                skill_file = self._skill_for(expected_apis)
+                output, actual_calls = self.agent.run(sample["instruction"], skill_file)
                 score = self.evaluate(actual_calls, expected_apis)
                 print(f"  Score: {score:.2f} | Expected: {expected_apis} | Got: {actual_calls}")
                 results[i] = (sample, score, actual_calls)
@@ -46,6 +47,10 @@ class MetaAgent:
 
             if avg_score >= threshold:
                 print("Threshold met. Specialization complete.")
+                break
+
+            if self.iteration >= max_iterations:
+                print(f"Reached max_iterations={max_iterations} with avg score {avg_score:.2f}. Stopping refinement loop.")
                 break
 
             for sample, score, actual_calls in results:
@@ -103,12 +108,17 @@ class MetaAgent:
         client = OpenAI()
         prompt_content = Path(skill_file).read_text()
 
+        def _normalize_api_name(name: str) -> str:
+            return (name or "").removeprefix("server_")
+
         mismatch_analysis = []
         for expected, actual in zip(expected_apis, actual_calls):
-            if expected["api_name"] != actual["api_name"]:
+            expected_name = _normalize_api_name(expected.get("api_name", ""))
+            actual_name = _normalize_api_name(actual.get("api_name", ""))
+            if expected_name != actual_name:
                 mismatch_analysis.append(
-                    f"- Task segment led to: `{actual['api_name']}` "
-                    f"but expected: `{expected['api_name']}`"
+                    f"- Task segment led to: `{actual_name}` "
+                    f"but expected: `{expected_name}`"
                 )
         mismatch_str = "\n".join(mismatch_analysis) if mismatch_analysis else "- No matching calls were made."
 
