@@ -21,10 +21,10 @@ class MetaAgent:
         return self.apply_skill
 
     def specialize_agent(self, dataset: list[dict], threshold: float = 0.5, max_iterations: int = 10):
-        # Initialize results: None means "not yet run"
         results = [(sample, None, None) for sample in dataset]
 
         while True:
+            # 1. Run ALL samples — always recalculate scores from scratch
             for i, (sample, score, actual_calls) in enumerate(results):
                 expected_apis = sample["relevant_apis"]
                 skill_file = self._skill_for(expected_apis)
@@ -39,10 +39,12 @@ class MetaAgent:
                     "actual": actual_calls
                 })
 
+            # 2. Compute average over ALL samples
             scores = [r[1] for r in results]
             avg_score = sum(scores) / len(scores)
             print(f"Iteration {self.iteration} — avg score: {avg_score:.2f}")
 
+            # 3. Check exit conditions
             if avg_score >= threshold:
                 print("Threshold met. Specialization complete.")
                 break
@@ -51,6 +53,8 @@ class MetaAgent:
                 print(f"Reached max_iterations={max_iterations} with avg score {avg_score:.2f}. Stopping refinement loop.")
                 break
 
+            # 4. Refine ONLY on failing samples
+            # (full re-run next iteration will catch any regressions on passing samples)
             for sample, score, actual_calls in results:
                 if score < 1.0:
                     skill_file = self._skill_for(sample["relevant_apis"])
@@ -61,8 +65,11 @@ class MetaAgent:
                         skill_file
                     )
 
+            # 5. Increment iteration once per full loop, not once per refined sample
+            self.iteration += 1
+
         return self.apply_skill, self.get_skill
-    
+
     def evaluate(self, actual_tool_calls: list[dict], expected_apis: list[dict]) -> float:
         if not expected_apis:
             return 1.0
@@ -161,6 +168,6 @@ Rules:
         )
 
         refined_content = response.choices[0].message.content
-        self.iteration += 1
+        # Removed: self.iteration += 1 (moved to specialize_agent)
         Path(skill_file).write_text(refined_content)
         return refined_content
