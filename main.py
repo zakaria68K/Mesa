@@ -9,6 +9,31 @@ import sys
 sys.path.insert(0, '.opencode/skills')
 from megamodel_toskill import MegamodelToSkill
 
+
+def load_specialization_dataset(dataset_path: str) -> list[dict]:
+    with open(dataset_path, "r") as f:
+        raw_dataset = json.load(f)
+
+    if isinstance(raw_dataset, dict):
+        dataset_sections = raw_dataset.values()
+    elif isinstance(raw_dataset, list):
+        dataset_sections = [raw_dataset]
+    else:
+        raise TypeError(f"Unsupported dataset format: {type(raw_dataset).__name__}")
+
+    samples: list[dict] = []
+    for section in dataset_sections:
+        if not isinstance(section, list):
+            continue
+        for sample in section:
+            if not isinstance(sample, dict):
+                continue
+            if "instruction" not in sample or "relevant_apis" not in sample:
+                continue
+            samples.append(sample)
+
+    return samples
+
 async def main():
 
     print("MESA Megamodel Instance Initialization")
@@ -19,9 +44,10 @@ async def main():
     for server_name in registry.mcp_servers.keys():
         print(f" - {server_name}")
 
-    with open("/Users/zakariahachm/Documents/Phd_Zakaria/MESA/datasets/testing_datatset.json", "r") as f:
-        dataset = json.load(f)
-    print(f"\nLoaded {len(dataset)} samples from dataset.")
+    dataset = load_specialization_dataset(
+        "/Users/zakariahachm/Documents/Phd_Zakaria/MESA/datasets/testing_datatset.json"
+    )
+    print(f"\nLoaded {len(dataset)} valid samples from dataset.")
 
     # generate skill files from megamodel registry
     print("\n> Generating skill files from megamodel...")
