@@ -26,8 +26,6 @@ class MetaAgent:
 
         while True:
             for i, (sample, score, actual_calls) in enumerate(results):
-                if score == 1.0:  # skip already passing samples
-                    continue
                 expected_apis = sample["relevant_apis"]
                 skill_file = self._skill_for(expected_apis)
                 output, actual_calls = self.agent.run(sample["instruction"], skill_file)
@@ -64,7 +62,7 @@ class MetaAgent:
                     )
 
         return self.apply_skill, self.get_skill
-
+    
     def evaluate(self, actual_tool_calls: list[dict], expected_apis: list[dict]) -> float:
         if not expected_apis:
             return 1.0
@@ -150,11 +148,12 @@ then update the skill to prevent this mistake.
 
 Rewrite the skill as a single clean SKILL.md.
 Rules:
-- Keep the frontmatter (---) unchanged.
-- DO NOT append iteration history or refinement blocks.
-- DO NOT include any explanation or commentary outside the skill content.
-- Consolidate all guidance into the existing sections.
-- Return ONLY the final skill content, nothing else.
+- Apply the MINIMUM change needed to fix this failure
+- Do NOT change unrelated tool-selection logic
+- Prefer adding clarification instead of rewriting sections
+- Preserve formatting and structure
+- Keep the frontmatter (---) unchanged
+- Return ONLY the updated SKILL.md content
 """
                 }
             ],
