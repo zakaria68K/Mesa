@@ -1,5 +1,7 @@
 import json
+from collections import defaultdict
 from pathlib import Path
+from datetime import datetime
 from openai import OpenAI
 from modeling_agents.generic_agent import GenericModelingAgent
 
@@ -15,22 +17,120 @@ class MetaAgent:
         self.iteration = iteration
         self.agent = agent_class(mcp_server_script="mcp_servers/atl/atl_server.py")
 
+    def _append_log(self, log_file: str, line: str) -> None:
+        log_path = Path(log_file)
+        log_path.parent.mkdir(parents=True, exist_ok=True)
+        with log_path.open("a", encoding="utf-8") as f:
+            f.write(line + "\n")
+
     def _skill_for(self, expected_apis: list[dict]) -> str:
         if any("list" in e["api_name"] for e in expected_apis):
             return self.get_skill
         return self.apply_skill
 
-    def specialize_agent(self, dataset: list[dict], threshold: float = 0.5, max_iterations: int = 10):
+    def _normalize_api_name(self, name: str) -> str:
+        return (name or "").removeprefix("server_")
+
+    def _failure_signature(self, expected_apis: list[dict], actual_calls: list[dict]) -> tuple:
+        expected_names = tuple(self._normalize_api_name(e.get("api_name", "")) for e in expected_apis)
+        actual_names = tuple(self._normalize_api_name(a.get("api_name", "")) for a in actual_calls)
+        return expected_names, actual_names
+
+    def _build_failure_payload(
+        self,
+        failures: list[dict],
+        max_examples: int = 12,
+        max_total_instruction_chars: int = 1600,
+    ) -> dict:
+        """Build a compact failure payload for refinement."""
+        grouped = defaultdict(list)
+        for f in failures:
+            sig = self._failure_signature(f["expected_apis"], f["actual_calls"])
+            grouped[sig].append(f)
+
+        sorted_groups = sorted(grouped.items(), key=lambda item: len(item[1]), reverse=True)
+
+        selected = []
+        for _, items in sorted_groups:
+            if len(selected) >= max_examples:
+                break
+            selected.append(items[0])
+
+        if len(selected) < max_examples:
+            for _, items in sorted_groups:
+                for item in items[1:]:
+                    if len(selected) >= max_examples:
+                        break
+                    selected.append(item)
+                if len(selected) >= max_examples:
+                    break
+
+        total_chars = 0
+        trimmed_selected = []
+        for item in selected:
+            instruction = item.get("instruction", "")
+            remaining = max_total_instruction_chars - total_chars
+            if remaining <= 0:
+                break
+            if len(instruction) > remaining:
+                instruction = instruction[: max(0, remaining - 3)] + "..."
+            total_chars += len(instruction)
+            trimmed_item = dict(item)
+            trimmed_item["instruction"] = instruction
+            trimmed_selected.append(trimmed_item)
+
+        pattern_summary = []
+        for (expected_names, actual_names), items in sorted_groups:
+            pattern_summary.append(
+                {
+                    "count": len(items),
+                    "expected_tools": list(expected_names),
+                    "actual_tools": list(actual_names),
+                }
+            )
+
+        return {
+            "total_failures": len(failures),
+            "distinct_patterns": len(sorted_groups),
+            "pattern_summary": pattern_summary,
+            "examples": trimmed_selected,
+        }
+
+    def specialize_agent(
+        self,
+        dataset: list[dict],
+        threshold: float = 0.5,
+        max_iterations: int = 10,
+        log_file: str = "debug_logs/specialization_iterations.txt",
+    ):
         results = [(sample, None, None) for sample in dataset]
 
+        self._append_log(log_file, "=" * 80)
+        self._append_log(
+            log_file,
+            (
+                f"Specialization run started at {datetime.now().isoformat(timespec='seconds')} | "
+                f"samples={len(dataset)} | threshold={threshold} | max_iterations={max_iterations}"
+            ),
+        )
+
         while True:
-            # 1. Run ALL samples — always recalculate scores from scratch
+            refined_in_iteration = 0
+            self._append_log(log_file, "-" * 80)
+            self._append_log(log_file, f"Iteration {self.iteration} started")
+
             for i, (sample, score, actual_calls) in enumerate(results):
                 expected_apis = sample["relevant_apis"]
                 skill_file = self._skill_for(expected_apis)
-                output, actual_calls = self.agent.run(sample["instruction"], skill_file)
+                _, actual_calls = self.agent.run(sample["instruction"], skill_file)
                 score = self.evaluate(actual_calls, expected_apis)
-                print(f"  Score: {score:.2f} | Expected: {expected_apis} | Got: {actual_calls}")
+                self._append_log(
+                    log_file,
+                    (
+                        f"Iteration {self.iteration} | sample={i + 1}/{len(results)} | "
+                        f"score={score:.2f} | skill={Path(skill_file).name}"
+                    ),
+                )
                 results[i] = (sample, score, actual_calls)
                 self.agent.evaluation_history.append({
                     "instruction": sample["instruction"],
@@ -39,46 +139,99 @@ class MetaAgent:
                     "actual": actual_calls
                 })
 
-            # 2. Compute average over ALL samples
             scores = [r[1] for r in results]
             avg_score = sum(scores) / len(scores)
-            print(f"Iteration {self.iteration} — avg score: {avg_score:.2f}")
+            failing_samples = sum(1 for s in scores if s < 1.0)
+            self._append_log(
+                log_file,
+                (
+                    f"Iteration {self.iteration} summary | avg_score={avg_score:.2f} | "
+                    f"failing_samples={failing_samples}/{len(results)}"
+                ),
+            )
 
-            # 3. Check exit conditions
             if avg_score >= threshold:
-                print("Threshold met. Specialization complete.")
+                self._append_log(
+                    log_file,
+                    (
+                        f"Iteration {self.iteration} exit: threshold met "
+                        f"(avg_score={avg_score:.2f} >= {threshold})"
+                    ),
+                )
                 break
 
             if self.iteration >= max_iterations:
-                print(f"Reached max_iterations={max_iterations} with avg score {avg_score:.2f}. Stopping refinement loop.")
+                self._append_log(
+                    log_file,
+                    (
+                        f"Iteration {self.iteration} exit: max_iterations reached "
+                        f"(max_iterations={max_iterations}, avg_score={avg_score:.2f})"
+                    ),
+                )
                 break
 
-            # 4. Refine ONLY on failing samples
-            # (full re-run next iteration will catch any regressions on passing samples)
+            self._append_log(log_file, f"Iteration {self.iteration} refinement phase started")
+            failures_by_skill = defaultdict(list)
             for sample, score, actual_calls in results:
                 if score < 1.0:
                     skill_file = self._skill_for(sample["relevant_apis"])
-                    self.refine_agent_definition(
-                        sample["instruction"],
-                        actual_calls,
-                        sample["relevant_apis"],
-                        skill_file
+                    failures_by_skill[skill_file].append(
+                        {
+                            "instruction": sample["instruction"],
+                            "expected_apis": sample["relevant_apis"],
+                            "actual_calls": actual_calls,
+                        }
                     )
 
-            # 5. Increment iteration once per full loop, not once per refined sample
+            for skill_file, failures in failures_by_skill.items():
+                payload = self._build_failure_payload(failures)
+                self._append_log(
+                    log_file,
+                    (
+                        f"Iteration {self.iteration} | refining skill={Path(skill_file).name} | "
+                        f"failures={payload['total_failures']} | patterns={payload['distinct_patterns']} | "
+                        f"examples_used={len(payload['examples'])}"
+                    ),
+                )
+                try:
+                    self.refine_agent_definition_batch(
+                        failures_payload=payload,
+                        skill_file=skill_file,
+                    )
+                    refined_in_iteration += 1
+                except Exception as e:
+                    self._append_log(
+                        log_file,
+                        (
+                            f"Iteration {self.iteration} refinement error | "
+                            f"skill={Path(skill_file).name} | error={e}"
+                        ),
+                    )
+                    raise
+
+            self._append_log(
+                log_file,
+                f"Iteration {self.iteration} refinement_count={refined_in_iteration}",
+            )
+
             self.iteration += 1
+
+        self._append_log(
+            log_file,
+            f"Specialization finished at {datetime.now().isoformat(timespec='seconds')}"
+        )
+        self._append_log(log_file, "=" * 80)
 
         return self.apply_skill, self.get_skill
 
     def evaluate(self, actual_tool_calls: list[dict], expected_apis: list[dict]) -> float:
         if not expected_apis:
             return 1.0
-        print(f">>> Evaluating. Expected APIs: {expected_apis}, Actual tool calls: {actual_tool_calls}")
         for expected in expected_apis:
             match_found = False
             for actual in actual_tool_calls:
-                actual["api_name"] = actual["api_name"].removeprefix("server_")
-                if actual["api_name"] != expected["api_name"]:
+                actual_name = (actual.get("api_name") or "").removeprefix("server_")
+                if actual_name != expected["api_name"]:
                     continue
                 expected_args = expected.get("arguments")
                 actual_args = actual.get("arguments", {}).get("file_path")
@@ -108,27 +261,14 @@ class MetaAgent:
                 return 0.0
         return 1.0
 
-    def refine_agent_definition(self, task: str, actual_calls: list[dict],
-                                expected_apis: list[dict], skill_file: str) -> str:
+    def refine_agent_definition_batch(self, failures_payload: dict, skill_file: str) -> str:
         client = OpenAI(
             base_url="https://ollama.kher.nl/v1",
             api_key="ollama",
         )
         prompt_content = Path(skill_file).read_text()
-
-        def _normalize_api_name(name: str) -> str:
-            return (name or "").removeprefix("server_")
-
-        mismatch_analysis = []
-        for expected, actual in zip(expected_apis, actual_calls):
-            expected_name = _normalize_api_name(expected.get("api_name", ""))
-            actual_name = _normalize_api_name(actual.get("api_name", ""))
-            if expected_name != actual_name:
-                mismatch_analysis.append(
-                    f"- Task segment led to: `{actual_name}` "
-                    f"but expected: `{expected_name}`"
-                )
-        mismatch_str = "\n".join(mismatch_analysis) if mismatch_analysis else "- No matching calls were made."
+        top_patterns = failures_payload.get("pattern_summary", [])[:10]
+        examples = failures_payload.get("examples", [])[:8]
 
         response = client.chat.completions.create(
             model="gemma4:26b",
@@ -136,31 +276,28 @@ class MetaAgent:
                 {
                     "role": "user",
                     "content": f"""
-You are refining an agent skill definition file.
+Refine this SKILL.md with small incremental edits only.
 
-Current skill:
+Current SKILL.md:
 {prompt_content}
 
-A task failed. Here are the details:
-- Task: "{task}"
-- Expected API calls: {expected_apis}
-- Actual API calls made: {actual_calls}
+Score/Error context:
+- failing_items: {failures_payload['total_failures']}
+- distinct_error_patterns: {failures_payload['distinct_patterns']}
 
-## Key insight about the failure
-The following tool name mismatches were observed:
-{mismatch_str}
+Top tool-mismatch patterns:
+{json.dumps(top_patterns, ensure_ascii=False, indent=2)}
 
-Analyze why the agent picked the wrong tools given the task and expected vs actual calls above,
-then update the skill to prevent this mistake.
+Representative failing examples:
+{json.dumps(examples, ensure_ascii=False, indent=2)}
 
-Rewrite the skill as a single clean SKILL.md.
-Rules:
-- Apply the MINIMUM change needed to fix this failure
-- Do NOT change unrelated tool-selection logic
-- Prefer adding clarification instead of rewriting sections
-- Preserve formatting and structure
+Instructions:
+- Keep the same SKILL.md structure and section order
 - Keep the frontmatter (---) unchanged
-- Return ONLY the updated SKILL.md content
+- Add only minimal clarifications to prevent repeating these mistakes
+- Do not rewrite unrelated parts
+- Do not overfit to one example
+- Return only the updated SKILL.md content
 """
                 }
             ],
@@ -168,6 +305,21 @@ Rules:
         )
 
         refined_content = response.choices[0].message.content
-        # Removed: self.iteration += 1 (moved to specialize_agent)
         Path(skill_file).write_text(refined_content)
         return refined_content
+
+    def refine_agent_definition(self, task: str, actual_calls: list[dict],
+                                expected_apis: list[dict], skill_file: str) -> str:
+        """Backward-compatible single-sample wrapper over batched refinement."""
+        payload = self._build_failure_payload(
+            [
+                {
+                    "instruction": task,
+                    "expected_apis": expected_apis,
+                    "actual_calls": actual_calls,
+                }
+            ],
+            max_examples=1,
+            max_total_instruction_chars=600,
+        )
+        return self.refine_agent_definition_batch(payload, skill_file)

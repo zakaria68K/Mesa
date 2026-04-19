@@ -1,8 +1,6 @@
-import datetime
 import json
 import os
 import subprocess
-import sys
 import tempfile
 from pathlib import Path
 import re
@@ -53,13 +51,16 @@ class GenericModelingAgent:
 
     def _parse_tool_calls_from_stderr(self, stderr: str) -> list[dict]:
         ansi = re.compile(r'\x1b?\[[\d;]*m')
-        strip_prefix = lambda n: re.sub(r'^[^_]+_', '', n, count=1)
         tool_calls, seen = [], set()
         for line in (ansi.sub('', l).strip() for l in stderr.splitlines()):
-            m = re.search(r'service=permission\s+permission=(modeling_server_\S+)\s+pattern=', line) \
-            or re.search(r'[⚙✦*]\s+(modeling_server_\S+)\s+(\{.*\})', line)
-            if not m: continue
-            name = strip_prefix(m.group(1))
+            m = (
+                re.search(r'service=permission\s+permission=(modeling_server_\S+)\s+pattern=', line)
+                or re.search(r'[⚙✦*]\s+(modeling_server_\S+)\s+(\{.*\})', line)
+            )
+            if not m:
+                continue
+
+            name = re.sub(r'^[^_]+_', '', m.group(1), count=1)
             args = json.loads(m.group(2)) if m.lastindex == 2 else {}
 
             existing = next((t for t in tool_calls if t["api_name"] == name and not t["arguments"]), None)
@@ -80,30 +81,45 @@ class GenericModelingAgent:
             config_path.write_text(json.dumps(config, indent=2))
             env = os.environ.copy()
             env["OPENCODE_CONFIG"] = str(config_path)
-            #env["OLLAMA_HOST"] = os.getenv("OLLAMA_HOST", "http://localhost:11434")
 
             log_path = Path("opencode_logs") / f"opencode_6.txt"
             log_path.parent.mkdir(exist_ok=True)
 
-            result = subprocess.run(
-                ["opencode", "run", "--print-logs", "--dir", str(Path.cwd()), task],
-                capture_output=True,
-                text=True,
-                timeout=300,
-                env=env,
-            )
+            try:
+                result = subprocess.run(
+                    ["opencode", "run", "--print-logs", "--dir", str(Path.cwd()), task],
+                    capture_output=True,
+                    text=True,
+                    timeout=300,
+                    env=env,
+                )
+                stdout = result.stdout
+                stderr = result.stderr
+            except subprocess.TimeoutExpired as e:
+                stdout = e.stdout or ""
+                stderr = e.stderr or ""
+                if isinstance(stdout, bytes):
+                    stdout = stdout.decode("utf-8", errors="replace")
+                if isinstance(stderr, bytes):
+                    stderr = stderr.decode("utf-8", errors="replace")
+                log_path.write_text(
+                    f"=== TIMEOUT ===\nCommand timed out after 300 seconds\n\n"
+                    f"=== PARTIAL STDOUT ===\n{stdout}\n\n=== PARTIAL STDERR ===\n{stderr}"
+                )
+                print(f">>> Logs written to: {log_path}")
+                return "", []
 
-            log_path.write_text(f"=== STDOUT ===\n{result.stdout}\n\n=== STDERR ===\n{result.stderr}")
+            log_path.write_text(f"=== STDOUT ===\n{stdout}\n\n=== STDERR ===\n{stderr}")
             print(f">>> Logs written to: {log_path}")
 
-        skills_used = self._extract_skills_used(result.stderr)
+        skills_used = self._extract_skills_used(stderr)
         print(f">>> Skills used: {skills_used}")
         if result.returncode != 0:
-            raise RuntimeError(f"opencode error:\n{result.stderr[:500]}")
-        tool_calls = self._parse_tool_calls_from_stderr(result.stderr)
+            raise RuntimeError(f"opencode error:\n{stderr[:500]}")
+        tool_calls = self._parse_tool_calls_from_stderr(stderr)
         print(f">>> Tool calls parsed: {tool_calls}")
 
-        return result.stdout.strip(), tool_calls
+        return stdout.strip(), tool_calls
 
     def run(self, task: str, file: str) -> tuple[str, list[dict]]:
         skill_name = Path(file).parent.name if file else None
