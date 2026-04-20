@@ -60,7 +60,7 @@ async def main():
     print("\n>>> Starting specialization loop...")
     apply_skill, get_skill = meta.specialize_agent(
         dataset,
-        threshold=0.8,
+        threshold=0.75,
         log_file=specialization_log_file,
     )
 

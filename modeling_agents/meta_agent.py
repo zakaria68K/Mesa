@@ -30,6 +30,12 @@ class MetaAgent:
 
     def _normalize_api_name(self, name: str) -> str:
         return (name or "").removeprefix("server_")
+    
+    def _normalize_actual_args(self, actual: dict) -> str | None:
+        actual_args = actual.get("arguments", {}).get("file_path")
+        if isinstance(actual_args, dict):
+            return next((actual_args[k] for k in ("file_path", "source_file", "input_file", "path") if k in actual_args), next(iter(actual_args.values()), None))
+        return actual_args or None
 
     def _failure_signature(self, expected_apis: list[dict], actual_calls: list[dict]) -> tuple:
         expected_names = tuple(self._normalize_api_name(e.get("api_name", "")) for e in expected_apis)
@@ -51,12 +57,14 @@ class MetaAgent:
         sorted_groups = sorted(grouped.items(), key=lambda item: len(item[1]), reverse=True)
 
         selected = []
+        # First pass: 1 per group
         for _, items in sorted_groups:
             if len(selected) >= max_examples:
                 break
             selected.append(items[0])
 
         if len(selected) < max_examples:
+            # Second pass: fill remaining
             for _, items in sorted_groups:
                 for item in items[1:]:
                     if len(selected) >= max_examples:
@@ -119,7 +127,7 @@ class MetaAgent:
             self._append_log(log_file, "-" * 80)
             self._append_log(log_file, f"Iteration {self.iteration} started")
 
-            for i, (sample, score, actual_calls) in enumerate(results):
+            for i, (sample, _, actual_calls) in enumerate(results):
                 expected_apis = sample["relevant_apis"]
                 skill_file = self._skill_for(expected_apis)
                 _, actual_calls = self.agent.run(sample["instruction"], skill_file)
@@ -128,7 +136,7 @@ class MetaAgent:
                     log_file,
                     (
                         f"Iteration {self.iteration} | sample={i + 1}/{len(results)} | "
-                        f"score={score:.2f} | skill={Path(skill_file).name}"
+                        f"score={score:.2f}"
                     ),
                 )
                 results[i] = (sample, score, actual_calls)
@@ -233,8 +241,9 @@ class MetaAgent:
                 actual_name = (actual.get("api_name") or "").removeprefix("server_")
                 if actual_name != expected["api_name"]:
                     continue
+
                 expected_args = expected.get("arguments")
-                actual_args = actual.get("arguments", {}).get("file_path")
+                actual_args = self._normalize_actual_args(actual)
 
                 if isinstance(expected_args, str):
                     try:
@@ -242,17 +251,7 @@ class MetaAgent:
                     except (json.JSONDecodeError, TypeError):
                         pass
 
-                if isinstance(actual_args, dict):
-                    actual_args = (
-                        actual_args.get("file_path")
-                        or actual_args.get("source_file")
-                        or actual_args.get("input_file")
-                        or actual_args.get("path")
-                        or next(iter(actual_args.values()), None)
-                    )
-
                 expected_args = expected_args or None
-                actual_args = actual_args or None
 
                 if expected_args == actual_args:
                     match_found = True

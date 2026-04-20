@@ -1,12 +1,18 @@
 import json
 import os
+import re
 import subprocess
 import tempfile
 from pathlib import Path
-import re
+
+
+ANSI_RE = re.compile(r'\x1b?\[[\d;]*m')
+SKILL_RE = re.compile(r'[→⚙✦*]\s+[Ss]kill\s+"([^"]+)"')
+TOOL_PERMISSION_RE = re.compile(r'service=permission\s+permission=(modeling_server_\S+)\s+pattern=')
+TOOL_CALL_RE = re.compile(r'[⚙✦*]\s+(modeling_server_\S+)\s+(\{.*\})')
 
 class GenericModelingAgent:
-    def __init__(self, mcp_server_script: str, prompt: str = None):
+    def __init__(self, mcp_server_script: str, _prompt: str = None):
         self.mcp_server_script = mcp_server_script
         self.evaluation_history = []
 
@@ -41,35 +47,31 @@ class GenericModelingAgent:
         }
 
     def _extract_skills_used(self, stderr: str) -> list[str]:
-        ansi = re.compile(r'\x1b?\[[\d;]*m')
         skills = []
-        for line in (ansi.sub('', l).strip() for l in stderr.splitlines()):
-            m = re.search(r'[→⚙✦*]\s+[Ss]kill\s+"([^"]+)"', line)
+        for line in (ANSI_RE.sub('', l).strip() for l in stderr.splitlines()):
+            m = SKILL_RE.search(line)
             if m:
                 skills.append(m.group(1))
         return skills
 
     def _parse_tool_calls_from_stderr(self, stderr: str) -> list[dict]:
-        ansi = re.compile(r'\x1b?\[[\d;]*m')
         tool_calls, seen = [], set()
-        for line in (ansi.sub('', l).strip() for l in stderr.splitlines()):
-            m = (
-                re.search(r'service=permission\s+permission=(modeling_server_\S+)\s+pattern=', line)
-                or re.search(r'[⚙✦*]\s+(modeling_server_\S+)\s+(\{.*\})', line)
-            )
+        for line in (ANSI_RE.sub('', l).strip() for l in stderr.splitlines()):
+            m = TOOL_PERMISSION_RE.search(line) or TOOL_CALL_RE.search(line)
             if not m:
                 continue
 
             name = re.sub(r'^[^_]+_', '', m.group(1), count=1)
             args = json.loads(m.group(2)) if m.lastindex == 2 else {}
+            args_key = json.dumps(args, sort_keys=True)
 
             existing = next((t for t in tool_calls if t["api_name"] == name and not t["arguments"]), None)
             if existing and args:
                 seen.discard((name, "{}"))
                 existing["arguments"] = args
-                seen.add((name, json.dumps(args, sort_keys=True)))
-            elif (name, json.dumps(args, sort_keys=True)) not in seen:
-                seen.add((name, json.dumps(args, sort_keys=True)))
+                seen.add((name, args_key))
+            elif (name, args_key) not in seen:
+                seen.add((name, args_key))
                 tool_calls.append({"api_name": name, "arguments": args})
         return tool_calls
 
@@ -82,7 +84,7 @@ class GenericModelingAgent:
             env = os.environ.copy()
             env["OPENCODE_CONFIG"] = str(config_path)
 
-            log_path = Path("opencode_logs") / f"opencode_6.txt"
+            log_path = Path("opencode_logs") / "opencode_6.txt"
             log_path.parent.mkdir(exist_ok=True)
 
             try:
