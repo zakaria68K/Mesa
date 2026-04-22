@@ -11,6 +11,10 @@ SKILL_RE = re.compile(r'[→⚙✦*]\s+[Ss]kill\s+"([^"]+)"')
 TOOL_PERMISSION_RE = re.compile(r'service=permission\s+permission=(modeling_server_\S+)\s+pattern=')
 TOOL_CALL_RE = re.compile(r'[⚙✦*]\s+(modeling_server_\S+)(?:\s+(\{.*\}|Unknown))?')
 
+# Resolve the project root once, relative to this file's location
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+
+
 class GenericModelingAgent:
     def __init__(self, mcp_server_script: str, _prompt: str = None):
         self.mcp_server_script = mcp_server_script
@@ -61,10 +65,13 @@ class GenericModelingAgent:
             if not m:
                 continue
 
-            name = re.sub(r'^[^_]+_', '', m.group(1), count=1)
+            name = re.sub(r'^modeling_server_', '', m.group(1))
             raw_args = m.group(2) if m.lastindex and m.lastindex >= 2 else None
             if raw_args and raw_args != "Unknown":
-                args = json.loads(raw_args)
+                try:
+                    args = json.loads(raw_args)
+                except json.JSONDecodeError:
+                    args = {}
             else:
                 args = {}
             args_key = json.dumps(args, sort_keys=True)
@@ -91,9 +98,12 @@ class GenericModelingAgent:
             log_path = Path("opencode_logs") / "opencode_logs.txt"
             log_path.parent.mkdir(exist_ok=True)
 
+            # Use the resolved project root so relative file paths in tasks always work
+            run_dir = str(PROJECT_ROOT)
+
             try:
                 result = subprocess.run(
-                    ["opencode", "run", "--print-logs", "--dir", str(Path.cwd()), task],
+                    ["opencode", "run", "--print-logs", "--dir", run_dir, task],
                     capture_output=True,
                     text=True,
                     timeout=300,
@@ -133,13 +143,15 @@ class GenericModelingAgent:
             full_task = (
                 f'Before doing anything, you MUST load the skill "{skill_name}" with the skill tool. '
                 f'Do not load any other skill unless explicitly asked. '
-                "After loading it, strictly follow that skill and use only the MCP tools required by the task.\n\n"
+                "After loading it, strictly follow that skill and use only the MCP tools required by the task. "
+                "Do NOT use bash, glob, or file-search tools to locate files — pass file paths exactly as given to the MCP tools.\n\n"
                 f"Task: {task}"
             )
         else:
             full_task = (
                 "Before doing anything, load the appropriate skill using the skill tool. "
-                "Then use the MCP tools as instructed by the skill.\n\n"
+                "Then use the MCP tools as instructed by the skill. "
+                "Do NOT use bash, glob, or file-search tools to locate files — pass file paths exactly as given to the MCP tools.\n\n"
                 f"Task: {task}"
             )
         return self._run_opencode_with_mcp(full_task)

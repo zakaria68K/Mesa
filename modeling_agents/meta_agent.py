@@ -1,4 +1,5 @@
 import json
+import re
 from collections import defaultdict
 from pathlib import Path
 from datetime import datetime
@@ -24,18 +25,30 @@ class MetaAgent:
             f.write(line + "\n")
 
     def _skill_for(self, expected_apis: list[dict]) -> str:
-        if any("list" in e["api_name"] for e in expected_apis):
-            return self.get_skill
-        return self.apply_skill
+        if any("apply" in e["api_name"] for e in expected_apis):
+            return self.apply_skill
+        return self.get_skill
 
     def _normalize_api_name(self, name: str) -> str:
-        return (name or "").removeprefix("server_")
-    
+        name = name or ""
+        for prefix in ("modeling_server_", "server_"):
+            if name.startswith(prefix):
+                return name[len(prefix):]
+        return name
+
     def _normalize_actual_args(self, actual: dict) -> str | None:
-        actual_args = actual.get("arguments", {}).get("file_path")
+        actual_args = actual.get("arguments", {})
         if isinstance(actual_args, dict):
-            return next((actual_args[k] for k in ("file_path", "source_file", "input_file", "path") if k in actual_args), next(iter(actual_args.values()), None))
-        return actual_args or None
+            # Try common file path keys
+            for key in ("file_path", "source_file", "input_file", "path"):
+                if key in actual_args:
+                    val = actual_args[key]
+                    return val if isinstance(val, str) else None
+            # Fall back to first string value
+            for v in actual_args.values():
+                if isinstance(v, str):
+                    return v
+        return None
 
     def _failure_signature(self, expected_apis: list[dict], actual_calls: list[dict]) -> tuple:
         expected_names = tuple(self._normalize_api_name(e.get("api_name", "")) for e in expected_apis)
@@ -48,7 +61,6 @@ class MetaAgent:
         max_examples: int = 12,
         max_total_instruction_chars: int = 1600,
     ) -> dict:
-        """Build a compact failure payload for refinement."""
         grouped = defaultdict(list)
         for f in failures:
             sig = self._failure_signature(f["expected_apis"], f["actual_calls"])
@@ -57,14 +69,12 @@ class MetaAgent:
         sorted_groups = sorted(grouped.items(), key=lambda item: len(item[1]), reverse=True)
 
         selected = []
-        # First pass: 1 per group
         for _, items in sorted_groups:
             if len(selected) >= max_examples:
                 break
             selected.append(items[0])
 
         if len(selected) < max_examples:
-            # Second pass: fill remaining
             for _, items in sorted_groups:
                 for item in items[1:]:
                     if len(selected) >= max_examples:
@@ -235,30 +245,26 @@ class MetaAgent:
     def evaluate(self, actual_tool_calls: list[dict], expected_apis: list[dict]) -> float:
         if not expected_apis:
             return 1.0
+        matched = 0
         for expected in expected_apis:
-            match_found = False
+            exp_name = self._normalize_api_name(expected.get("api_name", ""))
+            exp_args = expected.get("arguments")
+            if isinstance(exp_args, str):
+                try:
+                    exp_args = json.loads(exp_args)
+                except (json.JSONDecodeError, TypeError):
+                    pass
+            exp_args = exp_args or None
+
             for actual in actual_tool_calls:
-                actual_name = (actual.get("api_name") or "").removeprefix("server_")
-                if actual_name != expected["api_name"]:
+                act_name = self._normalize_api_name(actual.get("api_name", ""))
+                if act_name != exp_name:
                     continue
-
-                expected_args = expected.get("arguments")
-                actual_args = self._normalize_actual_args(actual)
-
-                if isinstance(expected_args, str):
-                    try:
-                        expected_args = json.loads(expected_args)
-                    except (json.JSONDecodeError, TypeError):
-                        pass
-
-                expected_args = expected_args or None
-
-                if expected_args == actual_args:
-                    match_found = True
+                act_args = self._normalize_actual_args(actual)
+                if exp_args == act_args:
+                    matched += 1
                     break
-            if not match_found:
-                return 0.0
-        return 1.0
+        return matched / len(expected_apis)
 
     def refine_agent_definition_batch(self, failures_payload: dict, skill_file: str) -> str:
         client = OpenAI(
@@ -276,8 +282,7 @@ class MetaAgent:
             messages=[
                 {
                     "role": "user",
-                    "content": f"""
-Refine this SKILL.md with small incremental edits only.
+                    "content": f"""Refine this SKILL.md with small incremental edits only.
 
 Current SKILL.md:
 {prompt_content}
@@ -298,7 +303,7 @@ Instructions:
 - Add only minimal clarifications to prevent repeating these mistakes
 - Do not rewrite unrelated parts
 - Do not overfit to one example
-- Return only the updated SKILL.md content
+- Return ONLY the raw SKILL.md content with no markdown fences, no preamble, no explanation
 """
                 }
             ],
@@ -306,6 +311,11 @@ Instructions:
         )
 
         refined_content = response.choices[0].message.content
+        # Strip markdown code fences Gemma tends to add
+        refined_content = re.sub(r'^```[^\n]*\n', '', refined_content.strip(), flags=re.MULTILINE)
+        refined_content = re.sub(r'\n```$', '', refined_content.strip(), flags=re.MULTILINE)
+        refined_content = refined_content.strip()
+
         Path(skill_file).write_text(refined_content)
         return refined_content
 
