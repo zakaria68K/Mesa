@@ -109,7 +109,7 @@ class MetaAgent:
         dataset: list[dict],
         threshold: float = 0.5,
         max_iterations: int = 10,
-        log_file: str = "debug_logs/specialization_iterations.txt",
+        log_file: str = "debug_logs/specialization_iterations1.txt",
     ):
         results = [(sample, None, None) for sample in dataset]
 
@@ -265,7 +265,7 @@ class MetaAgent:
             base_url="https://ollama.kher.nl/v1",
             api_key="ollama",
             timeout=120.0,
-            max_retries=1,
+            max_retries=2,
         )
         prompt_content = Path(skill_file).read_text()
         top_patterns = failures_payload.get("pattern_summary", [])[:10]

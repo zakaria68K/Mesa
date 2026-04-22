@@ -55,7 +55,7 @@ async def main():
     skill_generator.generate_patterns()
 
     meta = MetaAgent()
-    specialization_log_file = "debug_logs/specialization_iterations.txt"
+    specialization_log_file = "debug_logs/specialization_iterations1.txt"
 
     print("\n>>> Starting specialization loop...")
     apply_skill, get_skill = meta.specialize_agent(

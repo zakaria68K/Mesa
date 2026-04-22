@@ -9,7 +9,7 @@ from pathlib import Path
 ANSI_RE = re.compile(r'\x1b?\[[\d;]*m')
 SKILL_RE = re.compile(r'[→⚙✦*]\s+[Ss]kill\s+"([^"]+)"')
 TOOL_PERMISSION_RE = re.compile(r'service=permission\s+permission=(modeling_server_\S+)\s+pattern=')
-TOOL_CALL_RE = re.compile(r'[⚙✦*]\s+(modeling_server_\S+)\s+(\{.*\})')
+TOOL_CALL_RE = re.compile(r'[⚙✦*]\s+(modeling_server_\S+)(?:\s+(\{.*\}|Unknown))?')
 
 class GenericModelingAgent:
     def __init__(self, mcp_server_script: str, _prompt: str = None):
@@ -62,7 +62,11 @@ class GenericModelingAgent:
                 continue
 
             name = re.sub(r'^[^_]+_', '', m.group(1), count=1)
-            args = json.loads(m.group(2)) if m.lastindex == 2 else {}
+            raw_args = m.group(2) if m.lastindex and m.lastindex >= 2 else None
+            if raw_args and raw_args != "Unknown":
+                args = json.loads(raw_args)
+            else:
+                args = {}
             args_key = json.dumps(args, sort_keys=True)
 
             existing = next((t for t in tool_calls if t["api_name"] == name and not t["arguments"]), None)
@@ -84,7 +88,7 @@ class GenericModelingAgent:
             env = os.environ.copy()
             env["OPENCODE_CONFIG"] = str(config_path)
 
-            log_path = Path("opencode_logs") / "opencode_6.txt"
+            log_path = Path("opencode_logs") / "opencode_logs.txt"
             log_path.parent.mkdir(exist_ok=True)
 
             try:
