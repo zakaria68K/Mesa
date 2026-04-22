@@ -1,43 +1,13 @@
 {
- "single_tool": [
+    "multi_tool": [
         {
             "level": 1,
-            "pattern": "get, apply",
-            "instruction": "Show me the settings for PNML2XML then apply Mantis2XML to ./atl_zoo/SoftwareQualityControl2MantisBTFile/modelsExamples/MantisExample.xmi.",
+            "pattern": "apply, apply",
+            "instruction": "XML2Ant applies to ./atl_zoo/Ant2Maven/example/build1.xmi before SimpleClass2SimpleRDBMS is applied to ./atl_zoo/SimpleClass2SimpleRDBMS/Sample-SimpleClass.xmi",
             "relevant_apis": [
                 {
-                    "api_name": "list_transformation_PNML2XML_tool",
-                    "arguments": ""
-                },
-                {
-                    "api_name": "apply_Mantis2XML_transformation_tool",
-                    "arguments": "./atl_zoo/SoftwareQualityControl2MantisBTFile/modelsExamples/MantisExample.xmi"
-                }
-            ]
-        },
-        {
-            "level": 1,
-            "pattern": "get, apply",
-            "instruction": "Transform ./atl_zoo/DSLBridge/MetamodelBridge/Models/SimpleExample/DSL2EMF/SimpleExampleMM-KM3.xmi using KM32DSL as soon as we show you the transformation settings of KM32EMF.",
-            "relevant_apis": [
-                {
-                    "api_name": "list_transformation_KM32EMF_tool",
-                    "arguments": ""
-                },
-                {
-                    "api_name": "apply_KM32DSL_transformation_tool",
-                    "arguments": "./atl_zoo/DSLBridge/MetamodelBridge/Models/SimpleExample/DSL2EMF/SimpleExampleMM-KM3.xmi"
-                }
-            ]
-        },
-        {
-            "level": 1,
-            "pattern": "get, apply",
-            "instruction": "Transform ./atl_zoo/SimpleClass2SimpleRDBMS/Sample-SimpleClass.xmi using SimpleClass2SimpleRDBMS as soon as we show you the transformation settings of XML2Ant.",
-            "relevant_apis": [
-                {
-                    "api_name": "list_transformation_XML2Ant_tool",
-                    "arguments": ""
+                    "api_name": "apply_XML2Ant_transformation_tool",
+                    "arguments": "./atl_zoo/Ant2Maven/example/build1.xmi"
                 },
                 {
                     "api_name": "apply_SimpleClass2SimpleRDBMS_transformation_tool",
@@ -47,98 +17,23 @@
         },
         {
             "level": 1,
-            "pattern": "get, get",
-            "instruction": "Compare XML2Ant's settings with the values of SimpleClass2SimpleRDBMS",
-            "relevant_apis": [
-                {
-                    "api_name": "list_transformation_XML2Ant_tool",
-                    "arguments": ""
-                },
-                {
-                    "api_name": "list_transformation_SimpleClass2SimpleRDBMS_tool",
-                    "arguments": ""
-                }
-            ]
-        },
-        {
-            "level": 1,
-            "pattern": "get, get",
-            "instruction": "Compare the configurations of the XML2Ant and SimpleClass2SimpleRDBMS transformations",
-            "relevant_apis": [
-                {
-                    "api_name": "list_transformation_XML2Ant_tool",
-                    "arguments": ""
-                },
-                {
-                    "api_name": "list_transformation_SimpleClass2SimpleRDBMS_tool",
-                    "arguments": ""
-                }
-            ]
-        },
-        {
-            "level": 1,
-            "pattern": "get, get",
-            "instruction": "Obtain the parameters of KM32EMF next to display KM32DSL's settings",
-            "relevant_apis": [
-                {
-                    "api_name": "list_transformation_KM32EMF_tool",
-                    "arguments": ""
-                },
-                {
-                    "api_name": "list_transformation_KM32DSL_tool",
-                    "arguments": ""
-                }
-            ]
-        },
-        {
-            "level": 1,
-            "pattern": "get, get",
-            "instruction": "Obtain the parameters of PNML2XML next to display Mantis2XML's settings",
-            "relevant_apis": [
-                {
-                    "api_name": "list_transformation_PNML2XML_tool",
-                    "arguments": ""
-                },
-                {
-                    "api_name": "list_transformation_Mantis2XML_tool",
-                    "arguments": ""
-                }
-            ]
-        },
-        {
-            "level": 1,
-            "pattern": "get, get",
-            "instruction": "Retrieve the configuration of PNML2XML followed by the settings of Mantis2XML",
-            "relevant_apis": [
-                {
-                    "api_name": "list_transformation_PNML2XML_tool",
-                    "arguments": ""
-                },
-                {
-                    "api_name": "list_transformation_Mantis2XML_tool",
-                    "arguments": ""
-                }
-            ]
-        },
-        {
-            "level": 1,
-            "pattern": "get, get",
-            "instruction": "Show me the settings for XML2Ant then display the configuration for SimpleClass2SimpleRDBMS",
-            "relevant_apis": [
-                {
-                    "api_name": "list_transformation_XML2Ant_tool",
-                    "arguments": ""
-                },
-                {
-                    "api_name": "list_transformation_SimpleClass2SimpleRDBMS_tool",
-                    "arguments": ""
-                }
-            ]
-        },
-        {
-            "level": 2,
             "pattern": "apply, apply",
-            "instruction": "Apply your transformation technique to the KM3 model at ./atl_zoo/KM32EMF/Sample-KM3.xmi to get EMF, then transform the KM3 model at ./atl_zoo/DSLBridge/MetamodelBridge/Models/SimpleExample/DSL2EMF/SimpleExampleMM-KM3.xmi to DSL",
+            "instruction": "Apply PNML2XML to ./atl_zoo/Grafcet2PetriNet/Models/XML2PNML_example.xmi and then apply Mantis2XML to ./atl_zoo/SoftwareQualityControl2MantisBTFile/modelsExamples/MantisExample.xmi.",
+            "relevant_apis": [
+                {
+                    "api_name": "apply_PNML2XML_transformation_tool",
+                    "arguments": "./atl_zoo/Grafcet2PetriNet/Models/XML2PNML_example.xmi"
+                },
+                {
+                    "api_name": "apply_Mantis2XML_transformation_tool",
+                    "arguments": "./atl_zoo/SoftwareQualityControl2MantisBTFile/modelsExamples/MantisExample.xmi"
+                }
+            ]
+        },
+        {
+            "level": 1,
+            "pattern": "apply, apply",
+            "instruction": "Transform ./atl_zoo/KM32EMF/Sample-KM3.xmi using KM32EMF then transform ./atl_zoo/DSLBridge/MetamodelBridge/Models/SimpleExample/DSL2EMF/SimpleExampleMM-KM3.xmi using KM32DSL,",
             "relevant_apis": [
                 {
                     "api_name": "apply_KM32EMF_transformation_tool",
@@ -153,7 +48,7 @@
         {
             "level": 2,
             "pattern": "apply, apply",
-            "instruction": "Transform XML model at ./atl_zoo/Ant2Maven/example/build1.xmi to Ant then transform SimpleClass model at ./atl_zoo/SimpleClass2SimpleRDBMS/Sample-SimpleClass.xmi to SimpleRDBMS",
+            "instruction": "Transform the XML model at ./atl_zoo/Ant2Maven/example/build1.xmi to Ant and subsequently transform the SimpleClass model at ./atl_zoo/SimpleClass2SimpleRDBMS/Sample-SimpleClass.xmi to SimpleRDBMS",
             "relevant_apis": [
                 {
                     "api_name": "apply_XML2Ant_transformation_tool",
@@ -183,37 +78,7 @@
         {
             "level": 2,
             "pattern": "apply, apply",
-            "instruction": "Transform the PNML model at ./atl_zoo/Grafcet2PetriNet/Models/XML2PNML_example.xmi to XML and continue on with transforming the Mantis model at ./atl_zoo/SoftwareQualityControl2MantisBTFile/modelsExamples/MantisExample.xmi to XML",
-            "relevant_apis": [
-                {
-                    "api_name": "apply_PNML2XML_transformation_tool",
-                    "arguments": "./atl_zoo/Grafcet2PetriNet/Models/XML2PNML_example.xmi"
-                },
-                {
-                    "api_name": "apply_Mantis2XML_transformation_tool",
-                    "arguments": "./atl_zoo/SoftwareQualityControl2MantisBTFile/modelsExamples/MantisExample.xmi"
-                }
-            ]
-        },
-        {
-            "level": 2,
-            "pattern": "apply, apply",
-            "instruction": "Transform the PNML model at ./atl_zoo/Grafcet2PetriNet/Models/XML2PNML_example.xmi to XML and simultaneously transform the Mantis model at ./atl_zoo/SoftwareQualityControl2MantisBTFile/modelsExamples/MantisExample.xmi to XML",
-            "relevant_apis": [
-                {
-                    "api_name": "apply_PNML2XML_transformation_tool",
-                    "arguments": "./atl_zoo/Grafcet2PetriNet/Models/XML2PNML_example.xmi"
-                },
-                {
-                    "api_name": "apply_Mantis2XML_transformation_tool",
-                    "arguments": "./atl_zoo/SoftwareQualityControl2MantisBTFile/modelsExamples/MantisExample.xmi"
-                }
-            ]
-        },
-        {
-            "level": 2,
-            "pattern": "apply, apply",
-            "instruction": "Transform the XML model at ./atl_zoo/Ant2Maven/example/build1.xmi to Ant and subsequently transform the SimpleClass model at ./atl_zoo/SimpleClass2SimpleRDBMS/Sample-SimpleClass.xmi to SimpleRDBMS",
+            "instruction": "Transform XML model at ./atl_zoo/Ant2Maven/example/build1.xmi to Ant then transform SimpleClass model at ./atl_zoo/SimpleClass2SimpleRDBMS/Sample-SimpleClass.xmi to SimpleRDBMS",
             "relevant_apis": [
                 {
                     "api_name": "apply_XML2Ant_transformation_tool",
@@ -222,6 +87,126 @@
                 {
                     "api_name": "apply_SimpleClass2SimpleRDBMS_transformation_tool",
                     "arguments": "./atl_zoo/SimpleClass2SimpleRDBMS/Sample-SimpleClass.xmi"
+                }
+            ]
+        },
+        {
+            "level": 3,
+            "pattern": "apply, apply",
+            "instruction": "Execute transformation of the ./atl_zoo/Ant2Maven/example/build1.xmi model into Ant format, then transform the ./atl_zoo/SimpleClass2SimpleRDBMS/Sample-SimpleClass.xmi model into SimpleRDBMS format",
+            "relevant_apis": [
+                {
+                    "api_name": "apply_XML2Ant_transformation_tool",
+                    "arguments": "./atl_zoo/Ant2Maven/example/build1.xmi"
+                },
+                {
+                    "api_name": "apply_SimpleClass2SimpleRDBMS_transformation_tool",
+                    "arguments": "./atl_zoo/SimpleClass2SimpleRDBMS/Sample-SimpleClass.xmi"
+                }
+            ]
+        },
+        {
+            "level": 3,
+            "pattern": "apply, apply",
+            "instruction": "Modify the model at ./atl_zoo/KM32EMF/Sample-KM3.xmi to conform to EMF standards, then modify the model at ./atl_zoo/DSLBridge/MetamodelBridge/Models/SimpleExample/DSL2EMF/SimpleExampleMM-KM3.xmi to conform to DSL standards",
+            "relevant_apis": [
+                {
+                    "api_name": "apply_KM32EMF_transformation_tool",
+                    "arguments": "./atl_zoo/KM32EMF/Sample-KM3.xmi"
+                },
+                {
+                    "api_name": "apply_KM32DSL_transformation_tool",
+                    "arguments": "./atl_zoo/DSLBridge/MetamodelBridge/Models/SimpleExample/DSL2EMF/SimpleExampleMM-KM3.xmi"
+                }
+            ]
+        },
+        {
+            "level": 3,
+            "pattern": "apply, apply",
+            "instruction": "Execute transformation of the ./atl_zoo/Ant2Maven/example/build1.xmi model into Ant format, then transform the ./atl_zoo/SimpleClass2SimpleRDBMS/Sample-SimpleClass.xmi model into SimpleRDBMS format",
+            "relevant_apis": [
+                {
+                    "api_name": "apply_XML2Ant_transformation_tool",
+                    "arguments": "./atl_zoo/Ant2Maven/example/build1.xmi"
+                },
+                {
+                    "api_name": "apply_SimpleClass2SimpleRDBMS_transformation_tool",
+                    "arguments": "./atl_zoo/SimpleClass2SimpleRDBMS/Sample-SimpleClass.xmi"
+                }
+            ]
+        },
+        {
+            "level": 1,
+            "pattern": "apply, get",
+            "instruction": "Apply KM32EMF to ./atl_zoo/KM32EMF/Sample-KM3.xmi, then review the status of KM32DSL",
+            "relevant_apis": [
+                {
+                    "api_name": "apply_KM32EMF_transformation_tool",
+                    "arguments": "./atl_zoo/KM32EMF/Sample-KM3.xmi"
+                },
+                {
+                    "api_name": "list_transformation_KM32DSL_tool",
+                    "arguments": ""
+                }
+            ]
+        },
+        {
+            "level": 1,
+            "pattern": "apply, get",
+            "instruction": "Transform ./atl_zoo/KM32EMF/Sample-KM3.xmi with KM32EMF and once you're done check the KM32DSL config",
+            "relevant_apis": [
+                {
+                    "api_name": "apply_KM32EMF_transformation_tool",
+                    "arguments": "./atl_zoo/KM32EMF/Sample-KM3.xmi"
+                },
+                {
+                    "api_name": "list_transformation_KM32DSL_tool",
+                    "arguments": ""
+                }
+            ]
+        },
+        {
+            "level": 1,
+            "pattern": "apply, get",
+            "instruction": "apply PNML2XML to ./atl_zoo/Grafcet2PetriNet/Models/XML2PNML_example.xmi once then get the configuration for Mantis2XML",
+            "relevant_apis": [
+                {
+                    "api_name": "apply_PNML2XML_transformation_tool",
+                    "arguments": "./atl_zoo/Grafcet2PetriNet/Models/XML2PNML_example.xmi"
+                },
+                {
+                    "api_name": "list_transformation_Mantis2XML_tool",
+                    "arguments": ""
+                }
+            ]
+        },
+        {
+            "level": 2,
+            "pattern": "apply, get",
+            "instruction": "Transforming the PNML model ./atl_zoo/Grafcet2PetriNet/Models/XML2PNML_example.xmi to XML results in a new configuration then compare it with the original transformation that transforms a Mantis into a XML",
+            "relevant_apis": [
+                {
+                    "api_name": "apply_PNML2XML_transformation_tool",
+                    "arguments": "./atl_zoo/Grafcet2PetriNet/Models/XML2PNML_example.xmi"
+                },
+                {
+                    "api_name": "list_transformation_Mantis2XML_tool",
+                    "arguments": ""
+                }
+            ]
+        },
+        {
+            "level": 2,
+            "pattern": "apply, get",
+            "instruction": "Transform the XML model ./atl_zoo/Ant2Maven/example/build1.xmi to Ant then compare the configurations of the transformation that transforms a SimpleClass into a SimpleRDBMS",
+            "relevant_apis": [
+                {
+                    "api_name": "apply_XML2Ant_transformation_tool",
+                    "arguments": "./atl_zoo/Ant2Maven/example/build1.xmi"
+                },
+                {
+                    "api_name": "list_transformation_SimpleClass2SimpleRDBMS_tool",
+                    "arguments": ""
                 }
             ]
         },
@@ -241,24 +226,9 @@
             ]
         },
         {
-            "level": 2,
+            "level": 3,
             "pattern": "apply, get",
-            "instruction": "Transform the PNML model ./atl_zoo/Grafcet2PetriNet/Models/XML2PNML_example.xmi to XML then compare the configurations of the transformation that transforms a Mantis into a XML",
-            "relevant_apis": [
-                {
-                    "api_name": "apply_PNML2XML_transformation_tool",
-                    "arguments": "./atl_zoo/Grafcet2PetriNet/Models/XML2PNML_example.xmi"
-                },
-                {
-                    "api_name": "list_transformation_Mantis2XML_tool",
-                    "arguments": ""
-                }
-            ]
-        },
-        {
-            "level": 2,
-            "pattern": "apply, get",
-            "instruction": "Transform the XML model ./atl_zoo/Ant2Maven/example/build1.xmi to Ant then compare the configurations of the transformation that transforms a SimpleClass into a SimpleRDBMS",
+            "instruction": "Change the ./atl_zoo/Ant2Maven/example/build1.xmi model to conform to Ant model standards, then detail the transformation rules for converting file ./atl_zoo/SimpleClass2SimpleRDBMS/Sample-SimpleClass.xmi to SimpleRDBMS model standards",
             "relevant_apis": [
                 {
                     "api_name": "apply_XML2Ant_transformation_tool",
@@ -271,9 +241,24 @@
             ]
         },
         {
-            "level": 2,
+            "level": 3,
             "pattern": "apply, get",
-            "instruction": "Transform the XML model ./atl_zoo/Ant2Maven/example/build1.xmi to Ant then compare the configurations of the transformation that transforms a SimpleClass into a SimpleRDBMS",
+            "instruction": "Transform the model ./atl_zoo/Grafcet2PetriNet/Models/XML2PNML_example.xmi to a XML model, then show the transformation that would convert file ./atl_zoo/SoftwareQualityControl2MantisBTFile/modelsExamples/MantisExample.xmi to a XML model",
+            "relevant_apis": [
+                {
+                    "api_name": "apply_PNML2XML_transformation_tool",
+                    "arguments": "./atl_zoo/Grafcet2PetriNet/Models/XML2PNML_example.xmi"
+                },
+                {
+                    "api_name": "list_transformation_Mantis2XML_tool",
+                    "arguments": ""
+                }
+            ]
+        },
+        {
+            "level": 3,
+            "pattern": "apply, get",
+            "instruction": "Transform the model ./atl_zoo/Ant2Maven/example/build1.xmi to a Ant model, then show the transformation that would convert file ./atl_zoo/SimpleClass2SimpleRDBMS/Sample-SimpleClass.xmi to a SimpleRDBMS model",
             "relevant_apis": [
                 {
                     "api_name": "apply_XML2Ant_transformation_tool",
@@ -286,39 +271,54 @@
             ]
         },
         {
-            "level": 2,
-            "pattern": "apply, get",
-            "instruction": "Transforming the PNML model ./atl_zoo/Grafcet2PetriNet/Models/XML2PNML_example.xmi to XML results in a new configuration then compare it with the original transformation that transforms a Mantis into a XML",
+            "level": 1,
+            "pattern": "get, apply",
+            "instruction": "Apply KM32DSL to ./atl_zoo/DSLBridge/MetamodelBridge/Models/SimpleExample/DSL2EMF/SimpleExampleMM-KM3.xmi after displaying its configuration, which is KM32EMF.",
             "relevant_apis": [
                 {
-                    "api_name": "apply_PNML2XML_transformation_tool",
-                    "arguments": "./atl_zoo/Grafcet2PetriNet/Models/XML2PNML_example.xmi"
+                    "api_name": "list_transformation_KM32EMF_tool",
+                    "arguments": ""
                 },
                 {
-                    "api_name": "list_transformation_Mantis2XML_tool",
-                    "arguments": ""
+                    "api_name": "apply_KM32DSL_transformation_tool",
+                    "arguments": "./atl_zoo/DSLBridge/MetamodelBridge/Models/SimpleExample/DSL2EMF/SimpleExampleMM-KM3.xmi"
                 }
             ]
         },
         {
-            "level": 2,
-            "pattern": "apply, get",
-            "instruction": "Transforming the PNML model ./atl_zoo/Grafcet2PetriNet/Models/XML2PNML_example.xmi to XML results in a new configuration then compare it with the original transformation that transforms a Mantis into a XML",
+            "level": 1,
+            "pattern": "get, apply",
+            "instruction": "Transform ./atl_zoo/DSLBridge/MetamodelBridge/Models/SimpleExample/DSL2EMF/SimpleExampleMM-KM3.xmi using KM32DSL as soon as we show you the transformation settings of KM32EMF.",
             "relevant_apis": [
                 {
-                    "api_name": "apply_PNML2XML_transformation_tool",
-                    "arguments": "./atl_zoo/Grafcet2PetriNet/Models/XML2PNML_example.xmi"
+                    "api_name": "list_transformation_KM32EMF_tool",
+                    "arguments": ""
                 },
                 {
-                    "api_name": "list_transformation_Mantis2XML_tool",
+                    "api_name": "apply_KM32DSL_transformation_tool",
+                    "arguments": "./atl_zoo/DSLBridge/MetamodelBridge/Models/SimpleExample/DSL2EMF/SimpleExampleMM-KM3.xmi"
+                }
+            ]
+        },
+        {
+            "level": 1,
+            "pattern": "get, apply",
+            "instruction": "After showing us the details of KM32EMF, transform ./atl_zoo/DSLBridge/MetamodelBridge/Models/SimpleExample/DSL2EMF/SimpleExampleMM-KM3.xmi with KM32DSL.",
+            "relevant_apis": [
+                {
+                    "api_name": "list_transformation_KM32EMF_tool",
                     "arguments": ""
+                },
+                {
+                    "api_name": "apply_KM32DSL_transformation_tool",
+                    "arguments": "./atl_zoo/DSLBridge/MetamodelBridge/Models/SimpleExample/DSL2EMF/SimpleExampleMM-KM3.xmi"
                 }
             ]
         },
         {
             "level": 2,
             "pattern": "get, apply",
-            "instruction": "After I have your confirmation, show me the configuration that enables the transformation of KM3 into EMF and then apply this to transform ./atl_zoo/DSLBridge/MetamodelBridge/Models/SimpleExample/DSL2EMF/SimpleExampleMM-KM3.xmi from this model KM3 to a DSL model",
+            "instruction": "To complete the task, first get the required configuration, then apply it to transform a KM3 into a EMF model once, after which you can transform ./atl_zoo/DSLBridge/MetamodelBridge/Models/SimpleExample/DSL2EMF/SimpleExampleMM-KM3.xmi from this model KM3 to a DSL model",
             "relevant_apis": [
                 {
                     "api_name": "list_transformation_KM32EMF_tool",
@@ -361,9 +361,9 @@
             ]
         },
         {
-            "level": 2,
+            "level": 3,
             "pattern": "get, apply",
-            "instruction": "Apply these settings once you have displayed them, show me the required configuration for transforming XML into Ant and then apply this to transform ./atl_zoo/SimpleClass2SimpleRDBMS/Sample-SimpleClass.xmi from this model SimpleClass to a SimpleRDBMS model",
+            "instruction": "Show the mapping rules used to transform file ./atl_zoo/Ant2Maven/example/build1.xmi to Ant model, then apply transformation to the model at ./atl_zoo/SimpleClass2SimpleRDBMS/Sample-SimpleClass.xmi to create a SimpleRDBMS model",
             "relevant_apis": [
                 {
                     "api_name": "list_transformation_XML2Ant_tool",
@@ -376,9 +376,9 @@
             ]
         },
         {
-            "level": 2,
+            "level": 3,
             "pattern": "get, apply",
-            "instruction": "To complete the task, first get the required configuration, then apply it to transform a KM3 into a EMF model once, after which you can transform ./atl_zoo/DSLBridge/MetamodelBridge/Models/SimpleExample/DSL2EMF/SimpleExampleMM-KM3.xmi from this model KM3 to a DSL model",
+            "instruction": "Reveal the transformation that changes the file ./atl_zoo/KM32EMF/Sample-KM3.xmi to EMF model format, then convert the model ./atl_zoo/DSLBridge/MetamodelBridge/Models/SimpleExample/DSL2EMF/SimpleExampleMM-KM3.xmi to DSL model format",
             "relevant_apis": [
                 {
                     "api_name": "list_transformation_KM32EMF_tool",
@@ -387,6 +387,66 @@
                 {
                     "api_name": "apply_KM32DSL_transformation_tool",
                     "arguments": "./atl_zoo/DSLBridge/MetamodelBridge/Models/SimpleExample/DSL2EMF/SimpleExampleMM-KM3.xmi"
+                }
+            ]
+        },
+        {
+            "level": 3,
+            "pattern": "get, apply",
+            "instruction": "Detail the transformation steps that change file ./atl_zoo/KM32EMF/Sample-KM3.xmi to EMF model, then transform model ./atl_zoo/DSLBridge/MetamodelBridge/Models/SimpleExample/DSL2EMF/SimpleExampleMM-KM3.xmi to DSL model",
+            "relevant_apis": [
+                {
+                    "api_name": "list_transformation_KM32EMF_tool",
+                    "arguments": ""
+                },
+                {
+                    "api_name": "apply_KM32DSL_transformation_tool",
+                    "arguments": "./atl_zoo/DSLBridge/MetamodelBridge/Models/SimpleExample/DSL2EMF/SimpleExampleMM-KM3.xmi"
+                }
+            ]
+        },
+        {
+            "level": 1,
+            "pattern": "get, get",
+            "instruction": "Obtain the parameters of PNML2XML next to display Mantis2XML's settings",
+            "relevant_apis": [
+                {
+                    "api_name": "list_transformation_PNML2XML_tool",
+                    "arguments": ""
+                },
+                {
+                    "api_name": "list_transformation_Mantis2XML_tool",
+                    "arguments": ""
+                }
+            ]
+        },
+        {
+            "level": 1,
+            "pattern": "get, get",
+            "instruction": "Retrieve the configuration of PNML2XML followed by the settings of Mantis2XML",
+            "relevant_apis": [
+                {
+                    "api_name": "list_transformation_PNML2XML_tool",
+                    "arguments": ""
+                },
+                {
+                    "api_name": "list_transformation_Mantis2XML_tool",
+                    "arguments": ""
+                }
+            ]
+        },
+        {
+            "level": 1,
+            "pattern": "get, get",
+            "instruction": "Obtain the parameters of KM32EMF next to display KM32DSL's settings",
+            "relevant_apis": [
+                {
+                    "api_name": "list_transformation_KM32EMF_tool",
+                    "arguments": ""
+                },
+                {
+                    "api_name": "list_transformation_KM32DSL_tool",
+                    "arguments": ""
                 }
             ]
         },
@@ -436,9 +496,9 @@
             ]
         },
         {
-            "level": 2,
+            "level": 3,
             "pattern": "get, get",
-            "instruction": "Show the configuration settings of the transformation that converts a KM3 to a EMF and then show me the settings for converting a KM3 to a DSL",
+            "instruction": "Present the transformation that converts file ./atl_zoo/KM32EMF/Sample-KM3.xmi to a EMF model, then present the transformation that converts file ./atl_zoo/DSLBridge/MetamodelBridge/Models/SimpleExample/DSL2EMF/SimpleExampleMM-KM3.xmi to a DSL model",
             "relevant_apis": [
                 {
                     "api_name": "list_transformation_KM32EMF_tool",
@@ -451,249 +511,9 @@
             ]
         },
         {
-            "level": 2,
-            "pattern": "get, get",
-            "instruction": "Show the configuration settings of the transformation that transforms a PNML into a XML and then display the settings for converting a Mantis to a XML",
-            "relevant_apis": [
-                {
-                    "api_name": "list_transformation_PNML2XML_tool",
-                    "arguments": ""
-                },
-                {
-                    "api_name": "list_transformation_Mantis2XML_tool",
-                    "arguments": ""
-                }
-            ]
-        },
-        {
-            "level": 3,
-            "pattern": "apply, apply",
-            "instruction": "Convert the existing model at ./atl_zoo/Ant2Maven/example/build1.xmi into the Ant model type, then convert the existing model at ./atl_zoo/SimpleClass2SimpleRDBMS/Sample-SimpleClass.xmi into the SimpleRDBMS model type",
-            "relevant_apis": [
-                {
-                    "api_name": "apply_XML2Ant_transformation_tool",
-                    "arguments": "./atl_zoo/Ant2Maven/example/build1.xmi"
-                },
-                {
-                    "api_name": "apply_SimpleClass2SimpleRDBMS_transformation_tool",
-                    "arguments": "./atl_zoo/SimpleClass2SimpleRDBMS/Sample-SimpleClass.xmi"
-                }
-            ]
-        },
-        {
-            "level": 3,
-            "pattern": "apply, apply",
-            "instruction": "Execute transformation of the ./atl_zoo/Ant2Maven/example/build1.xmi model into Ant format, then transform the ./atl_zoo/SimpleClass2SimpleRDBMS/Sample-SimpleClass.xmi model into SimpleRDBMS format",
-            "relevant_apis": [
-                {
-                    "api_name": "apply_XML2Ant_transformation_tool",
-                    "arguments": "./atl_zoo/Ant2Maven/example/build1.xmi"
-                },
-                {
-                    "api_name": "apply_SimpleClass2SimpleRDBMS_transformation_tool",
-                    "arguments": "./atl_zoo/SimpleClass2SimpleRDBMS/Sample-SimpleClass.xmi"
-                }
-            ]
-        },
-        {
-            "level": 3,
-            "pattern": "apply, apply",
-            "instruction": "Execute transformation of the ./atl_zoo/Ant2Maven/example/build1.xmi model into Ant format, then transform the ./atl_zoo/SimpleClass2SimpleRDBMS/Sample-SimpleClass.xmi model into SimpleRDBMS format",
-            "relevant_apis": [
-                {
-                    "api_name": "apply_XML2Ant_transformation_tool",
-                    "arguments": "./atl_zoo/Ant2Maven/example/build1.xmi"
-                },
-                {
-                    "api_name": "apply_SimpleClass2SimpleRDBMS_transformation_tool",
-                    "arguments": "./atl_zoo/SimpleClass2SimpleRDBMS/Sample-SimpleClass.xmi"
-                }
-            ]
-        },
-        {
-            "level": 3,
-            "pattern": "apply, apply",
-            "instruction": "Modify the model at ./atl_zoo/Ant2Maven/example/build1.xmi to conform to Ant standards, then modify the model at ./atl_zoo/SimpleClass2SimpleRDBMS/Sample-SimpleClass.xmi to conform to SimpleRDBMS standards",
-            "relevant_apis": [
-                {
-                    "api_name": "apply_XML2Ant_transformation_tool",
-                    "arguments": "./atl_zoo/Ant2Maven/example/build1.xmi"
-                },
-                {
-                    "api_name": "apply_SimpleClass2SimpleRDBMS_transformation_tool",
-                    "arguments": "./atl_zoo/SimpleClass2SimpleRDBMS/Sample-SimpleClass.xmi"
-                }
-            ]
-        },
-        {
-            "level": 3,
-            "pattern": "apply, apply",
-            "instruction": "Modify the model at ./atl_zoo/KM32EMF/Sample-KM3.xmi to conform to EMF standards, then modify the model at ./atl_zoo/DSLBridge/MetamodelBridge/Models/SimpleExample/DSL2EMF/SimpleExampleMM-KM3.xmi to conform to DSL standards",
-            "relevant_apis": [
-                {
-                    "api_name": "apply_KM32EMF_transformation_tool",
-                    "arguments": "./atl_zoo/KM32EMF/Sample-KM3.xmi"
-                },
-                {
-                    "api_name": "apply_KM32DSL_transformation_tool",
-                    "arguments": "./atl_zoo/DSLBridge/MetamodelBridge/Models/SimpleExample/DSL2EMF/SimpleExampleMM-KM3.xmi"
-                }
-            ]
-        },
-        {
-            "level": 3,
-            "pattern": "apply, get",
-            "instruction": "Change the ./atl_zoo/Ant2Maven/example/build1.xmi model to conform to Ant model standards, then detail the transformation rules for converting file ./atl_zoo/SimpleClass2SimpleRDBMS/Sample-SimpleClass.xmi to SimpleRDBMS model standards",
-            "relevant_apis": [
-                {
-                    "api_name": "apply_XML2Ant_transformation_tool",
-                    "arguments": "./atl_zoo/Ant2Maven/example/build1.xmi"
-                },
-                {
-                    "api_name": "list_transformation_SimpleClass2SimpleRDBMS_tool",
-                    "arguments": ""
-                }
-            ]
-        },
-        {
-            "level": 3,
-            "pattern": "apply, get",
-            "instruction": "Change the ./atl_zoo/Ant2Maven/example/build1.xmi model to conform to Ant model standards, then detail the transformation rules for converting file ./atl_zoo/SimpleClass2SimpleRDBMS/Sample-SimpleClass.xmi to SimpleRDBMS model standards",
-            "relevant_apis": [
-                {
-                    "api_name": "apply_XML2Ant_transformation_tool",
-                    "arguments": "./atl_zoo/Ant2Maven/example/build1.xmi"
-                },
-                {
-                    "api_name": "list_transformation_SimpleClass2SimpleRDBMS_tool",
-                    "arguments": ""
-                }
-            ]
-        },
-        {
-            "level": 3,
-            "pattern": "apply, get",
-            "instruction": "Modify the model at ./atl_zoo/KM32EMF/Sample-KM3.xmi to create a EMF model, then explain the transformation that would modify file ./atl_zoo/DSLBridge/MetamodelBridge/Models/SimpleExample/DSL2EMF/SimpleExampleMM-KM3.xmi to create a DSL model",
-            "relevant_apis": [
-                {
-                    "api_name": "apply_KM32EMF_transformation_tool",
-                    "arguments": "./atl_zoo/KM32EMF/Sample-KM3.xmi"
-                },
-                {
-                    "api_name": "list_transformation_KM32DSL_tool",
-                    "arguments": ""
-                }
-            ]
-        },
-        {
-            "level": 3,
-            "pattern": "apply, get",
-            "instruction": "Transform the model ./atl_zoo/Ant2Maven/example/build1.xmi to a Ant model, then show the transformation that would convert file ./atl_zoo/SimpleClass2SimpleRDBMS/Sample-SimpleClass.xmi to a SimpleRDBMS model",
-            "relevant_apis": [
-                {
-                    "api_name": "apply_XML2Ant_transformation_tool",
-                    "arguments": "./atl_zoo/Ant2Maven/example/build1.xmi"
-                },
-                {
-                    "api_name": "list_transformation_SimpleClass2SimpleRDBMS_tool",
-                    "arguments": ""
-                }
-            ]
-        },
-        {
-            "level": 3,
-            "pattern": "apply, get",
-            "instruction": "Transform the model ./atl_zoo/Grafcet2PetriNet/Models/XML2PNML_example.xmi to a XML model, then show the transformation that would convert file ./atl_zoo/SoftwareQualityControl2MantisBTFile/modelsExamples/MantisExample.xmi to a XML model",
-            "relevant_apis": [
-                {
-                    "api_name": "apply_PNML2XML_transformation_tool",
-                    "arguments": "./atl_zoo/Grafcet2PetriNet/Models/XML2PNML_example.xmi"
-                },
-                {
-                    "api_name": "list_transformation_Mantis2XML_tool",
-                    "arguments": ""
-                }
-            ]
-        },
-        {
-            "level": 3,
-            "pattern": "get, apply",
-            "instruction": "Detail the transformation steps that change file ./atl_zoo/KM32EMF/Sample-KM3.xmi to EMF model, then transform model ./atl_zoo/DSLBridge/MetamodelBridge/Models/SimpleExample/DSL2EMF/SimpleExampleMM-KM3.xmi to DSL model",
-            "relevant_apis": [
-                {
-                    "api_name": "list_transformation_KM32EMF_tool",
-                    "arguments": ""
-                },
-                {
-                    "api_name": "apply_KM32DSL_transformation_tool",
-                    "arguments": "./atl_zoo/DSLBridge/MetamodelBridge/Models/SimpleExample/DSL2EMF/SimpleExampleMM-KM3.xmi"
-                }
-            ]
-        },
-        {
-            "level": 3,
-            "pattern": "get, apply",
-            "instruction": "Exhibit the transformation rules that convert file ./atl_zoo/Grafcet2PetriNet/Models/XML2PNML_example.xmi to XML model, then execute the transformation of model ./atl_zoo/SoftwareQualityControl2MantisBTFile/modelsExamples/MantisExample.xmi to XML model",
-            "relevant_apis": [
-                {
-                    "api_name": "list_transformation_PNML2XML_tool",
-                    "arguments": ""
-                },
-                {
-                    "api_name": "apply_Mantis2XML_transformation_tool",
-                    "arguments": "./atl_zoo/SoftwareQualityControl2MantisBTFile/modelsExamples/MantisExample.xmi"
-                }
-            ]
-        },
-        {
-            "level": 3,
-            "pattern": "get, apply",
-            "instruction": "Provide the transformation that maps file ./atl_zoo/Grafcet2PetriNet/Models/XML2PNML_example.xmi to a XML model, then perform the transformation of model ./atl_zoo/SoftwareQualityControl2MantisBTFile/modelsExamples/MantisExample.xmi to a XML model",
-            "relevant_apis": [
-                {
-                    "api_name": "list_transformation_PNML2XML_tool",
-                    "arguments": ""
-                },
-                {
-                    "api_name": "apply_Mantis2XML_transformation_tool",
-                    "arguments": "./atl_zoo/SoftwareQualityControl2MantisBTFile/modelsExamples/MantisExample.xmi"
-                }
-            ]
-        },
-        {
-            "level": 3,
-            "pattern": "get, apply",
-            "instruction": "Reveal the transformation that changes the file ./atl_zoo/KM32EMF/Sample-KM3.xmi to EMF model format, then convert the model ./atl_zoo/DSLBridge/MetamodelBridge/Models/SimpleExample/DSL2EMF/SimpleExampleMM-KM3.xmi to DSL model format",
-            "relevant_apis": [
-                {
-                    "api_name": "list_transformation_KM32EMF_tool",
-                    "arguments": ""
-                },
-                {
-                    "api_name": "apply_KM32DSL_transformation_tool",
-                    "arguments": "./atl_zoo/DSLBridge/MetamodelBridge/Models/SimpleExample/DSL2EMF/SimpleExampleMM-KM3.xmi"
-                }
-            ]
-        },
-        {
-            "level": 3,
-            "pattern": "get, apply",
-            "instruction": "Show the mapping rules used to transform file ./atl_zoo/Ant2Maven/example/build1.xmi to Ant model, then apply transformation to the model at ./atl_zoo/SimpleClass2SimpleRDBMS/Sample-SimpleClass.xmi to create a SimpleRDBMS model",
-            "relevant_apis": [
-                {
-                    "api_name": "list_transformation_XML2Ant_tool",
-                    "arguments": ""
-                },
-                {
-                    "api_name": "apply_SimpleClass2SimpleRDBMS_transformation_tool",
-                    "arguments": "./atl_zoo/SimpleClass2SimpleRDBMS/Sample-SimpleClass.xmi"
-                }
-            ]
-        },
-        {
             "level": 3,
             "pattern": "get, get",
-            "instruction": "Detail the transformation process for file ./atl_zoo/Ant2Maven/example/build1.xmi to create a Ant model, then detail the transformation process for file ./atl_zoo/SimpleClass2SimpleRDBMS/Sample-SimpleClass.xmi to create a SimpleRDBMS model",
+            "instruction": "Illustrate the conversion method from file ./atl_zoo/Ant2Maven/example/build1.xmi to Ant model, then illustrate the conversion method from file ./atl_zoo/SimpleClass2SimpleRDBMS/Sample-SimpleClass.xmi to SimpleRDBMS model",
             "relevant_apis": [
                 {
                     "api_name": "list_transformation_XML2Ant_tool",
@@ -719,16 +539,135 @@
                     "arguments": ""
                 }
             ]
+        }
+    ],
+    "single_tool": [
+        {
+            "level": 1,
+            "pattern": "apply",
+            "instruction": "Convert the structure of ./atl_zoo/SimpleClass2SimpleRDBMS/Sample-SimpleClass.xmi using SimpleClass2SimpleRDBMS technique.",
+            "relevant_apis": [
+                {
+                    "api_name": "apply_SimpleClass2SimpleRDBMS_transformation_tool",
+                    "arguments": "./atl_zoo/SimpleClass2SimpleRDBMS/Sample-SimpleClass.xmi"
+                }
+            ]
+        },
+        {
+            "level": 1,
+            "pattern": "apply",
+            "instruction": "Run XML2Ant through ./atl_zoo/Ant2Maven/example/build1.xmi to produce results.",
+            "relevant_apis": [
+                {
+                    "api_name": "apply_XML2Ant_transformation_tool",
+                    "arguments": "./atl_zoo/Ant2Maven/example/build1.xmi"
+                }
+            ]
+        },
+        {
+            "level": 1,
+            "pattern": "apply",
+            "instruction": "Execute SimpleClass2SimpleRDBMS from ./atl_zoo/SimpleClass2SimpleRDBMS/Sample-SimpleClass.xmi and capture output.",
+            "relevant_apis": [
+                {
+                    "api_name": "apply_SimpleClass2SimpleRDBMS_transformation_tool",
+                    "arguments": "./atl_zoo/SimpleClass2SimpleRDBMS/Sample-SimpleClass.xmi"
+                }
+            ]
+        },
+        {
+            "level": 2,
+            "pattern": "apply",
+            "instruction": "Change the format of the PNML model found at ./atl_zoo/Grafcet2PetriNet/Models/XML2PNML_example.xmi to match the structure of the XML model.",
+            "relevant_apis": [
+                {
+                    "api_name": "apply_PNML2XML_transformation_tool",
+                    "arguments": "./atl_zoo/Grafcet2PetriNet/Models/XML2PNML_example.xmi"
+                }
+            ]
+        },
+        {
+            "level": 2,
+            "pattern": "apply",
+            "instruction": "Transform the data within the SimpleClass model located at ./atl_zoo/SimpleClass2SimpleRDBMS/Sample-SimpleClass.xmi and convert it to a SimpleRDBMS format.",
+            "relevant_apis": [
+                {
+                    "api_name": "apply_SimpleClass2SimpleRDBMS_transformation_tool",
+                    "arguments": "./atl_zoo/SimpleClass2SimpleRDBMS/Sample-SimpleClass.xmi"
+                }
+            ]
+        },
+        {
+            "level": 2,
+            "pattern": "apply",
+            "instruction": "Morph the SimpleClass model present in ./atl_zoo/SimpleClass2SimpleRDBMS/Sample-SimpleClass.xmi to align with the requirements of the SimpleRDBMS model.",
+            "relevant_apis": [
+                {
+                    "api_name": "apply_SimpleClass2SimpleRDBMS_transformation_tool",
+                    "arguments": "./atl_zoo/SimpleClass2SimpleRDBMS/Sample-SimpleClass.xmi"
+                }
+            ]
         },
         {
             "level": 3,
-            "pattern": "get, get",
-            "instruction": "Illustrate the conversion method from file ./atl_zoo/Ant2Maven/example/build1.xmi to Ant model, then illustrate the conversion method from file ./atl_zoo/SimpleClass2SimpleRDBMS/Sample-SimpleClass.xmi to SimpleRDBMS model",
+            "pattern": "apply",
+            "instruction": "Change the content of the model situated at ./atl_zoo/SoftwareQualityControl2MantisBTFile/modelsExamples/MantisExample.xmi into a new form, represented as XML",
             "relevant_apis": [
                 {
-                    "api_name": "list_transformation_XML2Ant_tool",
+                    "api_name": "apply_Mantis2XML_transformation_tool",
+                    "arguments": "./atl_zoo/SoftwareQualityControl2MantisBTFile/modelsExamples/MantisExample.xmi"
+                }
+            ]
+        },
+        {
+            "level": 3,
+            "pattern": "apply",
+            "instruction": "Update the configuration of the metamodel associated with ./atl_zoo/Grafcet2PetriNet/Models/XML2PNML_example.xmi to be equal to XML",
+            "relevant_apis": [
+                {
+                    "api_name": "apply_PNML2XML_transformation_tool",
+                    "arguments": "./atl_zoo/Grafcet2PetriNet/Models/XML2PNML_example.xmi"
+                }
+            ]
+        },
+        {
+            "level": 1,
+            "pattern": "get",
+            "instruction": "Get the detailed configuration parameters for the KM32EMF transformation.",
+            "relevant_apis": [
+                {
+                    "api_name": "list_transformation_KM32EMF_tool",
                     "arguments": ""
-                },
+                }
+            ]
+        },
+        {
+            "level": 1,
+            "pattern": "get",
+            "instruction": "Show me the full configuration specifications for the SimpleClass2SimpleRDBMS transformation.",
+            "relevant_apis": [
+                {
+                    "api_name": "list_transformation_SimpleClass2SimpleRDBMS_tool",
+                    "arguments": ""
+                }
+            ]
+        },
+        {
+            "level": 2,
+            "pattern": "get",
+            "instruction": "Explain the step-by-step process for configuring a Mantis model to be transformed into a XML model",
+            "relevant_apis": [
+                {
+                    "api_name": "list_transformation_Mantis2XML_tool",
+                    "arguments": ""
+                }
+            ]
+        },
+        {
+            "level": 2,
+            "pattern": "get",
+            "instruction": "Describe the settings needed to transform SimpleClass into an SimpleRDBMS model",
+            "relevant_apis": [
                 {
                     "api_name": "list_transformation_SimpleClass2SimpleRDBMS_tool",
                     "arguments": ""
@@ -737,30 +676,22 @@
         },
         {
             "level": 3,
-            "pattern": "get, get",
-            "instruction": "Present the transformation that converts file ./atl_zoo/KM32EMF/Sample-KM3.xmi to a EMF model, then present the transformation that converts file ./atl_zoo/DSLBridge/MetamodelBridge/Models/SimpleExample/DSL2EMF/SimpleExampleMM-KM3.xmi to a DSL model",
+            "pattern": "get",
+            "instruction": "Reveal the transformation rules for converting file ./atl_zoo/KM32EMF/Sample-KM3.xmi to EMF model format",
             "relevant_apis": [
                 {
                     "api_name": "list_transformation_KM32EMF_tool",
-                    "arguments": ""
-                },
-                {
-                    "api_name": "list_transformation_KM32DSL_tool",
                     "arguments": ""
                 }
             ]
         },
         {
             "level": 3,
-            "pattern": "get, get",
-            "instruction": "Provide the transformation specifications that change file ./atl_zoo/Grafcet2PetriNet/Models/XML2PNML_example.xmi to a XML model, then provide the transformation specifications that change file ./atl_zoo/SoftwareQualityControl2MantisBTFile/modelsExamples/MantisExample.xmi to a XML model",
+            "pattern": "get",
+            "instruction": "Depict the transformation operation that converts file ./atl_zoo/SimpleClass2SimpleRDBMS/Sample-SimpleClass.xmi to SimpleRDBMS model",
             "relevant_apis": [
                 {
-                    "api_name": "list_transformation_PNML2XML_tool",
-                    "arguments": ""
-                },
-                {
-                    "api_name": "list_transformation_Mantis2XML_tool",
+                    "api_name": "list_transformation_SimpleClass2SimpleRDBMS_tool",
                     "arguments": ""
                 }
             ]

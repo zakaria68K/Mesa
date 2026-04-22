@@ -264,6 +264,8 @@ class MetaAgent:
         client = OpenAI(
             base_url="https://ollama.kher.nl/v1",
             api_key="ollama",
+            timeout=120.0,
+            max_retries=1,
         )
         prompt_content = Path(skill_file).read_text()
         top_patterns = failures_payload.get("pattern_summary", [])[:10]
