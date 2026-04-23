@@ -6,6 +6,10 @@ from datetime import datetime
 from openai import OpenAI
 from modeling_agents.generic_agent import GenericModelingAgent
 
+# The directory that contains .opencode/skills/ and the atl_zoo/ data.
+# Adjust this if your layout differs.
+PROJECT_ROOT = str(Path(__file__).resolve().parent.parent)
+
 
 class MetaAgent:
 
@@ -16,7 +20,10 @@ class MetaAgent:
         self.apply_skill = apply_skill
         self.get_skill = get_skill
         self.iteration = iteration
-        self.agent = agent_class(mcp_server_script="mcp_servers/atl/atl_server.py")
+        self.agent = agent_class(
+            mcp_server_script="mcp_servers/atl/atl_server.py",
+            project_root=PROJECT_ROOT,
+        )
 
     def _append_log(self, log_file: str, line: str) -> None:
         log_path = Path(log_file)
@@ -25,9 +32,9 @@ class MetaAgent:
             f.write(line + "\n")
 
     def _skill_for(self, expected_apis: list[dict]) -> str:
-        if any("apply" in e["api_name"] for e in expected_apis):
-            return self.apply_skill
-        return self.get_skill
+        if any("list" in e["api_name"] for e in expected_apis):
+            return self.get_skill
+        return self.apply_skill
 
     def _normalize_api_name(self, name: str) -> str:
         name = name or ""
@@ -39,12 +46,10 @@ class MetaAgent:
     def _normalize_actual_args(self, actual: dict) -> str | None:
         actual_args = actual.get("arguments", {})
         if isinstance(actual_args, dict):
-            # Try common file path keys
             for key in ("file_path", "source_file", "input_file", "path"):
                 if key in actual_args:
                     val = actual_args[key]
                     return val if isinstance(val, str) else None
-            # Fall back to first string value
             for v in actual_args.values():
                 if isinstance(v, str):
                     return v
@@ -122,6 +127,7 @@ class MetaAgent:
         log_file: str = "debug_logs/specialization_iterations1.txt",
     ):
         results = [(sample, None, None) for sample in dataset]
+        prev_avg_score = None
 
         self._append_log(log_file, "=" * 80)
         self._append_log(
@@ -137,7 +143,7 @@ class MetaAgent:
             self._append_log(log_file, "-" * 80)
             self._append_log(log_file, f"Iteration {self.iteration} started")
 
-            for i, (sample, _, actual_calls) in enumerate(results):
+            for i, (sample, _, _prev_calls) in enumerate(results):
                 expected_apis = sample["relevant_apis"]
                 skill_file = self._skill_for(expected_apis)
                 _, actual_calls = self.agent.run(sample["instruction"], skill_file)
@@ -206,23 +212,39 @@ class MetaAgent:
                 self._append_log(
                     log_file,
                     (
-                        f"Iteration {self.iteration} | refining skill={Path(skill_file).name} | "
+                        f"Iteration {self.iteration} | refining skill={skill_file} | "
                         f"failures={payload['total_failures']} | patterns={payload['distinct_patterns']} | "
                         f"examples_used={len(payload['examples'])}"
                     ),
                 )
+                backup = Path(skill_file).read_text()
+
+                # If score already regressed vs previous iteration, skip refinement
+                if prev_avg_score is not None and avg_score < prev_avg_score - 0.05:
+                    self._append_log(
+                        log_file,
+                        (
+                            f"Iteration {self.iteration} | skipping refinement for {skill_file}: "
+                            f"score regressed ({prev_avg_score:.2f} -> {avg_score:.2f}), restoring backup"
+                        ),
+                    )
+                    Path(skill_file).write_text(backup)
+                    continue
+
                 try:
                     self.refine_agent_definition_batch(
                         failures_payload=payload,
                         skill_file=skill_file,
+                        backup=backup,
                     )
                     refined_in_iteration += 1
                 except Exception as e:
+                    Path(skill_file).write_text(backup)
                     self._append_log(
                         log_file,
                         (
                             f"Iteration {self.iteration} refinement error | "
-                            f"skill={Path(skill_file).name} | error={e}"
+                            f"skill={skill_file} | error={e} | backup restored"
                         ),
                     )
                     raise
@@ -232,6 +254,7 @@ class MetaAgent:
                 f"Iteration {self.iteration} refinement_count={refined_in_iteration}",
             )
 
+            prev_avg_score = avg_score
             self.iteration += 1
 
         self._append_log(
@@ -266,7 +289,7 @@ class MetaAgent:
                     break
         return matched / len(expected_apis)
 
-    def refine_agent_definition_batch(self, failures_payload: dict, skill_file: str) -> str:
+    def refine_agent_definition_batch(self, failures_payload: dict, skill_file: str, backup: str = None) -> str:
         client = OpenAI(
             base_url="https://ollama.kher.nl/v1",
             api_key="ollama",
@@ -277,37 +300,55 @@ class MetaAgent:
         top_patterns = failures_payload.get("pattern_summary", [])[:10]
         examples = failures_payload.get("examples", [])[:8]
 
+        # Collect tool names that were expected but are completely absent from the skill text.
+        # These are the primary cause of failures: the agent cannot call a tool it doesn't know exists.
+        missing_tools = sorted({
+            name
+            for p in top_patterns
+            for name in p["expected_tools"]
+            if name and name not in prompt_content
+        })
+
+        # Compact example list: instruction + expected tool name + actual tool called
+        compact_examples = [
+            {
+                "instruction": e["instruction"],
+                "expected": [self._normalize_api_name(a["api_name"]) for a in e["expected_apis"]],
+                "actual_called": [self._normalize_api_name(a["api_name"]) for a in e["actual_calls"]],
+            }
+            for e in examples
+        ]
+
         response = client.chat.completions.create(
             model="gemma4:26b",
             messages=[
                 {
                     "role": "user",
-                    "content": f"""Refine this SKILL.md with small incremental edits only.
+                    "content": f"""You must update this SKILL.md by adding missing tool entries.
 
 Current SKILL.md:
 {prompt_content}
 
-Score/Error context:
-- failing_items: {failures_payload['total_failures']}
-- distinct_error_patterns: {failures_payload['distinct_patterns']}
+The agent failed because it tried to perform tasks that required tools not listed in the skill.
 
-Top tool-mismatch patterns:
-{json.dumps(top_patterns, ensure_ascii=False, indent=2)}
+Tools that are MISSING from the skill and caused failures ({len(missing_tools)} tools):
+{json.dumps(missing_tools, ensure_ascii=False, indent=2)}
 
-Representative failing examples:
-{json.dumps(examples, ensure_ascii=False, indent=2)}
+Failing examples showing what tool was needed vs what was called:
+{json.dumps(compact_examples, ensure_ascii=False, indent=2)}
 
 Instructions:
-- Keep the same SKILL.md structure and section order
-- Keep the frontmatter (---) unchanged
+- Keep the frontmatter (---) and all existing content EXACTLY unchanged
+- For each tool in the missing tools list, append one bullet under ## Available MCP Tools:
+  `- \`<tool_name>_tool\` — [infer a one-line description from the tool name]`
+- Do NOT remove, reorder, or rewrite any existing tool entries
+- Do NOT add commentary, headers, or explanation outside the tool list
 - Add only minimal clarifications to prevent repeating these mistakes
-- Do not rewrite unrelated parts
-- Do not overfit to one example
-- Return ONLY the raw SKILL.md content with no markdown fences, no preamble, no explanation
+- Return ONLY the complete raw SKILL.md content with no markdown fences
 """
                 }
             ],
-            temperature=0.3,
+            temperature=0.1,
         )
 
         refined_content = response.choices[0].message.content
@@ -315,6 +356,11 @@ Instructions:
         refined_content = re.sub(r'^```[^\n]*\n', '', refined_content.strip(), flags=re.MULTILINE)
         refined_content = re.sub(r'\n```$', '', refined_content.strip(), flags=re.MULTILINE)
         refined_content = refined_content.strip()
+
+        # Sanity check: if Gemma returned something suspiciously short, restore backup
+        if backup and len(refined_content) < len(backup) * 0.5:
+            Path(skill_file).write_text(backup)
+            return backup
 
         Path(skill_file).write_text(refined_content)
         return refined_content

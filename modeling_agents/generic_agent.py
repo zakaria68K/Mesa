@@ -11,13 +11,16 @@ SKILL_RE = re.compile(r'[→⚙✦*]\s+[Ss]kill\s+"([^"]+)"')
 TOOL_PERMISSION_RE = re.compile(r'service=permission\s+permission=(modeling_server_\S+)\s+pattern=')
 TOOL_CALL_RE = re.compile(r'[⚙✦*]\s+(modeling_server_\S+)(?:\s+(\{.*\}|Unknown))?')
 
-# Resolve the project root once, relative to this file's location
-PROJECT_ROOT = Path(__file__).resolve().parent.parent
-
 
 class GenericModelingAgent:
-    def __init__(self, mcp_server_script: str, _prompt: str = None):
+    def __init__(self, mcp_server_script: str, project_root: str = None, _prompt: str = None):
         self.mcp_server_script = mcp_server_script
+        # project_root must be the directory that contains .opencode/skills/ and the data files.
+        # Pass it explicitly from MetaAgent, or it defaults to two levels above this file.
+        if project_root:
+            self.project_root = str(Path(project_root).resolve())
+        else:
+            self.project_root = str(Path(__file__).resolve().parent.parent)
         self.evaluation_history = []
 
     def _build_opencode_config(self, mcp_server_script: str) -> dict:
@@ -98,12 +101,9 @@ class GenericModelingAgent:
             log_path = Path("opencode_logs") / "opencode_logs.txt"
             log_path.parent.mkdir(exist_ok=True)
 
-            # Use the resolved project root so relative file paths in tasks always work
-            run_dir = str(PROJECT_ROOT)
-
             try:
                 result = subprocess.run(
-                    ["opencode", "run", "--print-logs", "--dir", run_dir, task],
+                    ["opencode", "run", "--print-logs", "--dir", self.project_root, task],
                     capture_output=True,
                     text=True,
                     timeout=300,
