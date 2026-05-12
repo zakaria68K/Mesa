@@ -1,5 +1,5 @@
 ================================================================================
-Specialization run started at 2026-04-19T17:14:30 | samples=51 | threshold=0.8 | max_iterations=10
+Specialization run started at 2026-04-19T17:14:30 | samples=51 | threshold=0.75 | max_iterations=10
 --------------------------------------------------------------------------------
 Iteration 0 started
 Iteration 0 | sample=1/51 | score=1.00 | skill=SKILL.md
