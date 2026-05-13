@@ -1,0 +1,748 @@
+[
+  {
+    "level": 1,
+    "pattern": "create",
+    "instruction": "Create and register a fresh EEnumLiteral object within session $session_id.",
+    "relevant_apis": [
+      {
+        "api_name": "create_object",
+        "arguments": "session_id, class_name=eenumliteral"
+      }
+    ]
+  },
+  {
+    "level": 1,
+    "pattern": "create",
+    "instruction": "Make available a freshly created EFactory instance in session $session_id.",
+    "relevant_apis": [
+      {
+        "api_name": "create_object",
+        "arguments": "session_id, class_name=efactory"
+      }
+    ]
+  },
+  {
+    "level": 1,
+    "pattern": "create",
+    "instruction": "Make available a freshly created EAttribute instance in session $session_id.",
+    "relevant_apis": [
+      {
+        "api_name": "create_object",
+        "arguments": "session_id, class_name=eattribute"
+      }
+    ]
+  },
+  {
+    "level": 1,
+    "pattern": "create",
+    "instruction": "Insert a new instance of EParameter into session $session_id.",
+    "relevant_apis": [
+      {
+        "api_name": "create_object",
+        "arguments": "session_id, class_name=eparameter"
+      }
+    ]
+  },
+  {
+    "level": 1,
+    "pattern": "create",
+    "instruction": "Add a brand new EReference object to the active session $session_id.",
+    "relevant_apis": [
+      {
+        "api_name": "create_object",
+        "arguments": "session_id, class_name=ereference"
+      }
+    ]
+  },
+  {
+    "level": 1,
+    "pattern": "get",
+    "instruction": "Get all details of the specified obj_69 in session $session_id for the ETypeParameter object.",
+    "relevant_apis": [
+      {
+        "api_name": "inspect_instance",
+        "arguments": "session_id, class_name=etypeparameter, object_id=obj_69"
+      }
+    ]
+  },
+  {
+    "level": 1,
+    "pattern": "get",
+    "instruction": "Fetch and display information about the EReference object's specific obj_32 within $session_id.",
+    "relevant_apis": [
+      {
+        "api_name": "inspect_instance",
+        "arguments": "session_id, class_name=ereference, object_id=obj_32"
+      }
+    ]
+  },
+  {
+    "level": 1,
+    "pattern": "get",
+    "instruction": "Retrieves all data related to the EEnumLiteral object with obj_30 in its current state of session $session_id.",
+    "relevant_apis": [
+      {
+        "api_name": "inspect_instance",
+        "arguments": "session_id, class_name=eenumliteral, object_id=obj_30"
+      }
+    ]
+  },
+  {
+    "level": 1,
+    "pattern": "get",
+    "instruction": "Get all features of the EOperation object with id obj_102 in session $session_id",
+    "relevant_apis": [
+      {
+        "api_name": "inspect_instance",
+        "arguments": "session_id, class_name=eoperation, object_id=obj_102"
+      }
+    ]
+  },
+  {
+    "level": 1,
+    "pattern": "get",
+    "instruction": "Fetch and display information about the EStringToStringMapEntry object's specific obj_57 within $session_id.",
+    "relevant_apis": [
+      {
+        "api_name": "inspect_instance",
+        "arguments": "session_id, class_name=estringtostringmapentry, object_id=obj_57"
+      }
+    ]
+  },
+  {
+    "level": 1,
+    "pattern": "clear",
+    "instruction": "Unset the name attribute on EEnumLiteral object obj_64 within session $session_id",
+    "relevant_apis": [
+      {
+        "api_name": "clear_feature",
+        "arguments": "session_id, class_name=eenumliteral, object_id=obj_64, feature_name=name"
+      }
+    ]
+  },
+  {
+    "level": 1,
+    "pattern": "clear",
+    "instruction": "Unset the eOpposite attribute on EReference object obj_76 within session $session_id",
+    "relevant_apis": [
+      {
+        "api_name": "clear_feature",
+        "arguments": "session_id, class_name=ereference, object_id=obj_76, feature_name=eOpposite"
+      }
+    ]
+  },
+  {
+    "level": 1,
+    "pattern": "clear",
+    "instruction": "Reset the details property of EAnnotation object obj_113 in session $session_id",
+    "relevant_apis": [
+      {
+        "api_name": "clear_feature",
+        "arguments": "session_id, class_name=eannotation, object_id=obj_113, feature_name=details"
+      }
+    ]
+  },
+  {
+    "level": 1,
+    "pattern": "delete",
+    "instruction": "Delete the EFactory object with id obj_47 from session $session_id",
+    "relevant_apis": [
+      {
+        "api_name": "delete_object",
+        "arguments": "session_id, class_name=efactory, object_id=obj_47"
+      }
+    ]
+  },
+  {
+    "level": 1,
+    "pattern": "delete",
+    "instruction": "Destroy the EOperation instance with id obj_10 in session $session_id",
+    "relevant_apis": [
+      {
+        "api_name": "delete_object",
+        "arguments": "session_id, class_name=eoperation, object_id=obj_10"
+      }
+    ]
+  },
+  {
+    "level": 1,
+    "pattern": "update",
+    "instruction": "Assign '-1' to the value of EStringToStringMapEntry object obj_43 in session $session_id",
+    "relevant_apis": [
+      {
+        "api_name": "update_feature",
+        "arguments": "session_id, class_name=estringtostringmapentry, object_id=obj_43, feature_name=value, value=-1"
+      }
+    ]
+  },
+  {
+    "level": 1,
+    "pattern": "update",
+    "instruction": "Set the instanceClassName property of EDataType instance obj_71 to 'product' in session $session_id",
+    "relevant_apis": [
+      {
+        "api_name": "update_feature",
+        "arguments": "session_id, class_name=edatatype, object_id=obj_71, feature_name=instanceClassName, value=product"
+      }
+    ]
+  },
+  {
+    "level": 2,
+    "pattern": "create, clear",
+    "instruction": "Create a fresh EDataType in session $session_id then remove the value of its eTypeParameters",
+    "relevant_apis": [
+      {
+        "api_name": "create_object",
+        "arguments": "session_id, class_name=edatatype"
+      },
+      {
+        "api_name": "clear_feature",
+        "arguments": "session_id, class_name=edatatype, object_id=obj_275, feature_name=eTypeParameters"
+      }
+    ]
+  },
+  {
+    "level": 2,
+    "pattern": "create, clear",
+    "instruction": "In session $session_id, instantiate a EEnum object and immediately unset its serializable",
+    "relevant_apis": [
+      {
+        "api_name": "create_object",
+        "arguments": "session_id, class_name=eenum"
+      },
+      {
+        "api_name": "clear_feature",
+        "arguments": "session_id, class_name=eenum, object_id=obj_245, feature_name=serializable"
+      }
+    ]
+  },
+  {
+    "level": 2,
+    "pattern": "create, clear",
+    "instruction": "First create a EFactory instance in session $session_id, then reset its ePackage property",
+    "relevant_apis": [
+      {
+        "api_name": "create_object",
+        "arguments": "session_id, class_name=efactory"
+      },
+      {
+        "api_name": "clear_feature",
+        "arguments": "session_id, class_name=efactory, object_id=obj_352, feature_name=ePackage"
+      }
+    ]
+  },
+  {
+    "level": 2,
+    "pattern": "create, clear",
+    "instruction": "Add a new EParameter object to session $session_id and erase its lowerBound attribute",
+    "relevant_apis": [
+      {
+        "api_name": "create_object",
+        "arguments": "session_id, class_name=eparameter"
+      },
+      {
+        "api_name": "clear_feature",
+        "arguments": "session_id, class_name=eparameter, object_id=obj_351, feature_name=lowerBound"
+      }
+    ]
+  },
+  {
+    "level": 2,
+    "pattern": "create, create",
+    "instruction": "In session $session_id, create both a EOperation and a EClass object",
+    "relevant_apis": [
+      {
+        "api_name": "create_object",
+        "arguments": "session_id, class_name=eoperation"
+      },
+      {
+        "api_name": "create_object",
+        "arguments": "session_id, class_name=eclass"
+      }
+    ]
+  },
+  {
+    "level": 2,
+    "pattern": "create, create",
+    "instruction": "In session $session_id, create both a EAttribute and a EAttribute object",
+    "relevant_apis": [
+      {
+        "api_name": "create_object",
+        "arguments": "session_id, class_name=eattribute"
+      },
+      {
+        "api_name": "create_object",
+        "arguments": "session_id, class_name=eattribute"
+      }
+    ]
+  },
+  {
+    "level": 2,
+    "pattern": "create, create",
+    "instruction": "In session $session_id, create both a ETypeParameter and a EAttribute object",
+    "relevant_apis": [
+      {
+        "api_name": "create_object",
+        "arguments": "session_id, class_name=etypeparameter"
+      },
+      {
+        "api_name": "create_object",
+        "arguments": "session_id, class_name=eattribute"
+      }
+    ]
+  },
+  {
+    "level": 2,
+    "pattern": "create, delete",
+    "instruction": "First create a EGenericType instance in session $session_id, then remove the newly created object",
+    "relevant_apis": [
+      {
+        "api_name": "create_object",
+        "arguments": "session_id, class_name=egenerictype"
+      },
+      {
+        "api_name": "delete_object",
+        "arguments": "session_id, class_name=egenerictype, object_id=obj_281"
+      }
+    ]
+  },
+  {
+    "level": 2,
+    "pattern": "create, delete",
+    "instruction": "Create a new EDataType object in session $session_id and then delete it",
+    "relevant_apis": [
+      {
+        "api_name": "create_object",
+        "arguments": "session_id, class_name=edatatype"
+      },
+      {
+        "api_name": "delete_object",
+        "arguments": "session_id, class_name=edatatype, object_id=obj_218"
+      }
+    ]
+  },
+  {
+    "level": 2,
+    "pattern": "create, delete",
+    "instruction": "Add a new EAttribute object to session $session_id and then eliminate it",
+    "relevant_apis": [
+      {
+        "api_name": "create_object",
+        "arguments": "session_id, class_name=eattribute"
+      },
+      {
+        "api_name": "delete_object",
+        "arguments": "session_id, class_name=eattribute, object_id=obj_234"
+      }
+    ]
+  },
+  {
+    "level": 2,
+    "pattern": "create, get",
+    "instruction": "In session $session_id, instantiate a EEnum object and immediately fetch its properties",
+    "relevant_apis": [
+      {
+        "api_name": "create_object",
+        "arguments": "session_id, class_name=eenum"
+      },
+      {
+        "api_name": "inspect_instance",
+        "arguments": "session_id, class_name=eenum, object_id=obj_258"
+      }
+    ]
+  },
+  {
+    "level": 2,
+    "pattern": "create, get",
+    "instruction": "First create a EEnumLiteral instance in session $session_id, then retrieve all features of the newly created object",
+    "relevant_apis": [
+      {
+        "api_name": "create_object",
+        "arguments": "session_id, class_name=eenumliteral"
+      },
+      {
+        "api_name": "inspect_instance",
+        "arguments": "session_id, class_name=eenumliteral, object_id=obj_366"
+      }
+    ]
+  },
+  {
+    "level": 2,
+    "pattern": "create, get",
+    "instruction": "Create a new ETypeParameter object in session $session_id and then get all its features",
+    "relevant_apis": [
+      {
+        "api_name": "create_object",
+        "arguments": "session_id, class_name=etypeparameter"
+      },
+      {
+        "api_name": "inspect_instance",
+        "arguments": "session_id, class_name=etypeparameter, object_id=obj_153"
+      }
+    ]
+  },
+  {
+    "level": 2,
+    "pattern": "create, get",
+    "instruction": "First create a EPackage instance in session $session_id, then retrieve all features of the newly created object",
+    "relevant_apis": [
+      {
+        "api_name": "create_object",
+        "arguments": "session_id, class_name=epackage"
+      },
+      {
+        "api_name": "inspect_instance",
+        "arguments": "session_id, class_name=epackage, object_id=obj_159"
+      }
+    ]
+  },
+  {
+    "level": 2,
+    "pattern": "create, update",
+    "instruction": "In session $session_id, instantiate a EReference object and immediately change its ordered to 'true'",
+    "relevant_apis": [
+      {
+        "api_name": "create_object",
+        "arguments": "session_id, class_name=ereference"
+      },
+      {
+        "api_name": "update_feature",
+        "arguments": "session_id, class_name=ereference, object_id=obj_242, feature_name=ordered, value=true"
+      }
+    ]
+  },
+  {
+    "level": 2,
+    "pattern": "create, update",
+    "instruction": "Add a new EParameter object to session $session_id and configure its many as 'false'",
+    "relevant_apis": [
+      {
+        "api_name": "create_object",
+        "arguments": "session_id, class_name=eparameter"
+      },
+      {
+        "api_name": "update_feature",
+        "arguments": "session_id, class_name=eparameter, object_id=obj_229, feature_name=many, value=false"
+      }
+    ]
+  },
+  {
+    "level": 2,
+    "pattern": "create, update",
+    "instruction": "Create a new EAnnotation object in session $session_id and then update its source to 'Category'",
+    "relevant_apis": [
+      {
+        "api_name": "create_object",
+        "arguments": "session_id, class_name=eannotation"
+      },
+      {
+        "api_name": "update_feature",
+        "arguments": "session_id, class_name=eannotation, object_id=obj_175, feature_name=source, value=Category"
+      }
+    ]
+  },
+  {
+    "level": 3,
+    "pattern": "create, clear, create",
+    "instruction": "In session $session_id, create a EParameter, reset its required, then instantiate a EPackage",
+    "relevant_apis": [
+      {
+        "api_name": "create_object",
+        "arguments": "session_id, class_name=eparameter"
+      },
+      {
+        "api_name": "clear_feature",
+        "arguments": "session_id, class_name=eparameter, object_id=obj_905, feature_name=required"
+      },
+      {
+        "api_name": "create_object",
+        "arguments": "session_id, class_name=epackage"
+      }
+    ]
+  },
+  {
+    "level": 3,
+    "pattern": "create, clear, delete",
+    "instruction": "Create a new EEnum object in session $session_id, clear its instanceClassName, then delete it",
+    "relevant_apis": [
+      {
+        "api_name": "create_object",
+        "arguments": "session_id, class_name=eenum"
+      },
+      {
+        "api_name": "clear_feature",
+        "arguments": "session_id, class_name=eenum, object_id=obj_970, feature_name=instanceClassName"
+      },
+      {
+        "api_name": "delete_object",
+        "arguments": "session_id, class_name=eenum, object_id=obj_970"
+      }
+    ]
+  },
+  {
+    "level": 3,
+    "pattern": "create, clear, get",
+    "instruction": "Create a new EAnnotation object in session $session_id, clear its source, then get all its features",
+    "relevant_apis": [
+      {
+        "api_name": "create_object",
+        "arguments": "session_id, class_name=eannotation"
+      },
+      {
+        "api_name": "clear_feature",
+        "arguments": "session_id, class_name=eannotation, object_id=obj_937, feature_name=source"
+      },
+      {
+        "api_name": "inspect_instance",
+        "arguments": "session_id, class_name=eannotation, object_id=obj_937"
+      }
+    ]
+  },
+  {
+    "level": 3,
+    "pattern": "create, create, clear",
+    "instruction": "In session $session_id, create a EClass and a EDataType, then reset abstract of the EClass",
+    "relevant_apis": [
+      {
+        "api_name": "create_object",
+        "arguments": "session_id, class_name=eclass"
+      },
+      {
+        "api_name": "create_object",
+        "arguments": "session_id, class_name=edatatype"
+      },
+      {
+        "api_name": "clear_feature",
+        "arguments": "session_id, class_name=eclass, object_id=obj_1258, feature_name=abstract"
+      }
+    ]
+  },
+  {
+    "level": 3,
+    "pattern": "create, create, create",
+    "instruction": "Add EPackage, ETypeParameter, and EStringToStringMapEntry objects to session $session_id",
+    "relevant_apis": [
+      {
+        "api_name": "create_object",
+        "arguments": "session_id, class_name=epackage"
+      },
+      {
+        "api_name": "create_object",
+        "arguments": "session_id, class_name=etypeparameter"
+      },
+      {
+        "api_name": "create_object",
+        "arguments": "session_id, class_name=estringtostringmapentry"
+      }
+    ]
+  },
+  {
+    "level": 3,
+    "pattern": "create, create, delete",
+    "instruction": "First create EEnumLiteral then EStringToStringMapEntry in session $session_id, then discard the first object",
+    "relevant_apis": [
+      {
+        "api_name": "create_object",
+        "arguments": "session_id, class_name=eenumliteral"
+      },
+      {
+        "api_name": "create_object",
+        "arguments": "session_id, class_name=estringtostringmapentry"
+      },
+      {
+        "api_name": "delete_object",
+        "arguments": "session_id, class_name=eenumliteral, object_id=obj_1145"
+      }
+    ]
+  },
+  {
+    "level": 3,
+    "pattern": "create, create, get",
+    "instruction": "First create EOperation then EAttribute in session $session_id, then check attributes of the first object",
+    "relevant_apis": [
+      {
+        "api_name": "create_object",
+        "arguments": "session_id, class_name=eoperation"
+      },
+      {
+        "api_name": "create_object",
+        "arguments": "session_id, class_name=eattribute"
+      },
+      {
+        "api_name": "inspect_instance",
+        "arguments": "session_id, class_name=eoperation, object_id=obj_1027"
+      }
+    ]
+  },
+  {
+    "level": 3,
+    "pattern": "create, create, update",
+    "instruction": "First create EDataType then EFactory in session $session_id, then configure serializable of the first object to 'false'",
+    "relevant_apis": [
+      {
+        "api_name": "create_object",
+        "arguments": "session_id, class_name=edatatype"
+      },
+      {
+        "api_name": "create_object",
+        "arguments": "session_id, class_name=efactory"
+      },
+      {
+        "api_name": "update_feature",
+        "arguments": "session_id, class_name=edatatype, object_id=obj_1087, feature_name=serializable, value=false"
+      }
+    ]
+  },
+  {
+    "level": 3,
+    "pattern": "create, delete, create",
+    "instruction": "In session $session_id, create a temporary EClass, remove it, then instantiate a EGenericType",
+    "relevant_apis": [
+      {
+        "api_name": "create_object",
+        "arguments": "session_id, class_name=eclass"
+      },
+      {
+        "api_name": "delete_object",
+        "arguments": "session_id, class_name=eclass, object_id=obj_687"
+      },
+      {
+        "api_name": "create_object",
+        "arguments": "session_id, class_name=egenerictype"
+      }
+    ]
+  },
+  {
+    "level": 3,
+    "pattern": "create, get, create",
+    "instruction": "Create a new EPackage object in session $session_id, get all its features, then create another EDataType object",
+    "relevant_apis": [
+      {
+        "api_name": "create_object",
+        "arguments": "session_id, class_name=epackage"
+      },
+      {
+        "api_name": "inspect_instance",
+        "arguments": "session_id, class_name=epackage, object_id=obj_596"
+      },
+      {
+        "api_name": "create_object",
+        "arguments": "session_id, class_name=edatatype"
+      }
+    ]
+  },
+  {
+    "level": 3,
+    "pattern": "create, get, update",
+    "instruction": "In session $session_id, create a EOperation, retrieve its properties, then modify its upperBound to '1'",
+    "relevant_apis": [
+      {
+        "api_name": "create_object",
+        "arguments": "session_id, class_name=eoperation"
+      },
+      {
+        "api_name": "inspect_instance",
+        "arguments": "session_id, class_name=eoperation, object_id=obj_656"
+      },
+      {
+        "api_name": "update_feature",
+        "arguments": "session_id, class_name=eoperation, object_id=obj_656, feature_name=upperBound, value=1"
+      }
+    ]
+  },
+  {
+    "level": 3,
+    "pattern": "create, update, clear",
+    "instruction": "In session $session_id, create a EReference, set upperBound to '0', then reset eKeys",
+    "relevant_apis": [
+      {
+        "api_name": "create_object",
+        "arguments": "session_id, class_name=ereference"
+      },
+      {
+        "api_name": "update_feature",
+        "arguments": "session_id, class_name=ereference, object_id=obj_870, feature_name=upperBound, value=0"
+      },
+      {
+        "api_name": "clear_feature",
+        "arguments": "session_id, class_name=ereference, object_id=obj_870, feature_name=eKeys"
+      }
+    ]
+  },
+  {
+    "level": 3,
+    "pattern": "create, update, create",
+    "instruction": "In session $session_id, create a EGenericType, set its eLowerBound to 'Account', then instantiate a ETypeParameter",
+    "relevant_apis": [
+      {
+        "api_name": "create_object",
+        "arguments": "session_id, class_name=egenerictype"
+      },
+      {
+        "api_name": "update_feature",
+        "arguments": "session_id, class_name=egenerictype, object_id=obj_755, feature_name=eLowerBound, value=Account"
+      },
+      {
+        "api_name": "create_object",
+        "arguments": "session_id, class_name=etypeparameter"
+      }
+    ]
+  },
+  {
+    "level": 3,
+    "pattern": "create, update, delete",
+    "instruction": "First create EGenericType in session $session_id, configure eRawType as 'Person', then discard it",
+    "relevant_apis": [
+      {
+        "api_name": "create_object",
+        "arguments": "session_id, class_name=egenerictype"
+      },
+      {
+        "api_name": "update_feature",
+        "arguments": "session_id, class_name=egenerictype, object_id=obj_821, feature_name=eRawType, value=Person"
+      },
+      {
+        "api_name": "delete_object",
+        "arguments": "session_id, class_name=egenerictype, object_id=obj_821"
+      }
+    ]
+  },
+  {
+    "level": 3,
+    "pattern": "create, update, get",
+    "instruction": "First create EEnum in session $session_id, configure instanceTypeName as 'class', then check all its attributes",
+    "relevant_apis": [
+      {
+        "api_name": "create_object",
+        "arguments": "session_id, class_name=eenum"
+      },
+      {
+        "api_name": "update_feature",
+        "arguments": "session_id, class_name=eenum, object_id=obj_794, feature_name=instanceTypeName, value=class"
+      },
+      {
+        "api_name": "inspect_instance",
+        "arguments": "session_id, class_name=eenum, object_id=obj_794"
+      }
+    ]
+  },
+  {
+    "level": 3,
+    "pattern": "create, update, update",
+    "instruction": "Create a new ETypeParameter object in session $session_id, update its eBounds to 'SampleObject', then update its eAnnotations to 'Customer'",
+    "relevant_apis": [
+      {
+        "api_name": "create_object",
+        "arguments": "session_id, class_name=etypeparameter"
+      },
+      {
+        "api_name": "update_feature",
+        "arguments": "session_id, class_name=etypeparameter, object_id=obj_831, feature_name=eBounds, value=SampleObject"
+      },
+      {
+        "api_name": "update_feature",
+        "arguments": "session_id, class_name=etypeparameter, object_id=obj_831, feature_name=eAnnotations, value=Customer"
+      }
+    ]
+  }
+]
