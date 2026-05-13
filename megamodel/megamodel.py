@@ -1,6 +1,7 @@
+from collections import defaultdict
 from typing import Dict, List, Optional, Any
-from .execution import AgentSession 
-from .am3 import Entity, Relationship, Model, Server, Tool, Agent
+from .execution import AgentSession
+from .am3 import Capability, Entity, Relationship, Model, Server, Tool, Agent
 from .planning import Workflow
 
 
@@ -82,6 +83,54 @@ class MegamodelRegistry:
 
     def register_tools_for_server(self, server_name: str, tools: List[Tool]) -> None:
         self.tools_by_server[server_name] = tools
+
+    def derive_server_capabilities(self, server_name: str) -> List[Capability]:
+        """Derive Capability objects for a server by grouping its registered tools on
+        their leading verb (the first underscore-delimited token of the tool name).
+
+        No hardcoded tool lists or rules — everything is read from the discovered tools
+        and the server name already present in the registry.
+        """
+        tools = self.tools_by_server.get(server_name, [])
+        server = self.servers.get(server_name)
+        server_label = server.name if server and hasattr(server, "name") else server_name
+
+        groups: Dict[str, list] = defaultdict(list)
+        for tool in tools:
+            verb = tool.name.split("_")[0]
+            groups[verb].append(tool)
+
+        # Merge small singleton verb groups into the largest non-apply group
+        # so we don't create a separate skill file for a single utility tool.
+        apply_verbs = {v for v, g in groups.items() if v == "apply"}
+        read_verbs = {v: g for v, g in groups.items() if v not in apply_verbs}
+        if read_verbs:
+            anchor = max(read_verbs, key=lambda v: len(read_verbs[v]))
+            for v in list(read_verbs):
+                if v != anchor and len(groups[v]) == 1:
+                    groups[anchor].extend(groups.pop(v))
+
+        generic_rules = [
+            f"You MUST use ONLY the MCP tools provided by the `{server_label}`.",
+            "You MUST NOT attempt to run Python scripts directly.",
+            "Do NOT use bash, glob, or file-search tools.",
+        ]
+
+        capabilities = []
+        for verb, group_tools in sorted(groups.items()):
+            description = f"{verb.capitalize()} operations via {server_label}"
+            capabilities.append(Capability(
+                name=verb,
+                description=description,
+                tool_keywords=[verb],
+                rules=generic_rules,
+            ))
+
+        # Propagate back onto the am3.Server object when present
+        if server and hasattr(server, "capabilities"):
+            server.capabilities = capabilities
+
+        return capabilities
 
     def get_mcp_server(self, name: str) -> Optional[Any]:
         return self.servers.get(name)

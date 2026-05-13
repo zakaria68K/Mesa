@@ -44,6 +44,7 @@ class MCPServer:
     tools: List[MCPTool] = field(default_factory=list)
     resources: List[MCPResource] = field(default_factory=list)
     metadata: Dict[str, Any] = field(default_factory=dict)
+    capabilities: List[Any] = field(default_factory=list)  # List[am3.Capability]
     
     def __post_init__(self):
         if not self.name:

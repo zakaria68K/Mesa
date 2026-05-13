@@ -3,6 +3,13 @@ from typing import Optional, List, Dict
 from enum import Enum
 
 
+@dataclass
+class Capability:
+    name: str
+    description: str = ""
+    tool_keywords: List[str] = field(default_factory=list)
+    rules: List[str] = field(default_factory=list)
+
 class Status(Enum):
     CONNECTED = "connected"
     DISCONNECTED = "disconnected"
@@ -115,6 +122,9 @@ class Server:
     port: int = 0
     status: Status = Status.DISCONNECTED
     resources: List[Resource] = field(default_factory=list)
+    capabilities: List[Capability] = field(default_factory=list)
+    script_path: str = ""
+    metadata: dict = field(default_factory=dict)
 
 
 # ── Agents ─────────────────────────────────────────────────

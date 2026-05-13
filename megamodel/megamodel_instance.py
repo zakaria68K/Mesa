@@ -2,7 +2,7 @@ import os
 import json
 import subprocess
 from .server_config.server_integrator import MCPServerIntegrator
-from .am3 import ReferenceModel, TransformationModel, Server, Status
+from .am3 import ReferenceModel, TransformationModel, Server, Status, Capability
 from .server_config.client import MCPClient
 from mcp_servers.atl.atl_server import fetch_transformations
 
@@ -18,7 +18,12 @@ async def populate_registry(registry):
     atl_server_raw = integrator.setup_atl_server()
     atl_server_raw.metadata["script_path"] = atl_server_script
 
-    atl_server_obj = Server(name="atl_server", port=8080, status=Status.CONNECTED)
+    atl_server_obj = Server(
+        name="atl_server",
+        port=8080,
+        status=Status.CONNECTED,
+        script_path=atl_server_script,
+    )
     registry.register_server(atl_server_obj)
 
     # Discover tools via MCP client
@@ -33,6 +38,60 @@ async def populate_registry(registry):
         await atl_client.cleanup()
 
     registry.register_tools_for_server("atl_server", tools)
+
+    # Derive capabilities from the discovered tools — rename 'list' → 'get'
+    capabilities = registry.derive_server_capabilities("atl_server")
+    for cap in capabilities:
+        if cap.name == "list":
+            cap.name = "get"
+    atl_server_obj.capabilities = capabilities
+
+    # ── EMF server ────────────────────────────────────────────
+    emf_server_script = os.path.abspath(
+        os.path.join(os.path.dirname(__file__), "..", "mcp_servers", "emf", "emf_server.py")
+    )
+    emf_server_raw = integrator.setup_emf_server()
+    emf_server_raw.metadata["script_path"] = emf_server_script
+
+    emf_server_obj = Server(
+        name="emf_server",
+        port=8096,
+        status=Status.CONNECTED,
+        script_path=emf_server_script,
+    )
+    registry.register_server(emf_server_obj)
+
+    emf_client = MCPClient()
+    emf_tools = []
+    try:
+        await emf_client.connect_to_server(emf_server_script)
+        emf_session = await emf_client.get_session()
+        emf_response = await emf_session.list_tools()
+        emf_tools = emf_response.tools
+    finally:
+        await emf_client.cleanup()
+
+    registry.register_tools_for_server("emf_server", emf_tools)
+
+    _emf_rules = [
+        "You MUST use ONLY the MCP tools provided by the `emf_server`.",
+        "You MUST NOT attempt to run Python scripts directly.",
+        "Do NOT use bash, glob, or file-search tools.",
+    ]
+    emf_server_obj.capabilities = [
+        Capability(
+            name="write",
+            description="Write operations via emf_server",
+            tool_keywords=["start", "create", "update", "clear", "delete"],
+            rules=_emf_rules,
+        ),
+        Capability(
+            name="read",
+            description="Read operations via emf_server",
+            tool_keywords=["inspect", "list", "get"],
+            rules=_emf_rules,
+        ),
+    ]
 
     # Fetch enabled transformations
     enabled_transformations = fetch_transformations()
