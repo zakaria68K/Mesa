@@ -98,7 +98,8 @@ class GenericModelingAgent:
             env = os.environ.copy()
             env["OPENCODE_CONFIG"] = str(config_path)
 
-            log_path = Path("opencode_logs") / "opencode_logs.txt"
+            server_name = Path(self.mcp_server_script).stem  # e.g. "emf_server" or "atl_server"
+            log_path = Path("opencode_logs") / f"opencode_{server_name}.txt"
             log_path.parent.mkdir(exist_ok=True)
 
             try:

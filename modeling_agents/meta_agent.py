@@ -267,6 +267,44 @@ class MetaAgent:
 
         return self.apply_skill, self.get_skill
 
+    def _parse_args_string(self, args_str: str) -> dict:
+        """Parse 'session_id, class_name=foo, feature_name=bar' into {'class_name': 'foo', ...}.
+        Bare tokens (like 'session_id') that have no '=' are ignored."""
+        result = {}
+        for token in args_str.split(","):
+            token = token.strip()
+            if not token or token == "session_id":
+                continue
+            if "=" in token:
+                k, _, v = token.partition("=")
+                result[k.strip().lower()] = v.strip().lower()
+        return result
+
+    def _args_match(self, exp_args, actual: dict) -> bool:
+        """Compare expected args against an actual call's arguments dict, ignoring session_id."""
+        # Build expected dict (strip session_id)
+        if isinstance(exp_args, str):
+            exp_dict = self._parse_args_string(exp_args)
+        elif isinstance(exp_args, dict):
+            exp_dict = {k.lower(): str(v).lower() for k, v in exp_args.items() if k != "session_id"}
+        else:
+            return True  # no constraint
+
+        if not exp_dict:
+            return True  # only session_id was specified — no real constraint
+
+        # Build actual dict (strip session_id)
+        act_raw = actual.get("arguments", {})
+        if isinstance(act_raw, str):
+            try:
+                act_raw = json.loads(act_raw)
+            except (json.JSONDecodeError, TypeError):
+                act_raw = {}
+        act_dict = {k.lower(): str(v).lower() for k, v in act_raw.items() if k != "session_id"}
+
+        # Every expected key must be present with a matching value
+        return all(act_dict.get(k) == v for k, v in exp_dict.items())
+
     def evaluate(self, actual_tool_calls: list[dict], expected_apis: list[dict]) -> float:
         if not expected_apis:
             return 1.0
@@ -274,19 +312,12 @@ class MetaAgent:
         for expected in expected_apis:
             exp_name = self._normalize_api_name(expected.get("api_name", ""))
             exp_args = expected.get("arguments")
-            if isinstance(exp_args, str):
-                try:
-                    exp_args = json.loads(exp_args)
-                except (json.JSONDecodeError, TypeError):
-                    pass
-            exp_args = exp_args or None
 
             for actual in actual_tool_calls:
                 act_name = self._normalize_api_name(actual.get("api_name", ""))
                 if act_name != exp_name:
                     continue
-                act_args = self._normalize_actual_args(actual)
-                if exp_args == act_args:
+                if self._args_match(exp_args, actual):
                     matched += 1
                     break
         return matched / len(expected_apis)

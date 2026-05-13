@@ -1,13 +1,14 @@
 import asyncio
 import json
+import sys
+from pathlib import Path
 from dotenv import load_dotenv
 load_dotenv()
+sys.path.insert(0, '.opencode/skills')
+from megamodel_toskill import MegamodelToSkill
 from megamodel.megamodel import MegamodelRegistry
 from megamodel.megamodel_instance import populate_registry
 from modeling_agents.meta_agent import MetaAgent
-import sys
-sys.path.insert(0, '.opencode/skills')
-from megamodel_toskill import MegamodelToSkill
 
 
 def load_specialization_dataset(dataset_path: str) -> list[dict]:
@@ -36,42 +37,33 @@ def load_specialization_dataset(dataset_path: str) -> list[dict]:
 
 async def main():
 
-    print("MESA Megamodel Instance Initialization")
+    dataset = load_specialization_dataset(
+        "/Users/zakariahachm/Documents/Phd_Zakaria/MESA/datasets/emf_testing_dataset_50.json"
+    )
+    print(f"Loaded {len(dataset)} samples from EMF dataset.")
 
+    # Skills generation
+    print("\n> Populating registry and generating skill files...")
     registry = MegamodelRegistry()
     await populate_registry(registry)
-    print("MESA Megamodel Instance is ready with the following servers:")
-    for server_name in registry.mcp_servers.keys():
-        print(f" - {server_name}")
-
-    dataset = load_specialization_dataset(
-        "/Users/zakariahachm/Documents/Phd_Zakaria/MESA/datasets/testing_datatset.json"
-    )
-    print(f"\nLoaded {len(dataset)} valid samples from dataset.")
-
-    # generate skill files from megamodel registry
-    print("\n> Generating skill files from megamodel...")
-    skill_generator = MegamodelToSkill(registry)
-    skill_generator.generate_patterns()
+    base_dir = str(Path(".opencode/skills").resolve())
+    generated = MegamodelToSkill(registry).generate_all_skills(base_dir=base_dir)
+    print(f"> {len(generated)} skill(s) written: {[p.parent.name for p in generated]}")
 
     meta = MetaAgent()
-    specialization_log_file = "debug_logs/specialization_iterations1.txt"
+    specialization_log_file = "debug_logs/specialization_iterations_emf.txt"
 
-    print("\n>>> Starting specialization loop...")
+    print("\n>>> Starting EMF specialization loop...")
     apply_skill, get_skill = meta.specialize_agent(
         dataset,
         threshold=0.75,
         log_file=specialization_log_file,
     )
 
-    print("\n>>> Specialization complete. Final skill files:")
-    print(f"  Apply skill : {apply_skill}")
-    print(f"  Get skill   : {get_skill}")
-    print(f"  Iteration log: {specialization_log_file}")
-    print("\n>>> Apply skill content:")
-    print(open(apply_skill).read())
-    print("\n>>> Get skill content:")
-    print(open(get_skill).read())
+    print("\n>>> Specialization complete.")
+    print(f"  Write skill : {apply_skill}")
+    print(f"  Read skill  : {get_skill}")
+    print(f"  Log         : {specialization_log_file}")
     
 if __name__ == "__main__":
     asyncio.run(main())
