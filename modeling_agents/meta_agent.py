@@ -14,14 +14,15 @@ PROJECT_ROOT = str(Path(__file__).resolve().parent.parent)
 class MetaAgent:
 
     def __init__(self, agent_class=GenericModelingAgent,
-        apply_skill=".opencode/skills/mde-apply/SKILL.md",
-        get_skill=".opencode/skills/mde-get/SKILL.md",
+        mcp_server_script="mcp_servers/emf/emf_server.py",
+        apply_skill=".opencode/skills/emf-write/SKILL.md",
+        get_skill=".opencode/skills/emf-read/SKILL.md",
         iteration=0):
         self.apply_skill = apply_skill
         self.get_skill = get_skill
         self.iteration = iteration
         self.agent = agent_class(
-            mcp_server_script="mcp_servers/atl/atl_server.py",
+            mcp_server_script=mcp_server_script,
             project_root=PROJECT_ROOT,
         )
 
@@ -32,7 +33,8 @@ class MetaAgent:
             f.write(line + "\n")
 
     def _skill_for(self, expected_apis: list[dict]) -> str:
-        if any("list" in e["api_name"] for e in expected_apis):
+        read_verbs = ("list", "inspect", "get")
+        if any(e["api_name"].split("_")[0] in read_verbs for e in expected_apis):
             return self.get_skill
         return self.apply_skill
 
