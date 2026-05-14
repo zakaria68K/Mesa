@@ -140,11 +140,18 @@ class GenericModelingAgent:
 
     def run(self, task: str, file: str) -> tuple[str, list[dict]]:
         skill_name = Path(file).parent.name if file else None
+        session_note = (
+            "IMPORTANT: if the task contains '$session_id', that is a placeholder — "
+            "you MUST call start_metamodel_session_stateless FIRST to obtain a real session ID, "
+            "then use that session ID for ALL subsequent tool calls. "
+        )
         if skill_name:
             full_task = (
                 f'Before doing anything, you MUST load the skill "{skill_name}" with the skill tool. '
                 f'Do not load any other skill unless explicitly asked. '
-                "After loading it, strictly follow that skill and use only the MCP tools required by the task. "
+                "After loading it, strictly follow that skill. "
+                "IMPORTANT: some tasks require multiple sequential tool calls — do NOT stop after the first tool call, complete ALL steps the task requires. "
+                f"{session_note}"
                 "Do NOT use bash, glob, or file-search tools to locate files — pass file paths exactly as given to the MCP tools.\n\n"
                 f"Task: {task}"
             )
@@ -152,6 +159,8 @@ class GenericModelingAgent:
             full_task = (
                 "Before doing anything, load the appropriate skill using the skill tool. "
                 "Then use the MCP tools as instructed by the skill. "
+                "IMPORTANT: some tasks require multiple sequential tool calls — do NOT stop after the first tool call, complete ALL steps the task requires. "
+                f"{session_note}"
                 "Do NOT use bash, glob, or file-search tools to locate files — pass file paths exactly as given to the MCP tools.\n\n"
                 f"Task: {task}"
             )
