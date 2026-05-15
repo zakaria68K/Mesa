@@ -1,0 +1,114 @@
+================================================================================
+Specialization run started at 2026-05-15T09:29:21 | samples=50 | threshold=0.95 | max_iterations=10
+--------------------------------------------------------------------------------
+Iteration 0 started
+Iteration 0 | sample=1/50 | score=0.67
+Iteration 0 | sample=2/50 | score=1.00
+Iteration 0 | sample=3/50 | score=0.67
+Iteration 0 | sample=4/50 | score=0.67
+Iteration 0 | sample=5/50 | score=1.00
+Iteration 0 | sample=6/50 | score=0.00
+Iteration 0 | sample=7/50 | score=1.00
+Iteration 0 | sample=8/50 | score=1.00
+Iteration 0 | sample=9/50 | score=0.67
+Iteration 0 | sample=10/50 | score=0.67
+Iteration 0 | sample=11/50 | score=1.00
+Iteration 0 | sample=12/50 | score=0.67
+Iteration 0 | sample=13/50 | score=1.00
+Iteration 0 | sample=14/50 | score=0.67
+Iteration 0 | sample=15/50 | score=1.00
+Iteration 0 | sample=16/50 | score=0.33
+Iteration 0 | sample=17/50 | score=1.00
+Iteration 0 | sample=18/50 | score=1.00
+Iteration 0 | sample=19/50 | score=0.33
+Iteration 0 | sample=20/50 | score=1.00
+Iteration 0 | sample=21/50 | score=0.67
+Iteration 0 | sample=22/50 | score=0.67
+Iteration 0 | sample=23/50 | score=1.00
+Iteration 0 | sample=24/50 | score=1.00
+Iteration 0 | sample=25/50 | score=0.33
+Iteration 0 | sample=26/50 | score=0.67
+Iteration 0 | sample=27/50 | score=0.67
+Iteration 0 | sample=28/50 | score=1.00
+Iteration 0 | sample=29/50 | score=1.00
+Iteration 0 | sample=30/50 | score=1.00
+Iteration 0 | sample=31/50 | score=0.33
+Iteration 0 | sample=32/50 | score=0.33
+Iteration 0 | sample=33/50 | score=0.67
+Iteration 0 | sample=34/50 | score=0.67
+Iteration 0 | sample=35/50 | score=0.67
+Iteration 0 | sample=36/50 | score=1.00
+Iteration 0 | sample=37/50 | score=0.67
+Iteration 0 | sample=38/50 | score=1.00
+Iteration 0 | sample=39/50 | score=1.00
+Iteration 0 | sample=40/50 | score=0.67
+Iteration 0 | sample=41/50 | score=1.00
+Iteration 0 | sample=42/50 | score=1.00
+Iteration 0 | sample=43/50 | score=1.00
+Iteration 0 | sample=44/50 | score=0.33
+Iteration 0 | sample=45/50 | score=1.00
+Iteration 0 | sample=46/50 | score=0.67
+Iteration 0 | sample=47/50 | score=1.00
+Iteration 0 | sample=48/50 | score=1.00
+Iteration 0 | sample=49/50 | score=1.00
+Iteration 0 | sample=50/50 | score=1.00
+Iteration 0 summary | avg_score=0.79 | failing_samples=24/50
+Iteration 0 refinement phase started
+Iteration 0 | refining skill=.opencode/skills/emf-write/SKILL.md | failures=10 | patterns=9 | examples_used=10
+Iteration 0 | refining skill=.opencode/skills/emf-read/SKILL.md | failures=14 | patterns=12 | examples_used=12
+Iteration 0 refinement_count=2
+--------------------------------------------------------------------------------
+Iteration 1 started
+Iteration 1 | sample=1/50 | score=1.00
+Iteration 1 | sample=2/50 | score=1.00
+Iteration 1 | sample=3/50 | score=0.67
+Iteration 1 | sample=4/50 | score=1.00
+Iteration 1 | sample=5/50 | score=1.00
+Iteration 1 | sample=6/50 | score=1.00
+Iteration 1 | sample=7/50 | score=1.00
+Iteration 1 | sample=8/50 | score=1.00
+Iteration 1 | sample=9/50 | score=0.67
+Iteration 1 | sample=10/50 | score=0.67
+Iteration 1 | sample=11/50 | score=1.00
+Iteration 1 | sample=12/50 | score=0.67
+Iteration 1 | sample=13/50 | score=1.00
+Iteration 1 | sample=14/50 | score=1.00
+Iteration 1 | sample=15/50 | score=0.33
+Iteration 1 | sample=16/50 | score=1.00
+Iteration 1 | sample=17/50 | score=0.67
+Iteration 1 | sample=18/50 | score=1.00
+Iteration 1 | sample=19/50 | score=0.33
+Iteration 1 | sample=20/50 | score=1.00
+Iteration 1 | sample=21/50 | score=1.00
+Iteration 1 | sample=22/50 | score=0.67
+Iteration 1 | sample=23/50 | score=1.00
+Iteration 1 | sample=24/50 | score=1.00
+Iteration 1 | sample=25/50 | score=0.67
+Iteration 1 | sample=26/50 | score=1.00
+Iteration 1 | sample=27/50 | score=0.33
+Iteration 1 | sample=28/50 | score=1.00
+Iteration 1 | sample=29/50 | score=1.00
+Iteration 1 | sample=30/50 | score=1.00
+Iteration 1 | sample=31/50 | score=0.33
+Iteration 1 | sample=32/50 | score=0.67
+Iteration 1 | sample=33/50 | score=1.00
+Iteration 1 | sample=34/50 | score=0.67
+Iteration 1 | sample=35/50 | score=1.00
+Iteration 1 | sample=36/50 | score=1.00
+Iteration 1 | sample=37/50 | score=1.00
+Iteration 1 | sample=38/50 | score=1.00
+Iteration 1 | sample=39/50 | score=0.67
+Iteration 1 | sample=40/50 | score=0.67
+Iteration 1 | sample=41/50 | score=1.00
+Iteration 1 | sample=42/50 | score=1.00
+Iteration 1 | sample=43/50 | score=1.00
+Iteration 1 | sample=44/50 | score=0.67
+Iteration 1 | sample=45/50 | score=1.00
+Iteration 1 | sample=46/50 | score=1.00
+Iteration 1 | sample=47/50 | score=1.00
+Iteration 1 | sample=48/50 | score=1.00
+Iteration 1 | sample=49/50 | score=1.00
+Iteration 1 | sample=50/50 | score=1.00
+Iteration 1 summary | avg_score=0.87 | failing_samples=16/50
+Iteration 0 exit: threshold met (avg_score=0.87 >= 0.85)
+Specialization finished at 2026-05-15T10:38:46

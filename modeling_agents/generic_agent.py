@@ -4,6 +4,7 @@ import re
 import subprocess
 import tempfile
 from pathlib import Path
+import requests
 
 
 ANSI_RE = re.compile(r'\x1b?\[[\d;]*m')
@@ -13,8 +14,9 @@ TOOL_CALL_RE = re.compile(r'[⚙✦*]\s+(modeling_server_\S+)(?:\s+(\{.*\}|Unkno
 
 
 class GenericModelingAgent:
-    def __init__(self, mcp_server_script: str, project_root: str = None, _prompt: str = None):
+    def __init__(self, mcp_server_script: str, project_root: str = None, _prompt: str = None, metamodel_file: str = None):
         self.mcp_server_script = mcp_server_script
+        self.metamodel_file = metamodel_file
         # project_root must be the directory that contains .opencode/skills/ and the data files.
         # Pass it explicitly from MetaAgent, or it defaults to two levels above this file.
         if project_root:
@@ -138,20 +140,24 @@ class GenericModelingAgent:
 
         return stdout.strip(), tool_calls
 
+    def _start_emf_session(self) -> str:
+        emf_base = os.environ.get("EMF_SERVER_BASE", "http://localhost:8096")
+        with open(self.metamodel_file, "rb") as f:
+            resp = requests.post(f"{emf_base}/metamodel/start", files={"file": f}, timeout=30)
+        resp.raise_for_status()
+        return resp.json()["sessionId"]
+
     def run(self, task: str, file: str) -> tuple[str, list[dict]]:
+        if self.metamodel_file and "$session_id" in task:
+            real_session_id = self._start_emf_session()
+            task = task.replace("$session_id", real_session_id)
         skill_name = Path(file).parent.name if file else None
-        session_note = (
-            "IMPORTANT: if the task contains '$session_id', that is a placeholder — "
-            "you MUST call start_metamodel_session_stateless FIRST to obtain a real session ID, "
-            "then use that session ID for ALL subsequent tool calls. "
-        )
         if skill_name:
             full_task = (
                 f'Before doing anything, you MUST load the skill "{skill_name}" with the skill tool. '
                 f'Do not load any other skill unless explicitly asked. '
                 "After loading it, strictly follow that skill. "
                 "IMPORTANT: some tasks require multiple sequential tool calls — do NOT stop after the first tool call, complete ALL steps the task requires. "
-                f"{session_note}"
                 "Do NOT use bash, glob, or file-search tools to locate files — pass file paths exactly as given to the MCP tools.\n\n"
                 f"Task: {task}"
             )
@@ -160,7 +166,6 @@ class GenericModelingAgent:
                 "Before doing anything, load the appropriate skill using the skill tool. "
                 "Then use the MCP tools as instructed by the skill. "
                 "IMPORTANT: some tasks require multiple sequential tool calls — do NOT stop after the first tool call, complete ALL steps the task requires. "
-                f"{session_note}"
                 "Do NOT use bash, glob, or file-search tools to locate files — pass file paths exactly as given to the MCP tools.\n\n"
                 f"Task: {task}"
             )

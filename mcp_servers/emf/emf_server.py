@@ -97,8 +97,6 @@ async def start_metamodel_session_stateless(metamodel_file_path: str) -> str:
           description="Create a new object instance. Provide session_id and class_name.")
 async def create_object(session_id: str, class_name: str) -> str:
     try:
-        if session_id not in active_sessions:
-            return f"Session {session_id} not found. Start a session first."
         resp = make_request('POST', f'/metamodel/{session_id}/{class_name}')
         if resp.status_code != 200:
             return f"Error creating {class_name}: {resp.text}"
@@ -115,8 +113,6 @@ async def create_object(session_id: str, class_name: str) -> str:
           description="Update a feature on an object. Provide session_id, class_name, object_id, feature_name, value (string or JSON).")
 async def update_feature(session_id: str, class_name: str, object_id: str, feature_name: str, value: str) -> str:
     try:
-        if session_id not in active_sessions:
-            return f"Session {session_id} not found."
         parsed_object_id = parse_id_from_user_input(object_id)
 
         # Try to auto-parse 'value' as JSON for lists/numbers/booleans; fallback to raw string

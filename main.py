@@ -50,13 +50,15 @@ async def main():
     generated = MegamodelToSkill(registry).generate_all_skills(base_dir=base_dir)
     print(f"> {len(generated)} skill(s) written: {[p.parent.name for p in generated]}")
 
-    meta = MetaAgent()
+    meta = MetaAgent(
+        metamodel_file="/Users/zakariahachm/Documents/Phd_Zakaria/Paper_Artifacts_SAM_2025/atl_zoo-master/EMF2KM3/Ecore.ecore"
+    )
     specialization_log_file = "debug_logs/specialization_iterations_emf.txt"
 
     print("\n>>> Starting EMF specialization loop...")
     apply_skill, get_skill = meta.specialize_agent(
         dataset,
-        threshold=0.75,
+        threshold=0.85,
         log_file=specialization_log_file,
     )
 
