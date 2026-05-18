@@ -1,5 +1,5 @@
 ================================================================================
-Specialization run started at 2026-05-15T09:29:21 | samples=50 | threshold=0.95 | max_iterations=10
+Specialization run started at 2026-05-15T09:29:21 | samples=50 | threshold=0.85 | max_iterations=10
 --------------------------------------------------------------------------------
 Iteration 0 started
 Iteration 0 | sample=1/50 | score=0.67
