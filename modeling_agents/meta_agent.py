@@ -114,7 +114,7 @@ class MetaAgent:
         self,
         dataset: list[dict],
         threshold: float = 0.5,
-        max_iterations: int = 10,
+        max_iterations: int = 5,
         log_file: str = "debug_logs/specialization_iterations1.txt",
     ):
         results = [(sample, None, None) for sample in dataset]

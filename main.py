@@ -42,30 +42,31 @@ async def main():
     )
     print(f"Loaded {len(dataset)} samples from EMF dataset.")
 
-    # Skills generation
-    print("\n> Populating registry and generating skill files...")
-    registry = MegamodelRegistry()
-    await populate_registry(registry)
-    base_dir = str(Path(".opencode/skills").resolve())
-    generated = MegamodelToSkill(registry).generate_all_skills(base_dir=base_dir)
-    print(f"> {len(generated)} skill(s) written: {[p.parent.name for p in generated]}")
+    for run in range(1, 3):
+        # Skills generation
+        print("\n> Populating registry and generating skill files...")
+        registry = MegamodelRegistry()
+        await populate_registry(registry)
+        base_dir = str(Path(".opencode/skills").resolve())
+        generated = MegamodelToSkill(registry).generate_all_skills(base_dir=base_dir)
+        print(f"> {len(generated)} skill(s) written: {[p.parent.name for p in generated]}")
 
-    meta = MetaAgent(
-        metamodel_file="/Users/zakariahachm/Documents/Phd_Zakaria/Paper_Artifacts_SAM_2025/atl_zoo-master/EMF2KM3/Ecore.ecore"
-    )
-    specialization_log_file = "debug_logs/specialization_iterations_emf.txt"
+        meta = MetaAgent(
+            metamodel_file="/Users/zakariahachm/Documents/Phd_Zakaria/Paper_Artifacts_SAM_2025/atl_zoo-master/EMF2KM3/Ecore.ecore"
+        )
+        specialization_log_file = f"debug_logs/specialization_iterations_emf_run{run}.txt"
 
-    print("\n>>> Starting EMF specialization loop...")
-    apply_skill, get_skill = meta.specialize_agent(
-        dataset,
-        threshold=0.85,
-        log_file=specialization_log_file,
-    )
+        print(f"\n>>> Starting EMF specialization loop (run {run})...")
+        apply_skill, get_skill = meta.specialize_agent(
+            dataset,
+            threshold=1,
+            log_file=specialization_log_file,
+        )
 
-    print("\n>>> Specialization complete.")
-    print(f"  Write skill : {apply_skill}")
-    print(f"  Read skill  : {get_skill}")
-    print(f"  Log         : {specialization_log_file}")
+        print("\n>>> Specialization complete.")
+        print(f"  Write skill : {apply_skill}")
+        print(f"  Read skill  : {get_skill}")
+        print(f"  Log         : {specialization_log_file}")
     
 if __name__ == "__main__":
     asyncio.run(main())
