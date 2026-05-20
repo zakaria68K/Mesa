@@ -1,0 +1,283 @@
+Specialization finished at 2026-05-15T10:38:46================================================================================
+Specialization run started at 2026-05-19T23:00:19 | samples=50 | threshold=1.0 | max_iterations=6
+--------------------------------------------------------------------------------
+Iteration 0 started
+Iteration 0 | sample=1/50 | score=1.00
+Iteration 0 | sample=2/50 | score=1.00
+Iteration 0 | sample=3/50 | score=0.67
+Iteration 0 | sample=4/50 | score=0.67
+Iteration 0 | sample=5/50 | score=0.00
+Iteration 0 | sample=6/50 | score=0.67
+Iteration 0 | sample=7/50 | score=1.00
+Iteration 0 | sample=8/50 | score=1.00
+Iteration 0 | sample=9/50 | score=0.67
+Iteration 0 | sample=10/50 | score=0.67
+Iteration 0 | sample=11/50 | score=1.00
+Iteration 0 | sample=12/50 | score=0.00
+Iteration 0 | sample=13/50 | score=1.00
+Iteration 0 | sample=14/50 | score=0.67
+Iteration 0 | sample=15/50 | score=1.00
+Iteration 0 | sample=16/50 | score=0.67
+Iteration 0 | sample=17/50 | score=0.67
+Iteration 0 | sample=18/50 | score=1.00
+Iteration 0 | sample=19/50 | score=0.67
+Iteration 0 | sample=20/50 | score=1.00
+Iteration 0 | sample=21/50 | score=0.67
+Iteration 0 | sample=22/50 | score=0.67
+Iteration 0 | sample=23/50 | score=1.00
+Iteration 0 | sample=24/50 | score=1.00
+Iteration 0 | sample=25/50 | score=0.67
+Iteration 0 | sample=26/50 | score=0.67
+Iteration 0 | sample=27/50 | score=0.67
+Iteration 0 | sample=28/50 | score=1.00
+Iteration 0 | sample=29/50 | score=1.00
+Iteration 0 | sample=30/50 | score=1.00
+Iteration 0 | sample=31/50 | score=0.33
+Iteration 0 | sample=32/50 | score=0.67
+Iteration 0 | sample=33/50 | score=0.67
+Iteration 0 | sample=34/50 | score=0.67
+Iteration 0 | sample=35/50 | score=1.00
+Iteration 0 | sample=36/50 | score=1.00
+Iteration 0 | sample=37/50 | score=0.67
+Iteration 0 | sample=38/50 | score=0.00
+Iteration 0 | sample=39/50 | score=1.00
+Iteration 0 | sample=40/50 | score=0.67
+Iteration 0 | sample=41/50 | score=1.00
+Iteration 0 | sample=42/50 | score=1.00
+Iteration 0 | sample=43/50 | score=1.00
+Iteration 0 | sample=44/50 | score=0.67
+Iteration 0 | sample=45/50 | score=1.00
+Iteration 0 | sample=46/50 | score=1.00
+Iteration 0 | sample=47/50 | score=1.00
+Iteration 0 | sample=48/50 | score=1.00
+Iteration 0 | sample=49/50 | score=1.00
+Iteration 0 | sample=50/50 | score=1.00
+Iteration 0 summary | avg_score=0.79 | failing_samples=24/50
+Iteration 0 refinement phase started
+Iteration 0 | refining skill=.opencode/skills/emf-read/SKILL.md | failures=14 | patterns=12 | examples_used=12
+Iteration 0 | refining skill=.opencode/skills/emf-write/SKILL.md | failures=10 | patterns=9 | examples_used=10
+Iteration 0 refinement_count=2
+--------------------------------------------------------------------------------
+Iteration 1 started
+Iteration 1 | sample=1/50 | score=0.67
+Iteration 1 | sample=2/50 | score=1.00
+Iteration 1 | sample=3/50 | score=1.00
+Iteration 1 | sample=4/50 | score=1.00
+Iteration 1 | sample=5/50 | score=0.67
+Iteration 1 | sample=6/50 | score=1.00
+Iteration 1 | sample=7/50 | score=1.00
+Iteration 1 | sample=8/50 | score=1.00
+Iteration 1 | sample=9/50 | score=0.67
+Iteration 1 | sample=10/50 | score=0.67
+Iteration 1 | sample=11/50 | score=1.00
+Iteration 1 | sample=12/50 | score=0.67
+Iteration 1 | sample=13/50 | score=1.00
+Iteration 1 | sample=14/50 | score=1.00
+Iteration 1 | sample=15/50 | score=1.00
+Iteration 1 | sample=16/50 | score=1.00
+Iteration 1 | sample=17/50 | score=0.67
+Iteration 1 | sample=18/50 | score=1.00
+Iteration 1 | sample=19/50 | score=0.00
+Iteration 1 | sample=20/50 | score=1.00
+Iteration 1 | sample=21/50 | score=0.67
+Iteration 1 | sample=22/50 | score=1.00
+Iteration 1 | sample=23/50 | score=1.00
+Iteration 1 | sample=24/50 | score=1.00
+Iteration 1 | sample=25/50 | score=0.67
+Iteration 1 | sample=26/50 | score=1.00
+Iteration 1 | sample=27/50 | score=0.67
+Iteration 1 | sample=28/50 | score=1.00
+Iteration 1 | sample=29/50 | score=1.00
+Iteration 1 | sample=30/50 | score=1.00
+Iteration 1 | sample=31/50 | score=0.67
+Iteration 1 | sample=32/50 | score=0.67
+Iteration 1 | sample=33/50 | score=1.00
+Iteration 1 | sample=34/50 | score=1.00
+Iteration 1 | sample=35/50 | score=0.67
+Iteration 1 | sample=36/50 | score=1.00
+Iteration 1 | sample=37/50 | score=1.00
+Iteration 1 | sample=38/50 | score=0.67
+Iteration 1 | sample=39/50 | score=1.00
+Iteration 1 | sample=40/50 | score=0.67
+Iteration 1 | sample=41/50 | score=1.00
+Iteration 1 | sample=42/50 | score=1.00
+Iteration 1 | sample=43/50 | score=1.00
+Iteration 1 | sample=44/50 | score=0.33
+Iteration 1 | sample=45/50 | score=1.00
+Iteration 1 | sample=46/50 | score=1.00
+Iteration 1 | sample=47/50 | score=1.00
+Iteration 1 | sample=48/50 | score=1.00
+Iteration 1 | sample=49/50 | score=1.00
+Iteration 1 | sample=50/50 | score=1.00
+Iteration 1 summary | avg_score=0.87 | failing_samples=16/50
+Iteration 1 refinement phase started
+Iteration 1 | refining skill=.opencode/skills/emf-write/SKILL.md | failures=8 | patterns=7 | examples_used=8
+Iteration 1 | refining skill=.opencode/skills/emf-read/SKILL.md | failures=8 | patterns=7 | examples_used=8
+Iteration 1 refinement_count=2
+--------------------------------------------------------------------------------
+Iteration 2 started
+Iteration 2 | sample=1/50 | score=0.67
+Iteration 2 | sample=2/50 | score=1.00
+Iteration 2 | sample=3/50 | score=1.00
+Iteration 2 | sample=4/50 | score=0.67
+Iteration 2 | sample=5/50 | score=1.00
+Iteration 2 | sample=6/50 | score=0.67
+Iteration 2 | sample=7/50 | score=1.00
+Iteration 2 | sample=8/50 | score=1.00
+Iteration 2 | sample=9/50 | score=0.67
+Iteration 2 | sample=10/50 | score=0.67
+Iteration 2 | sample=11/50 | score=0.67
+Iteration 2 | sample=12/50 | score=0.67
+Iteration 2 | sample=13/50 | score=1.00
+Iteration 2 | sample=14/50 | score=1.00
+Iteration 2 | sample=15/50 | score=1.00
+Iteration 2 | sample=16/50 | score=1.00
+Iteration 2 | sample=17/50 | score=0.67
+Iteration 2 | sample=18/50 | score=1.00
+Iteration 2 | sample=19/50 | score=0.33
+Iteration 2 | sample=20/50 | score=1.00
+Iteration 2 | sample=21/50 | score=1.00
+Iteration 2 | sample=22/50 | score=1.00
+Iteration 2 | sample=23/50 | score=1.00
+Iteration 2 | sample=24/50 | score=1.00
+Iteration 2 | sample=25/50 | score=0.67
+Iteration 2 | sample=26/50 | score=1.00
+Iteration 2 | sample=27/50 | score=1.00
+Iteration 2 | sample=28/50 | score=1.00
+Iteration 2 | sample=29/50 | score=1.00
+Iteration 2 | sample=30/50 | score=1.00
+Iteration 2 | sample=31/50 | score=0.67
+Iteration 2 | sample=32/50 | score=0.67
+Iteration 2 | sample=33/50 | score=0.67
+Iteration 2 | sample=34/50 | score=0.67
+Iteration 2 | sample=35/50 | score=1.00
+Iteration 2 | sample=36/50 | score=1.00
+Iteration 2 | sample=37/50 | score=1.00
+Iteration 2 | sample=38/50 | score=1.00
+Iteration 2 | sample=39/50 | score=1.00
+Iteration 2 | sample=40/50 | score=0.67
+Iteration 2 | sample=41/50 | score=1.00
+Iteration 2 | sample=42/50 | score=1.00
+Iteration 2 | sample=43/50 | score=1.00
+Iteration 2 | sample=44/50 | score=1.00
+Iteration 2 | sample=45/50 | score=1.00
+Iteration 2 | sample=46/50 | score=0.67
+Iteration 2 | sample=47/50 | score=1.00
+Iteration 2 | sample=48/50 | score=1.00
+Iteration 2 | sample=49/50 | score=1.00
+Iteration 2 | sample=50/50 | score=1.00
+Iteration 2 summary | avg_score=0.89 | failing_samples=16/50
+Iteration 2 refinement phase started
+Iteration 2 | refining skill=.opencode/skills/emf-write/SKILL.md | failures=8 | patterns=6 | examples_used=8
+Iteration 2 | refining skill=.opencode/skills/emf-read/SKILL.md | failures=8 | patterns=4 | examples_used=8
+Iteration 2 refinement_count=2
+--------------------------------------------------------------------------------
+Iteration 3 started
+Iteration 3 | sample=1/50 | score=0.67
+Iteration 3 | sample=2/50 | score=1.00
+Iteration 3 | sample=3/50 | score=1.00
+Iteration 3 | sample=4/50 | score=0.00
+Iteration 3 | sample=5/50 | score=0.67
+Iteration 3 | sample=6/50 | score=0.67
+Iteration 3 | sample=7/50 | score=0.67
+Iteration 3 | sample=8/50 | score=1.00
+Iteration 3 | sample=9/50 | score=0.67
+Iteration 3 | sample=10/50 | score=0.67
+Iteration 3 | sample=11/50 | score=1.00
+Iteration 3 | sample=12/50 | score=0.67
+Iteration 3 | sample=13/50 | score=1.00
+Iteration 3 | sample=14/50 | score=1.00
+Iteration 3 | sample=15/50 | score=1.00
+Iteration 3 | sample=16/50 | score=1.00
+Iteration 3 | sample=17/50 | score=1.00
+Iteration 3 | sample=18/50 | score=1.00
+Iteration 3 | sample=19/50 | score=0.33
+Iteration 3 | sample=20/50 | score=1.00
+Iteration 3 | sample=21/50 | score=0.67
+Iteration 3 | sample=22/50 | score=1.00
+Iteration 3 | sample=23/50 | score=1.00
+Iteration 3 | sample=24/50 | score=1.00
+Iteration 3 | sample=25/50 | score=0.67
+Iteration 3 | sample=26/50 | score=1.00
+Iteration 3 | sample=27/50 | score=0.67
+Iteration 3 | sample=28/50 | score=1.00
+Iteration 3 | sample=29/50 | score=0.00
+Iteration 3 | sample=30/50 | score=0.00
+Iteration 3 | sample=31/50 | score=0.00
+Iteration 3 | sample=32/50 | score=0.00
+Iteration 3 | sample=33/50 | score=0.00
+Iteration 3 | sample=34/50 | score=0.00
+Iteration 3 | sample=35/50 | score=0.00
+Iteration 3 | sample=36/50 | score=0.00
+Iteration 3 | sample=37/50 | score=0.67
+Iteration 3 | sample=38/50 | score=1.00
+Iteration 3 | sample=39/50 | score=1.00
+Iteration 3 | sample=40/50 | score=0.67
+Iteration 3 | sample=41/50 | score=1.00
+Iteration 3 | sample=42/50 | score=1.00
+Iteration 3 | sample=43/50 | score=1.00
+Iteration 3 | sample=44/50 | score=1.00
+Iteration 3 | sample=45/50 | score=1.00
+Iteration 3 | sample=46/50 | score=1.00
+Iteration 3 | sample=47/50 | score=1.00
+Iteration 3 | sample=48/50 | score=1.00
+Iteration 3 | sample=49/50 | score=0.67
+Iteration 3 | sample=50/50 | score=1.00
+Iteration 3 summary | avg_score=0.72 | failing_samples=23/50
+Iteration 3 refinement phase started
+Iteration 3 | refining skill=.opencode/skills/emf-write/SKILL.md | failures=14 | patterns=12 | examples_used=12
+Iteration 3 | refining skill=.opencode/skills/emf-read/SKILL.md | failures=9 | patterns=6 | examples_used=9
+Iteration 3 refinement_count=2
+--------------------------------------------------------------------------------
+Iteration 4 started
+Iteration 4 | sample=1/50 | score=0.33
+Iteration 4 | sample=2/50 | score=1.00
+Iteration 4 | sample=3/50 | score=1.00
+Iteration 4 | sample=4/50 | score=0.67
+Iteration 4 | sample=5/50 | score=0.67
+Iteration 4 | sample=6/50 | score=0.67
+Iteration 4 | sample=7/50 | score=1.00
+Iteration 4 | sample=8/50 | score=1.00
+Iteration 4 | sample=9/50 | score=1.00
+Iteration 4 | sample=10/50 | score=0.67
+Iteration 4 | sample=11/50 | score=1.00
+Iteration 4 | sample=12/50 | score=0.67
+Iteration 4 | sample=13/50 | score=1.00
+Iteration 4 | sample=14/50 | score=1.00
+Iteration 4 | sample=15/50 | score=1.00
+Iteration 4 | sample=16/50 | score=1.00
+Iteration 4 | sample=17/50 | score=0.67
+Iteration 4 | sample=18/50 | score=1.00
+Iteration 4 | sample=19/50 | score=0.67
+Iteration 4 | sample=20/50 | score=1.00
+Iteration 4 | sample=21/50 | score=0.67
+Iteration 4 | sample=22/50 | score=1.00
+Iteration 4 | sample=23/50 | score=1.00
+Iteration 4 | sample=24/50 | score=1.00
+Iteration 4 | sample=25/50 | score=0.67
+Iteration 4 | sample=26/50 | score=0.00
+Iteration 4 | sample=27/50 | score=0.00
+Iteration 4 | sample=28/50 | score=1.00
+Iteration 4 | sample=29/50 | score=1.00
+Iteration 4 | sample=30/50 | score=1.00
+Iteration 4 | sample=31/50 | score=0.67
+Iteration 4 | sample=32/50 | score=0.67
+Iteration 4 | sample=33/50 | score=1.00
+Iteration 4 | sample=34/50 | score=0.67
+Iteration 4 | sample=35/50 | score=1.00
+Iteration 4 | sample=36/50 | score=0.67
+Iteration 4 | sample=37/50 | score=1.00
+Iteration 4 | sample=38/50 | score=1.00
+Iteration 4 | sample=39/50 | score=1.00
+Iteration 4 | sample=40/50 | score=0.67
+Iteration 4 | sample=41/50 | score=1.00
+Iteration 4 | sample=42/50 | score=1.00
+Iteration 4 | sample=43/50 | score=1.00
+Iteration 4 | sample=44/50 | score=1.00
+Iteration 4 | sample=45/50 | score=1.00
+Iteration 4 | sample=46/50 | score=1.00
+Iteration 4 | sample=47/50 | score=1.00
+Iteration 4 | sample=48/50 | score=1.00
+Iteration 4 | sample=49/50 | score=1.00
+Iteration 4 | sample=50/50 | score=1.00
+Iteration 4 summary | avg_score=0.85 | failing_samples=17/50
