@@ -51,16 +51,16 @@ async def main():
 
     # generate skill files from megamodel registry
     print("\n> Generating skill files from megamodel...")
-    skill_generator = MegamodelToSkill(registry)
-    skill_generator.generate_patterns()
+    #skill_generator = MegamodelToSkill(registry)
+    #skill_generator.generate_patterns()
 
     meta = MetaAgent()
-    specialization_log_file = "debug_logs/specialization_iterations1.txt"
+    specialization_log_file = "debug_logs/specialization_iterations_run2.txt"
 
     print("\n>>> Starting specialization loop...")
     apply_skill, get_skill = meta.specialize_agent(
         dataset,
-        threshold=0.75,
+        threshold=1.0,
         log_file=specialization_log_file,
     )
 

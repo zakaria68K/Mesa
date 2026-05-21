@@ -12,7 +12,9 @@ You are a Model-Driven Engineering agent with access to an ATL MCP server.
 ## Available MCP Tools
 - `apply_KM32DSL_transformation_tool` — Input metamodel: KM3, Output metamodel: DSL. This tool transforms KM3 model into DSL model.
 - `apply_KM32EMF_transformation_tool` — Input metamodel: KM3, Output metamodel: EMF. This tool transforms KM3 model into EMF model.
-- `apply_Mantis2XML_transformation_tool` — Input metamodel: Mantis, Output metamodel: XML. This tool transforms Mantis model into XML model.
-- `apply_PNML2XML_transformation_tool` — Input metamodel: PNML, Output metamodel: XML. This tool transforms PNML model into XML model.
-- `apply_SimpleClass2SimpleRDBMS_transformation_tool` — Input metamodel: SimpleClass, Output metamodel: SimpleRDBMS. This tool transforms SimpleClass model into SimpleRDBMS model.
-- `apply_XML2Ant_transformation_tool` — Input metamodel: XML, Output metamodel: Ant. This tool transforms XML model into Ant model.
+- `apply_Mantis2XML_transformation_tool` — Transforms Mantis model into XML model.
+- `apply_PNML2XML_transformation_tool` — Transforms PNML model into XML model.
+- `apply_SimpleClass2SimpleRDBMS_transformation_tool` — Transforms SimpleClass model into SimpleRDBMS model.
+- `apply_XML2Ant_transformation_tool` — Transforms XML model into Ant model.
+- `apply_Ant2Maven_transformation_tool` — Transforms Ant model into Maven model.
+- `apply_KM32DSL_transformation_tool` — Transforms KM3 model into DSL model.

@@ -1,9 +1,11 @@
 import json
+import os
 import re
 from collections import defaultdict
 from pathlib import Path
 from datetime import datetime
 from openai import OpenAI
+from megamodel.server_config import client
 from modeling_agents.generic_agent import GenericModelingAgent
 
 # The directory that contains .opencode/skills/ and the atl_zoo/ data.
@@ -123,7 +125,7 @@ class MetaAgent:
         self,
         dataset: list[dict],
         threshold: float = 0.5,
-        max_iterations: int = 10,
+        max_iterations: int = 3,
         log_file: str = "debug_logs/specialization_iterations1.txt",
     ):
         results = [(sample, None, None) for sample in dataset]
@@ -290,12 +292,8 @@ class MetaAgent:
         return matched / len(expected_apis)
 
     def refine_agent_definition_batch(self, failures_payload: dict, skill_file: str, backup: str = None) -> str:
-        client = OpenAI(
-            base_url="https://ollama.kher.nl/v1",
-            api_key="ollama",
-            timeout=120.0,
-            max_retries=2,
-        )
+        openai_model = os.getenv("EVAL_SYSTEM_MODEL") or os.getenv("OPENAI_MODEL", "gpt-4.1-mini")
+        client = OpenAI(timeout=60.0, max_retries=2)
         prompt_content = Path(skill_file).read_text()
         top_patterns = failures_payload.get("pattern_summary", [])[:10]
         examples = failures_payload.get("examples", [])[:8]
@@ -320,7 +318,8 @@ class MetaAgent:
         ]
 
         response = client.chat.completions.create(
-            model="gemma4:26b",
+            model=openai_model,
+            temperature=0.1,
             messages=[
                 {
                     "role": "user",
@@ -347,8 +346,7 @@ Instructions:
 - Return ONLY the complete raw SKILL.md content with no markdown fences
 """
                 }
-            ],
-            temperature=0.1,
+            ]
         )
 
         refined_content = response.choices[0].message.content
