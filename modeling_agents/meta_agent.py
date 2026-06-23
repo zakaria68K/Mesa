@@ -125,8 +125,8 @@ class MetaAgent:
         self,
         dataset: list[dict],
         threshold: float = 0.5,
-        max_iterations: int = 3,
-        log_file: str = "debug_logs/specialization_iterations1.txt",
+        max_iterations: int = 4,
+        log_file: str = "debug_logs/specialization_iterations2.txt",
     ):
         results = [(sample, None, None) for sample in dataset]
         prev_avg_score = None
