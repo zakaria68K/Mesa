@@ -38,7 +38,7 @@ def load_specialization_dataset(dataset_path: str) -> list[dict]:
 async def main():
 
     dataset = load_specialization_dataset(
-        "/Users/zakariahachm/Documents/Phd_Zakaria/MESA/datasets/emf_testing_dataset_50.json"
+        "/Users/anonymoushachm/Documents/Phd_anonymous/MESA/datasets/emf_testing_dataset_50.json"
     )
     print(f"Loaded {len(dataset)} samples from EMF dataset.")
 
@@ -52,7 +52,7 @@ async def main():
         print(f"> {len(generated)} skill(s) written: {[p.parent.name for p in generated]}")
 
         meta = MetaAgent(
-            metamodel_file="/Users/zakariahachm/Documents/Phd_Zakaria/Paper_Artifacts_SAM_2025/atl_zoo-master/EMF2KM3/Ecore.ecore"
+            metamodel_file="/Users/anonymoushachm/Documents/Phd_anonymous/Paper_Artifacts_SAM_2025/atl_zoo-master/EMF2KM3/Ecore.ecore"
         )
         specialization_log_file = f"debug_logs/specialization_iterations_emf_run{run}.txt"
 
