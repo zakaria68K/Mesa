@@ -109,6 +109,30 @@ class MetaAgent:
             "pattern_summary": pattern_summary,
             "examples": trimmed_selected,
         }
+    def evaluate_no_skill_baseline(self, dataset: list[dict], log_file: str) -> float:
+        scores = []
+        for sample in dataset:
+            _, actual_calls = self.agent.run(sample["instruction"], file=None)
+            score = self.evaluate(actual_calls, sample["relevant_apis"])
+            scores.append(score)
+            self._append_log(log_file, f"BASELINE | score={score:.2f}")
+        avg = sum(scores) / len(scores)
+        self._append_log(log_file, f"BASELINE avg_score={avg:.2f}")
+        print(f">>> No-skill baseline score: {avg:.2f}")
+        return avg
+
+    def evaluate_on_test_set(self, test_dataset: list[dict], log_file: str) -> float:
+        scores = []
+        for sample in test_dataset:
+            skill_file = self._skill_for(sample["relevant_apis"])
+            _, actual_calls = self.agent.run(sample["instruction"], skill_file)
+            score = self.evaluate(actual_calls, sample["relevant_apis"])
+            scores.append(score)
+            self._append_log(log_file, f"TEST | score={score:.2f}")
+        avg = sum(scores) / len(scores)
+        self._append_log(log_file, f"TEST avg_score={avg:.2f}")
+        print(f">>> Held-out test score: {avg:.2f}")
+        return avg
 
     def specialize_agent(
         self,
