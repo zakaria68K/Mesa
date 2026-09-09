@@ -137,7 +137,7 @@ class GenericModelingAgent:
 
         return stdout.strip(), tool_calls
 
-    def run(self, task: str, file: str) -> tuple[str, list[dict]]:
+    def run(self, task: str, file: str | None) -> tuple[str, list[dict]]:
         skill_name = Path(file).parent.name if file else None
         if skill_name:
             full_task = (
@@ -149,8 +149,8 @@ class GenericModelingAgent:
             )
         else:
             full_task = (
-                "Before doing anything, load the appropriate skill using the skill tool. "
-                "Then use the MCP tools as instructed by the skill. "
+                "Use only the MCP tools available to complete the following task. "
+                "Do NOT load any skill. "
                 "Do NOT use bash, glob, or file-search tools to locate files — pass file paths exactly as given to the MCP tools.\n\n"
                 f"Task: {task}"
             )
