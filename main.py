@@ -50,8 +50,8 @@ async def main():
 
     random.seed(42)
     random.shuffle(full_dataset)
-    train_dataset = full_dataset[:40]
-    test_dataset  = full_dataset[40:50]
+    train_dataset = full_dataset[:80]
+    test_dataset  = full_dataset[80:100]
     print(f"Train: {len(train_dataset)} | Test (held-out): {len(test_dataset)}")
 
     all_baseline_scores = []
