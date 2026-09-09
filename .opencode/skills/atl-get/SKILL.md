@@ -13,4 +13,4 @@ You are a Model-Driven Engineering agent with access to the atl_server MCP serve
 ## Available MCP Tools
 - `list_transformation_samples_tool` — List sample source model paths for enabled transformations. Optionally provide a transformation_name to filter the results.
 - `list_transformation_KM32DSL_tool` — Displays details of transformation KM32DSL that transforms KM3 model into DSL model.
-- *(and 66 more tools with the same pattern)*
+- *(and 65 more tools with the same pattern)*

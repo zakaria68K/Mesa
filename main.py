@@ -65,7 +65,7 @@ async def main():
         # Reset skill files to initial state
         print("\n> Populating registry and generating skill files...")
         registry = MegamodelRegistry()
-        await populate_registry(registry)
+        await populate_registry(registry, servers=["emf"])
         base_dir = str(Path(".opencode/skills").resolve())
         generated = MegamodelToSkill(registry).generate_all_skills(base_dir=base_dir)
         print(f"> {len(generated)} skill(s) written: {[p.parent.name for p in generated]}")
