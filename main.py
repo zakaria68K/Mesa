@@ -40,8 +40,7 @@ def load_specialization_dataset(dataset_path: str) -> list[dict]:
 async def main():
     N_RUNS       = 4
     MAX_ITER     = 8
-    DATASET_PATH = "/Users/anonymoushachm/Documents/Phd_anonymous/MESA/datasets/testing_datatset.json"
-
+    DATASET_PATH = "/Users/zakariahachm/Documents/Phd_Zakaria/MESA/datasets/testing_datatset.json"
     print("MESA Megamodel Instance Initialization")
     registry = MegamodelRegistry()
     await populate_registry(registry)
