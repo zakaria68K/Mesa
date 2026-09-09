@@ -147,7 +147,7 @@ class GenericModelingAgent:
         resp.raise_for_status()
         return resp.json()["sessionId"]
 
-    def run(self, task: str, file: str) -> tuple[str, list[dict]]:
+    def run(self, task: str, file: str | None) -> tuple[str, list[dict]]:
         if self.metamodel_file and "$session_id" in task:
             real_session_id = self._start_emf_session()
             task = task.replace("$session_id", real_session_id)
@@ -163,8 +163,8 @@ class GenericModelingAgent:
             )
         else:
             full_task = (
-                "Before doing anything, load the appropriate skill using the skill tool. "
-                "Then use the MCP tools as instructed by the skill. "
+                "Use only the MCP tools available to complete the following task. "
+                "Do NOT load any skill. "
                 "IMPORTANT: some tasks require multiple sequential tool calls — do NOT stop after the first tool call, complete ALL steps the task requires. "
                 "Do NOT use bash, glob, or file-search tools to locate files — pass file paths exactly as given to the MCP tools.\n\n"
                 f"Task: {task}"
