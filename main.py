@@ -1,4 +1,5 @@
 import asyncio
+import datetime
 import json
 import random
 import statistics
@@ -12,11 +13,44 @@ from megamodel.megamodel import MegamodelRegistry
 from megamodel.megamodel_instance import populate_registry
 from modeling_agents.meta_agent import MetaAgent
 
-N_RUNS       = 4
+RUN_ID   = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+N_RUNS       = 1
 MAX_ITER     = 8
 DATASET_PATH = "datasets/emf_testing_dataset_50.json"
 METAMODEL    = "datasets/Ecore.ecore"
-STATE_FILE   = "debug_logs/emf_run_state.json"
+STATE_FILE   = f"debug_logs/{RUN_ID}_emf_run_state.json"
+
+
+from collections import defaultdict
+
+def stratified_split(dataset, test_size=20, seed=42):
+    random.seed(seed)
+
+    groups = defaultdict(list)
+    for item in dataset:
+        level = item.get("level", "none")
+        groups[level].append(item)
+
+    for key in groups:
+        random.shuffle(groups[key])
+
+    train, test = [], []
+    total = len(dataset)
+    test_ratio = test_size / total
+
+    for level, items in groups.items():
+        n_test = max(1, round(len(items) * test_ratio))
+        test.extend(items[:n_test])
+        train.extend(items[n_test:])
+
+    # Enforce exactly test_size
+    random.shuffle(test)
+    while len(test) > test_size:
+        train.append(test.pop())
+    while len(test) < test_size and train:
+        test.append(train.pop())
+
+    return train, test
 
 
 def load_specialization_dataset(dataset_path: str) -> list[dict]:
@@ -93,7 +127,7 @@ def save_summary(state: dict, train_size: int, test_size: int) -> None:
 
     summary_text = "\n".join(lines)
     print(f"\n{summary_text}")
-    Path("debug_logs/emf_summary.txt").write_text(summary_text)
+    Path(f"debug_logs/{RUN_ID}_emf_summary.txt").write_text(summary_text)
 
 
 async def main():
@@ -102,11 +136,9 @@ async def main():
     full_dataset = load_specialization_dataset(DATASET_PATH)
     print(f"Loaded {len(full_dataset)} samples from EMF dataset.")
 
-    random.seed(42)
-    random.shuffle(full_dataset)
-    train_dataset = full_dataset[:80]
-    test_dataset  = full_dataset[80:100]
+    train_dataset, test_dataset = stratified_split(full_dataset, test_size=20)
     print(f"Train: {len(train_dataset)} | Test (held-out): {len(test_dataset)}")
+
 
     state = load_state()
     completed_runs = set(state["completed_runs"])
@@ -119,9 +151,9 @@ async def main():
 
         print(f"\n{'='*50}\nRUN {run_id + 1}/{N_RUNS}\n{'='*50}")
 
-        baseline_log = f"debug_logs/emf_run{run_id + 1}_baseline.txt"
-        spec_log     = f"debug_logs/emf_run{run_id + 1}_specialization.txt"
-        test_log     = f"debug_logs/emf_run{run_id + 1}_test.txt"
+        baseline_log = f"debug_logs/{RUN_ID}_emf_baseline.txt"
+        spec_log     = f"debug_logs/{RUN_ID}_emf_specialization.txt"
+        test_log     = f"debug_logs/{RUN_ID}_emf_test.txt"
 
         # Reset skill files to initial state
         print("\n> Populating registry and generating skill files...")
