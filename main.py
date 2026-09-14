@@ -2,8 +2,8 @@ import asyncio
 import datetime
 import json
 import random
-import statistics
 import sys
+from collections import defaultdict
 from pathlib import Path
 from dotenv import load_dotenv
 load_dotenv()
@@ -13,57 +13,45 @@ from megamodel.megamodel import MegamodelRegistry
 from megamodel.megamodel_instance import populate_registry
 from modeling_agents.meta_agent import MetaAgent
 
-RUN_ID   = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
-N_RUNS       = 1
+RUN_ID       = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
 MAX_ITER     = 8
 DATASET_PATH = "datasets/emf_testing_dataset_50.json"
 METAMODEL    = "datasets/Ecore.ecore"
-STATE_FILE   = f"debug_logs/{RUN_ID}_emf_run_state.json"
+CHECKPOINT   = "debug_logs/emf_checkpoint.json"
 
-
-from collections import defaultdict
 
 def stratified_split(dataset, test_size=20, seed=42):
     random.seed(seed)
-
     groups = defaultdict(list)
     for item in dataset:
         level = item.get("level", "none")
         groups[level].append(item)
-
     for key in groups:
         random.shuffle(groups[key])
-
     train, test = [], []
     total = len(dataset)
     test_ratio = test_size / total
-
     for level, items in groups.items():
         n_test = max(1, round(len(items) * test_ratio))
         test.extend(items[:n_test])
         train.extend(items[n_test:])
-
-    # Enforce exactly test_size
     random.shuffle(test)
     while len(test) > test_size:
         train.append(test.pop())
     while len(test) < test_size and train:
         test.append(train.pop())
-
     return train, test
 
 
 def load_specialization_dataset(dataset_path: str) -> list[dict]:
     with open(dataset_path, "r") as f:
         raw_dataset = json.load(f)
-
     if isinstance(raw_dataset, dict):
         dataset_sections = raw_dataset.values()
     elif isinstance(raw_dataset, list):
         dataset_sections = [raw_dataset]
     else:
         raise TypeError(f"Unsupported dataset format: {type(raw_dataset).__name__}")
-
     samples: list[dict] = []
     for section in dataset_sections:
         if not isinstance(section, list):
@@ -74,64 +62,69 @@ def load_specialization_dataset(dataset_path: str) -> list[dict]:
             if "instruction" not in sample or "relevant_apis" not in sample:
                 continue
             samples.append(sample)
-
     return samples
 
 
-def load_state() -> dict:
-    if Path(STATE_FILE).exists():
-        with open(STATE_FILE) as f:
-            return json.load(f)
-    return {"completed_runs": [], "all_baseline_scores": [], "all_test_scores": []}
+def load_checkpoint() -> dict:
+    if Path(CHECKPOINT).exists():
+        with open(CHECKPOINT) as f:
+            cp = json.load(f)
+            print(f">>> Checkpoint found: phase={cp.get('phase')} | sample={cp.get('sample_index')}")
+            return cp
+    return {
+        "run_id": RUN_ID,
+        "phase": "baseline",
+        "sample_index": 0,
+        "baseline_scores": [],
+        "test_scores": [],
+        "baseline_avg": None,
+        "test_avg": None,
+    }
 
 
-def save_state(state: dict) -> None:
+def save_checkpoint(cp: dict) -> None:
     Path("debug_logs").mkdir(exist_ok=True)
-    with open(STATE_FILE, "w") as f:
-        json.dump(state, f, indent=2)
+    with open(CHECKPOINT, "w") as f:
+        json.dump(cp, f, indent=2)
 
 
-def save_summary(state: dict, train_size: int, test_size: int) -> None:
-    completed      = len(state["all_baseline_scores"])
-    baseline_scores = state["all_baseline_scores"]
-    test_scores     = state["all_test_scores"]
-
+def save_summary(cp: dict, train_size: int, test_size: int) -> None:
     lines = [
         "=" * 50,
-        "EMF RESULTS SUMMARY (incremental)",
+        "EMF RESULTS SUMMARY",
         "=" * 50,
-        f"Runs completed : {completed}/{N_RUNS}",
-        f"Iterations     : {MAX_ITER}",
-        f"Train size     : {train_size}",
-        f"Test size      : {test_size}",
+        f"Run ID     : {cp['run_id']}",
+        f"Phase      : {cp['phase']}",
+        f"Iterations : {MAX_ITER}",
+        f"Train size : {train_size}",
+        f"Test size  : {test_size}",
         "",
         "Baseline (no skill)",
-        f"  scores : {[round(s, 2) for s in baseline_scores]}",
-    ]
-    if len(baseline_scores) > 1:
-        lines += [
-            f"  mean   : {statistics.mean(baseline_scores):.2f}",
-            f"  std    : {statistics.stdev(baseline_scores):.2f}",
-        ]
-    lines += [
+        f"  scores : {[round(s, 2) for s in cp['baseline_scores']]}",
+        f"  avg    : {cp['baseline_avg']:.2f}" if cp['baseline_avg'] is not None else "  avg    : pending",
         "",
         "After specialization (held-out test)",
-        f"  scores : {[round(s, 2) for s in test_scores]}",
+        f"  scores : {[round(s, 2) for s in cp['test_scores']]}",
+        f"  avg    : {cp['test_avg']:.2f}" if cp['test_avg'] is not None else "  avg    : pending",
+        "=" * 50,
     ]
-    if len(test_scores) > 1:
-        lines += [
-            f"  mean   : {statistics.mean(test_scores):.2f}",
-            f"  std    : {statistics.stdev(test_scores):.2f}",
-        ]
-    lines.append("=" * 50)
-
     summary_text = "\n".join(lines)
     print(f"\n{summary_text}")
-    Path(f"debug_logs/{RUN_ID}_emf_summary.txt").write_text(summary_text)
+    Path(f"debug_logs/{cp['run_id']}_emf_summary.txt").write_text(summary_text)
 
 
 async def main():
     Path("debug_logs").mkdir(exist_ok=True)
+
+    cp = load_checkpoint()
+    run_id = cp.get("run_id", RUN_ID)
+
+    baseline_log = f"debug_logs/{run_id}_emf_baseline.txt"
+    spec_log     = f"debug_logs/{run_id}_emf_specialization.txt"
+    test_log     = f"debug_logs/{run_id}_emf_test.txt"
+    spec_ckpt    = f"debug_logs/{run_id}_emf_spec_checkpoint.json"
+
+    print(f"MESA EMF Run — {run_id}")
 
     full_dataset = load_specialization_dataset(DATASET_PATH)
     print(f"Loaded {len(full_dataset)} samples from EMF dataset.")
@@ -139,37 +132,30 @@ async def main():
     train_dataset, test_dataset = stratified_split(full_dataset, test_size=20)
     print(f"Train: {len(train_dataset)} | Test (held-out): {len(test_dataset)}")
 
-
-    state = load_state()
-    completed_runs = set(state["completed_runs"])
-    print(f"Resuming from state: {len(completed_runs)}/{N_RUNS} runs already done.")
-
-    for run_id in range(N_RUNS):
-        if run_id in completed_runs:
-            print(f"\n[Run {run_id + 1}] Already completed, skipping.")
-            continue
-
-        print(f"\n{'='*50}\nRUN {run_id + 1}/{N_RUNS}\n{'='*50}")
-
-        baseline_log = f"debug_logs/{RUN_ID}_emf_baseline.txt"
-        spec_log     = f"debug_logs/{RUN_ID}_emf_specialization.txt"
-        test_log     = f"debug_logs/{RUN_ID}_emf_test.txt"
-
-        # Reset skill files to initial state
+    # Only regenerate skills if starting fresh
+    if cp["phase"] == "baseline":
         print("\n> Populating registry and generating skill files...")
         registry = MegamodelRegistry()
         await populate_registry(registry, servers=["emf"])
         base_dir = str(Path(".opencode/skills").resolve())
         generated = MegamodelToSkill(registry).generate_all_skills(base_dir=base_dir)
         print(f"> {len(generated)} skill(s) written: {[p.parent.name for p in generated]}")
+    else:
+        print("\n> Resuming — skipping skill regeneration to preserve existing SKILL.md")
+        registry = MegamodelRegistry()
+        await populate_registry(registry, servers=["emf"])
 
-        meta = MetaAgent(metamodel_file=METAMODEL)
+    meta = MetaAgent(metamodel_file=METAMODEL)
 
-        # --- Baseline (no skill, sample by sample, saved incrementally) ---
-        print(f"\n[Run {run_id + 1}] Evaluating no-skill baseline...")
-        baseline_scores = []
-        for i, sample in enumerate(test_dataset):
-            print(f"  [Baseline {i+1}/{len(test_dataset)}] {sample['instruction']}")
+    # ── PHASE 1: Baseline ────────────────────────────────────
+    if cp["phase"] == "baseline":
+        print(f"\nEvaluating no-skill baseline (resuming from sample {cp['sample_index'] + 1})...")
+        baseline_scores = cp["baseline_scores"]
+
+        for i in range(cp["sample_index"], len(test_dataset)):
+            sample = test_dataset[i]
+            pct = round((i / len(test_dataset)) * 100)
+            print(f"  [Baseline {i+1}/{len(test_dataset)} — {pct}%] {sample['instruction']}")
             _, actual_calls = meta.agent.run(sample["instruction"], file=None)
             score = meta.evaluate(actual_calls, sample["relevant_apis"])
             baseline_scores.append(score)
@@ -178,25 +164,42 @@ async def main():
                 baseline_log,
                 f"sample={i+1}/{len(test_dataset)} | score={score:.2f} | instruction={sample['instruction']}"
             )
+            cp["baseline_scores"] = baseline_scores
+            cp["sample_index"] = i + 1
+            save_checkpoint(cp)
 
         baseline_avg = sum(baseline_scores) / len(baseline_scores)
+        cp["baseline_avg"] = baseline_avg
+        cp["phase"] = "specialization"
+        cp["sample_index"] = 0
+        save_checkpoint(cp)
         meta._append_log(baseline_log, f"BASELINE avg_score={baseline_avg:.2f}")
-        print(f">>> Baseline avg score: {baseline_avg:.2f}")
+        print(f">>> Baseline complete — avg score: {baseline_avg:.2f}")
 
-        # --- Specialization loop ---
-        print(f"\n[Run {run_id + 1}] Starting specialization ({MAX_ITER} iterations)...")
+    # ── PHASE 2: Specialization ──────────────────────────────
+    if cp["phase"] == "specialization":
+        print(f"\nStarting specialization ({MAX_ITER} iterations)...")
         meta.specialize_agent(
             train_dataset,
             threshold=2.0,
             max_iterations=MAX_ITER,
             log_file=spec_log,
+            checkpoint_file=spec_ckpt,
         )
+        cp["phase"] = "test"
+        cp["sample_index"] = 0
+        save_checkpoint(cp)
+        print(">>> Specialization complete.")
 
-        # --- Final evaluation on held-out test set, sample by sample ---
-        print(f"\n[Run {run_id + 1}] Evaluating on held-out test set...")
-        test_scores = []
-        for i, sample in enumerate(test_dataset):
-            print(f"  [Test {i+1}/{len(test_dataset)}] {sample['instruction']}")
+    # ── PHASE 3: Test ────────────────────────────────────────
+    if cp["phase"] == "test":
+        print(f"\nEvaluating on held-out test set (resuming from sample {cp['sample_index'] + 1})...")
+        test_scores = cp["test_scores"]
+
+        for i in range(cp["sample_index"], len(test_dataset)):
+            sample = test_dataset[i]
+            pct = round((i / len(test_dataset)) * 100)
+            print(f"  [Test {i+1}/{len(test_dataset)} — {pct}%] {sample['instruction']}")
             skill_file = meta._skill_for(sample["relevant_apis"])
             _, actual_calls = meta.agent.run(sample["instruction"], skill_file)
             score = meta.evaluate(actual_calls, sample["relevant_apis"])
@@ -206,22 +209,24 @@ async def main():
                 test_log,
                 f"sample={i+1}/{len(test_dataset)} | score={score:.2f} | instruction={sample['instruction']}"
             )
+            cp["test_scores"] = test_scores
+            cp["sample_index"] = i + 1
+            save_checkpoint(cp)
 
         test_avg = sum(test_scores) / len(test_scores)
+        cp["test_avg"] = test_avg
+        cp["phase"] = "done"
+        save_checkpoint(cp)
         meta._append_log(test_log, f"TEST avg_score={test_avg:.2f}")
-        print(f">>> Test avg score: {test_avg:.2f}")
+        print(f">>> Test complete — avg score: {test_avg:.2f}")
 
-        # --- Save state after this run completes ---
-        state["completed_runs"].append(run_id)
-        state["all_baseline_scores"].append(baseline_avg)
-        state["all_test_scores"].append(test_avg)
-        save_state(state)
-
-        # Update summary after every run
-        save_summary(state, len(train_dataset), len(test_dataset))
-
-    print("\n>>> All runs complete.")
-    save_summary(state, len(train_dataset), len(test_dataset))
+    # ── Done ─────────────────────────────────────────────────
+    if cp["phase"] == "done":
+        save_summary(cp, len(train_dataset), len(test_dataset))
+        print("\n>>> All done.")
+        Path(CHECKPOINT).unlink(missing_ok=True)
+        if Path(spec_ckpt).exists():
+            Path(spec_ckpt).unlink()
 
 
 if __name__ == "__main__":

@@ -109,6 +109,7 @@ class MetaAgent:
             "pattern_summary": pattern_summary,
             "examples": trimmed_selected,
         }
+
     def evaluate_no_skill_baseline(self, dataset: list[dict], log_file: str) -> float:
         scores = []
         for sample in dataset:
@@ -140,8 +141,18 @@ class MetaAgent:
         threshold: float = 0.5,
         max_iterations: int = 5,
         log_file: str = "debug_logs/specialization_iterations1.txt",
+        checkpoint_file: str = None,
     ):
         results = [(sample, None, None) for sample in dataset]
+
+        # Restore from iteration checkpoint if available
+        if checkpoint_file and Path(checkpoint_file).exists():
+            iter_cp = json.loads(Path(checkpoint_file).read_text())
+            self.iteration = iter_cp["iteration"] + 1
+            Path(self.apply_skill).write_text(iter_cp["skill_apply"])
+            Path(self.get_skill).write_text(iter_cp["skill_get"])
+            self._append_log(log_file, f"Resuming from iteration {self.iteration} (checkpoint restored)")
+            print(f">>> Resuming specialization from iteration {self.iteration}")
 
         self._append_log(log_file, "=" * 80)
         self._append_log(
@@ -193,6 +204,16 @@ class MetaAgent:
                 ),
             )
 
+            # Save iteration checkpoint
+            if checkpoint_file:
+                iter_cp = {
+                    "iteration": self.iteration,
+                    "avg_score": avg_score,
+                    "skill_apply": Path(self.apply_skill).read_text(),
+                    "skill_get": Path(self.get_skill).read_text(),
+                }
+                Path(checkpoint_file).write_text(json.dumps(iter_cp, indent=2))
+
             if avg_score >= threshold:
                 self._append_log(
                     log_file,
@@ -236,7 +257,6 @@ class MetaAgent:
                         f"examples_used={len(payload['examples'])}"
                     ),
                 )
-
                 backup = Path(skill_file).read_text()
                 try:
                     self.refine_agent_definition_batch(
@@ -311,7 +331,6 @@ class MetaAgent:
         for expected in expected_apis:
             exp_name = self._normalize_api_name(expected.get("api_name", ""))
             exp_args = expected.get("arguments")
-
             for actual in actual_tool_calls:
                 act_name = self._normalize_api_name(actual.get("api_name", ""))
                 if act_name != exp_name:
@@ -353,35 +372,34 @@ class MetaAgent:
                     "role": "user",
                     "content": f"""You are improving an AI agent skill file based on observed failures.
 
-    Current SKILL.md:
-    {prompt_content}
+Current SKILL.md:
+{prompt_content}
 
-    Observed failure patterns (expected tool sequence vs what agent actually called):
-    {json.dumps(top_patterns, indent=2)}
+Observed failure patterns (expected tool sequence vs what agent actually called):
+{json.dumps(top_patterns, indent=2)}
 
-    Concrete failing examples:
-    {json.dumps(compact_examples, indent=2)}
+Concrete failing examples:
+{json.dumps(compact_examples, indent=2)}
 
-    Tools completely missing from the skill:
-    {json.dumps(missing_tools, indent=2)}
+Tools completely missing from the skill:
+{json.dumps(missing_tools, indent=2)}
 
-    Analyze the failures and rewrite the skill to fix:
-    1. The agent stops after one tool call — add explicit sequencing rules showing which tools must be called together and in what order
-    2. The agent calls the wrong tool — add clarifications distinguishing similar tools
-    3. Add any missing tools under ## Available MCP Tools with a one-line description
+Analyze the failures and rewrite the skill to fix:
+1. The agent stops after one tool call — add explicit sequencing rules showing which tools must be called together and in what order
+2. The agent calls the wrong tool — add clarifications distinguishing similar tools
+3. Add any missing tools under ## Available MCP Tools with a one-line description
 
-    Rules:
-    - Return ONLY raw markdown, no code fences, no ```markdown, no ``` wrapping
-    - Do NOT change the frontmatter (--- block at the top)
-    - Do NOT remove any existing tool entries
-    - Return the FULL updated SKILL.md
-    """
+Rules:
+- Return ONLY raw markdown, no code fences, no ```markdown, no ``` wrapping
+- Do NOT change the frontmatter (--- block at the top)
+- Do NOT remove any existing tool entries
+- Return the FULL updated SKILL.md
+"""
                 }
             ],
         )
 
         refined_content = response.choices[0].message.content.strip()
-        # Aggressively strip any code fences GPT adds
         refined_content = re.sub(r'^```[^\n]*\n', '', refined_content, flags=re.MULTILINE)
         refined_content = re.sub(r'```$', '', refined_content, flags=re.MULTILINE).strip()
 
