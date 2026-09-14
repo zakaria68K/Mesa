@@ -40,10 +40,34 @@ class MetaAgent:
 
     def _normalize_api_name(self, name: str) -> str:
         name = name or ""
+
+        # Strip known prefixes
         for prefix in ("modeling_server_", "server_"):
             if name.startswith(prefix):
-                return name[len(prefix):]
-        return name
+                name = name[len(prefix):]
+
+        # Handle "PNML2XML.apply_tool" or "XML2Ant.get_tool"
+        if "." in name:
+            parts = name.split(".")
+            tool_name = parts[0].lower()
+            operation = parts[1].lower().replace("_tool", "")
+            if operation == "get":
+                operation = "list"
+            return f"{tool_name}.{operation}"
+
+        # Handle "apply_PNML2XML_transformation_tool" → "pnml2xml.apply"
+        name_lower = name.lower().replace("_transformation_tool", "").replace("_tool", "")
+        if name_lower.startswith("apply_"):
+            tool = name_lower[len("apply_"):]
+            return f"{tool}.apply"
+        if name_lower.startswith("list_transformation_"):
+            tool = name_lower[len("list_transformation_"):]
+            return f"{tool}.list"
+        if name_lower.startswith("list_"):
+            tool = name_lower[len("list_"):]
+            return f"{tool}.list"
+
+        return name_lower
 
     def _normalize_actual_args(self, actual: dict) -> str | None:
         actual_args = actual.get("arguments", {})
@@ -297,19 +321,21 @@ class MetaAgent:
         for expected in expected_apis:
             exp_name = self._normalize_api_name(expected.get("api_name", ""))
             exp_args = expected.get("arguments")
-            if isinstance(exp_args, str):
-                try:
-                    exp_args = json.loads(exp_args)
-                except (json.JSONDecodeError, TypeError):
-                    pass
-            exp_args = exp_args or None
+
+            # Extract the value regardless of structure
+            if isinstance(exp_args, dict):
+                exp_val = next(iter(exp_args.values()), None)
+            elif isinstance(exp_args, str):
+                exp_val = exp_args.strip() or None
+            else:
+                exp_val = None
 
             for actual in actual_tool_calls:
                 act_name = self._normalize_api_name(actual.get("api_name", ""))
                 if act_name != exp_name:
                     continue
-                act_args = self._normalize_actual_args(actual)
-                if exp_args == act_args:
+                act_val = self._normalize_actual_args(actual)
+                if exp_val == act_val:
                     matched += 1
                     break
         return matched / len(expected_apis)
