@@ -158,14 +158,26 @@ class MetaAgent:
         results = [(sample, None, None) for sample in dataset]
         prev_avg_score = None
 
-        # Restore from iteration checkpoint if available
+        # Restore from checkpoint if available
         if checkpoint_file and Path(checkpoint_file).exists():
             iter_cp = json.loads(Path(checkpoint_file).read_text())
-            self.iteration = iter_cp["iteration"] + 1
+            restored_iteration = iter_cp["iteration"]
+            restored_sample = iter_cp.get("sample_index", 0)
             Path(self.apply_skill).write_text(iter_cp["skill_apply"])
             Path(self.get_skill).write_text(iter_cp["skill_get"])
-            self._append_log(log_file, f"Resuming from iteration {self.iteration} (checkpoint restored)")
-            print(f">>> Resuming specialization from iteration {self.iteration}")
+
+            if iter_cp.get("avg_score") is not None:
+                self.iteration = restored_iteration + 1
+                self._append_log(log_file, f"Resuming from iteration {self.iteration} (checkpoint restored)")
+                print(f">>> Resuming specialization from iteration {self.iteration}")
+            else:
+                self.iteration = restored_iteration
+                saved_results = iter_cp.get("results", [])
+                for idx, r in enumerate(saved_results):
+                    if r["score"] is not None and idx < len(results):
+                        results[idx] = (results[idx][0], r["score"], [])
+                self._append_log(log_file, f"Resuming iteration {self.iteration} from sample {restored_sample} (mid-iteration checkpoint)")
+                print(f">>> Resuming iteration {self.iteration} from sample {restored_sample}")
 
         self._append_log(log_file, "=" * 80)
         self._append_log(
@@ -181,7 +193,12 @@ class MetaAgent:
             self._append_log(log_file, "-" * 80)
             self._append_log(log_file, f"Iteration {self.iteration} started")
 
-            for i, (sample, _, _prev_calls) in enumerate(results):
+            for i, (sample, prev_score, _prev_calls) in enumerate(results):
+                # Skip already computed samples when resuming mid-iteration
+                if prev_score is not None:
+                    self._append_log(log_file, f"Iteration {self.iteration} | sample={i+1}/{len(results)} | score={prev_score:.2f} (restored)")
+                    continue
+
                 expected_apis = sample["relevant_apis"]
                 skill_file = self._skill_for(expected_apis)
                 _, actual_calls = self.agent.run(sample["instruction"], skill_file)
@@ -201,6 +218,21 @@ class MetaAgent:
                     "actual": actual_calls
                 })
 
+                # Save sample-level checkpoint
+                if checkpoint_file:
+                    sample_cp = {
+                        "iteration": self.iteration,
+                        "sample_index": i + 1,
+                        "avg_score": None,
+                        "skill_apply": Path(self.apply_skill).read_text(),
+                        "skill_get": Path(self.get_skill).read_text(),
+                        "results": [
+                            {"score": r[1]} if r[1] is not None else {"score": None}
+                            for r in results
+                        ],
+                    }
+                    Path(checkpoint_file).write_text(json.dumps(sample_cp, indent=2))
+
             scores = [r[1] for r in results]
             avg_score = sum(scores) / len(scores)
             failing_samples = sum(1 for s in scores if s < 1.0)
@@ -212,7 +244,7 @@ class MetaAgent:
                 ),
             )
 
-            # Save iteration checkpoint
+            # Save iteration-level checkpoint
             if checkpoint_file:
                 iter_cp = {
                     "iteration": self.iteration,
@@ -302,6 +334,10 @@ class MetaAgent:
             )
 
             prev_avg_score = avg_score
+
+            # Reset results scores for next iteration
+            results = [(r[0], None, None) for r in results]
+
             self.iteration += 1
 
         self._append_log(
