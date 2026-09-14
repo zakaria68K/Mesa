@@ -8,8 +8,6 @@ from openai import OpenAI
 from megamodel.server_config import client
 from modeling_agents.generic_agent import GenericModelingAgent
 
-# The directory that contains .opencode/skills/ and the atl_zoo/ data.
-# Adjust this if your layout differs.
 PROJECT_ROOT = str(Path(__file__).resolve().parent.parent)
 
 
@@ -40,13 +38,9 @@ class MetaAgent:
 
     def _normalize_api_name(self, name: str) -> str:
         name = name or ""
-
-        # Strip known prefixes
         for prefix in ("modeling_server_", "server_"):
             if name.startswith(prefix):
                 name = name[len(prefix):]
-
-        # Handle "PNML2XML.apply_tool" or "XML2Ant.get_tool"
         if "." in name:
             parts = name.split(".")
             tool_name = parts[0].lower()
@@ -54,8 +48,6 @@ class MetaAgent:
             if operation == "get":
                 operation = "list"
             return f"{tool_name}.{operation}"
-
-        # Handle "apply_PNML2XML_transformation_tool" → "pnml2xml.apply"
         name_lower = name.lower().replace("_transformation_tool", "").replace("_tool", "")
         if name_lower.startswith("apply_"):
             tool = name_lower[len("apply_"):]
@@ -66,7 +58,6 @@ class MetaAgent:
         if name_lower.startswith("list_"):
             tool = name_lower[len("list_"):]
             return f"{tool}.list"
-
         return name_lower
 
     def _normalize_actual_args(self, actual: dict) -> str | None:
@@ -144,6 +135,7 @@ class MetaAgent:
             "pattern_summary": pattern_summary,
             "examples": trimmed_selected,
         }
+
     def evaluate_no_skill_baseline(self, dataset, log_file):
         scores = []
         for sample in dataset:
@@ -161,9 +153,19 @@ class MetaAgent:
         threshold: float = 0.5,
         max_iterations: int = 4,
         log_file: str = "debug_logs/specialization_iterations2.txt",
+        checkpoint_file: str = None,
     ):
         results = [(sample, None, None) for sample in dataset]
         prev_avg_score = None
+
+        # Restore from iteration checkpoint if available
+        if checkpoint_file and Path(checkpoint_file).exists():
+            iter_cp = json.loads(Path(checkpoint_file).read_text())
+            self.iteration = iter_cp["iteration"] + 1
+            Path(self.apply_skill).write_text(iter_cp["skill_apply"])
+            Path(self.get_skill).write_text(iter_cp["skill_get"])
+            self._append_log(log_file, f"Resuming from iteration {self.iteration} (checkpoint restored)")
+            print(f">>> Resuming specialization from iteration {self.iteration}")
 
         self._append_log(log_file, "=" * 80)
         self._append_log(
@@ -210,6 +212,16 @@ class MetaAgent:
                 ),
             )
 
+            # Save iteration checkpoint
+            if checkpoint_file:
+                iter_cp = {
+                    "iteration": self.iteration,
+                    "avg_score": avg_score,
+                    "skill_apply": Path(self.apply_skill).read_text(),
+                    "skill_get": Path(self.get_skill).read_text(),
+                }
+                Path(checkpoint_file).write_text(json.dumps(iter_cp, indent=2))
+
             if avg_score >= threshold:
                 self._append_log(
                     log_file,
@@ -255,7 +267,6 @@ class MetaAgent:
                 )
                 backup = Path(skill_file).read_text()
 
-                # If score already regressed vs previous iteration, skip refinement
                 if prev_avg_score is not None and avg_score < prev_avg_score - 0.05:
                     self._append_log(
                         log_file,
@@ -321,15 +332,12 @@ class MetaAgent:
         for expected in expected_apis:
             exp_name = self._normalize_api_name(expected.get("api_name", ""))
             exp_args = expected.get("arguments")
-
-            # Extract the value regardless of structure
             if isinstance(exp_args, dict):
                 exp_val = next(iter(exp_args.values()), None)
             elif isinstance(exp_args, str):
                 exp_val = exp_args.strip() or None
             else:
                 exp_val = None
-
             for actual in actual_tool_calls:
                 act_name = self._normalize_api_name(actual.get("api_name", ""))
                 if act_name != exp_name:
@@ -347,8 +355,6 @@ class MetaAgent:
         top_patterns = failures_payload.get("pattern_summary", [])[:10]
         examples = failures_payload.get("examples", [])[:8]
 
-        # Collect tool names that were expected but are completely absent from the skill text.
-        # These are the primary cause of failures: the agent cannot call a tool it doesn't know exists.
         missing_tools = sorted({
             name
             for p in top_patterns
@@ -356,7 +362,6 @@ class MetaAgent:
             if name and name not in prompt_content
         })
 
-        # Compact example list: instruction + expected tool name + actual tool called
         compact_examples = [
             {
                 "instruction": e["instruction"],
@@ -399,12 +404,10 @@ Instructions:
         )
 
         refined_content = response.choices[0].message.content
-        # Strip markdown code fences Gemma tends to add
         refined_content = re.sub(r'^```[^\n]*\n', '', refined_content.strip(), flags=re.MULTILINE)
         refined_content = re.sub(r'\n```$', '', refined_content.strip(), flags=re.MULTILINE)
         refined_content = refined_content.strip()
 
-        # Sanity check: if Gemma returned something suspiciously short, restore backup
         if backup and len(refined_content) < len(backup) * 0.5:
             Path(skill_file).write_text(backup)
             return backup
@@ -414,7 +417,6 @@ Instructions:
 
     def refine_agent_definition(self, task: str, actual_calls: list[dict],
                                 expected_apis: list[dict], skill_file: str) -> str:
-        """Backward-compatible single-sample wrapper over batched refinement."""
         payload = self._build_failure_payload(
             [
                 {
