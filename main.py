@@ -15,6 +15,7 @@ from modeling_agents.meta_agent import MetaAgent
 
 RUN_ID       = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
 MAX_ITER     = 8
+ONLINE       = True   # True = online specialization, False = batch
 DATASET_PATH = "datasets/emf_testing_dataset_50.json"
 METAMODEL    = "datasets/Ecore.ecore"
 CHECKPOINT   = "debug_logs/emf_checkpoint.json"
@@ -79,6 +80,7 @@ def load_checkpoint() -> dict:
         "test_scores": [],
         "baseline_avg": None,
         "test_avg": None,
+        "mode": "online" if ONLINE else "batch",
     }
 
 
@@ -89,13 +91,15 @@ def save_checkpoint(cp: dict) -> None:
 
 
 def save_summary(cp: dict, train_size: int, test_size: int) -> None:
+    mode = cp.get("mode", "batch")
     lines = [
         "=" * 50,
         "EMF RESULTS SUMMARY",
         "=" * 50,
         f"Run ID     : {cp['run_id']}",
+        f"Mode       : {mode}",
         f"Phase      : {cp['phase']}",
-        f"Iterations : {MAX_ITER}",
+        f"Iterations : {MAX_ITER if mode == 'batch' else 'online (1 pass)'}",
         f"Train size : {train_size}",
         f"Test size  : {test_size}",
         "",
@@ -119,12 +123,13 @@ async def main():
     cp = load_checkpoint()
     run_id = cp.get("run_id", RUN_ID)
 
+    mode = "online" if ONLINE else "batch"
     baseline_log = f"debug_logs/{run_id}_emf_baseline.txt"
-    spec_log     = f"debug_logs/{run_id}_emf_specialization.txt"
+    spec_log     = f"debug_logs/{run_id}_emf_{mode}_specialization.txt"
     test_log     = f"debug_logs/{run_id}_emf_test.txt"
-    spec_ckpt    = f"debug_logs/{run_id}_emf_spec_checkpoint.json"
+    spec_ckpt    = f"debug_logs/{run_id}_emf_{mode}_spec_checkpoint.json"
 
-    print(f"MESA EMF Run — {run_id}")
+    print(f"MESA EMF Run — {run_id} — mode={mode}")
 
     full_dataset = load_specialization_dataset(DATASET_PATH)
     print(f"Loaded {len(full_dataset)} samples from EMF dataset.")
@@ -178,14 +183,22 @@ async def main():
 
     # ── PHASE 2: Specialization ──────────────────────────────
     if cp["phase"] == "specialization":
-        print(f"\nStarting specialization ({MAX_ITER} iterations)...")
-        meta.specialize_agent(
-            train_dataset,
-            threshold=2.0,
-            max_iterations=MAX_ITER,
-            log_file=spec_log,
-            checkpoint_file=spec_ckpt,
-        )
+        if ONLINE:
+            print(f"\nStarting ONLINE specialization ({len(train_dataset)} samples, 1 pass)...")
+            meta.specialize_agent_online(
+                train_dataset,
+                log_file=spec_log,
+                checkpoint_file=spec_ckpt,
+            )
+        else:
+            print(f"\nStarting BATCH specialization ({MAX_ITER} iterations)...")
+            meta.specialize_agent(
+                train_dataset,
+                threshold=2.0,
+                max_iterations=MAX_ITER,
+                log_file=spec_log,
+                checkpoint_file=spec_ckpt,
+            )
         cp["phase"] = "test"
         cp["sample_index"] = 0
         save_checkpoint(cp)

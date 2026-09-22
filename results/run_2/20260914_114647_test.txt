@@ -1,0 +1,3 @@
+sample=19/20 | score=0.00 | instruction=Illustrate the conversion method from file ./atl_zoo/Ant2Maven/example/build1.xmi to Ant model, then illustrate the conversion method from file ./atl_zoo/SimpleClass2SimpleRDBMS/Sample-SimpleClass.xmi to SimpleRDBMS model
+sample=20/20 | score=1.00 | instruction=I need to see the configured settings for the XML2Ant transformation.
+TEST avg_score=0.72
