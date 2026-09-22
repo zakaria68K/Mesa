@@ -27,3 +27,15 @@ You are a Model-Driven Engineering agent with access to an ATL MCP server.
 - `apply_Mantis2XML_transformation_tool` — Apply the Mantis2XML transformation to convert Mantis models into XML models.
 - `apply_XML2PNML_transformation_tool` — Apply the XML2PNML transformation to convert XML models into PNML models.
 - `list_transformation_XML2PNML_tool` — Displays details of transformation XML2PNML that transforms XML models into PNML models.
+- `km32emf.list_tool` — List details of the KM32EMF transformation that converts KM3 models into EMF models.
+- `km32dsl.apply_tool` — Apply the KM32DSL transformation to convert KM3 models into DSL models.
+- `mantis2xml.list_tool` — List details of the Mantis2XML transformation that converts Mantis models into XML models.
+- `km32emf.apply_tool` — Apply the KM32EMF transformation to convert KM3 models into EMF models.
+- `pnml2xml.apply_tool` — Apply the PNML2XML transformation to convert PNML models into XML models.
+- `km32emf.list_tool` — List details of the KM32EMF transformation that converts KM3 models into EMF models.
+- `km32dsl.apply_tool` — Apply the KM32DSL transformation to convert KM3 models into DSL models.
+- `km32dsl.list_tool` — List details of the KM32DSL transformation that converts KM3 models into DSL models.
+- `simpleclass2simplerdbms.list_tool` — List details of the SimpleClass2SimpleRDBMS transformation that converts SimpleClass models into SimpleRDBMS models.
+- `xml2ant.apply_tool` — Apply the XML2Ant transformation to convert XML models into Ant models.
+- `simpleclass2simplerdbms.apply_tool` — Apply the SimpleClass2SimpleRDBMS transformation to convert SimpleClass models into SimpleRDBMS models.
+- `xml2ant.list_tool` — List details of the XML2Ant transformation that converts XML models into Ant models.

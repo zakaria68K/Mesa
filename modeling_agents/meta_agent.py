@@ -71,6 +71,110 @@ class MetaAgent:
                 if isinstance(v, str):
                     return v
         return None
+    def specialize_agent_online(
+        self,
+        dataset: list[dict],
+        max_samples: int = 80,
+        log_file: str = "debug_logs/specialization_online.txt",
+        checkpoint_file: str = None,
+    ):
+        """
+        Online specialization: rewrite the SKILL.md immediately after each failing sample.
+        No iterations — one pass through the dataset, fix as you go.
+        """
+        results = [(sample, None, None) for sample in dataset]
+        start_index = 0
+
+        # Restore from checkpoint if available
+        if checkpoint_file and Path(checkpoint_file).exists():
+            cp = json.loads(Path(checkpoint_file).read_text())
+            start_index = cp.get("sample_index", 0)
+            Path(self.apply_skill).write_text(cp["skill_apply"])
+            Path(self.get_skill).write_text(cp["skill_get"])
+            saved_results = cp.get("results", [])
+            for idx, r in enumerate(saved_results):
+                if r["score"] is not None and idx < len(results):
+                    results[idx] = (results[idx][0], r["score"], [])
+            self._append_log(log_file, f"Resuming online specialization from sample {start_index}")
+            print(f">>> Resuming online specialization from sample {start_index}")
+
+        self._append_log(log_file, "=" * 80)
+        self._append_log(
+            log_file,
+            f"Online specialization started at {datetime.now().isoformat(timespec='seconds')} | "
+            f"samples={len(dataset)}"
+        )
+
+        for i in range(start_index, len(dataset)):
+            sample = dataset[i]
+            pct = round((i / len(dataset)) * 100)
+
+            # Skip already computed
+            if results[i][1] is not None:
+                self._append_log(log_file, f"sample={i+1}/{len(dataset)} | score={results[i][1]:.2f} (restored)")
+                continue
+
+            expected_apis = sample["relevant_apis"]
+            skill_file = self._skill_for(expected_apis)
+            _, actual_calls = self.agent.run(sample["instruction"], skill_file)
+            score = self.evaluate(actual_calls, expected_apis)
+
+            print(f"  [Online {i+1}/{len(dataset)} — {pct}%] score={score:.2f}")
+            print(f"    Expected : {[e['api_name'] for e in expected_apis]}")
+            print(f"    Actual   : {[a['api_name'] for a in actual_calls]}")
+
+            self._append_log(
+                log_file,
+                f"sample={i+1}/{len(dataset)} | score={score:.2f}"
+            )
+
+            results[i] = (sample, score, actual_calls)
+
+            # Rewrite skill immediately if this sample failed
+            if score < 1.0:
+                failure = {
+                    "instruction": sample["instruction"],
+                    "expected_apis": expected_apis,
+                    "actual_calls": actual_calls,
+                }
+                payload = self._build_failure_payload([failure], max_examples=1)
+                backup = Path(skill_file).read_text()
+                try:
+                    self.refine_agent_definition_batch(
+                        failures_payload=payload,
+                        skill_file=skill_file,
+                        backup=backup,
+                    )
+                    self._append_log(log_file, f"  → skill rewritten after sample {i+1}")
+                    print(f"    → skill rewritten")
+                except Exception as e:
+                    Path(skill_file).write_text(backup)
+                    self._append_log(log_file, f"  → refinement error: {e} | backup restored")
+
+            # Save checkpoint after every sample
+            if checkpoint_file:
+                cp = {
+                    "sample_index": i + 1,
+                    "skill_apply": Path(self.apply_skill).read_text(),
+                    "skill_get": Path(self.get_skill).read_text(),
+                    "results": [
+                        {"score": r[1]} if r[1] is not None else {"score": None}
+                        for r in results
+                    ],
+                }
+                Path(checkpoint_file).write_text(json.dumps(cp, indent=2))
+
+        scores = [r[1] for r in results if r[1] is not None]
+        avg_score = sum(scores) / len(scores) if scores else 0.0
+        failing = sum(1 for s in scores if s < 1.0)
+
+        self._append_log(log_file, "-" * 80)
+        self._append_log(log_file, f"Online specialization finished | avg_score={avg_score:.2f} | failing={failing}/{len(scores)}")
+        self._append_log(log_file, f"Finished at {datetime.now().isoformat(timespec='seconds')}")
+        self._append_log(log_file, "=" * 80)
+
+        print(f">>> Online specialization complete — avg score: {avg_score:.2f}")
+        return self.apply_skill, self.get_skill
 
     def _failure_signature(self, expected_apis: list[dict], actual_calls: list[dict]) -> tuple:
         expected_names = tuple(self._normalize_api_name(e.get("api_name", "")) for e in expected_apis)

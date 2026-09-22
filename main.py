@@ -17,6 +17,7 @@ from megamodel_toskill import MegamodelToSkill
 RUN_ID       = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
 DATASET_PATH = "datasets/testing_datatset.json"
 MAX_ITER     = 8
+ONLINE       = True   # True = online specialization, False = batch
 CHECKPOINT   = "debug_logs/atl_checkpoint.json"
 
 
@@ -73,12 +74,11 @@ def load_checkpoint() -> dict:
             return cp
     return {
         "run_id": RUN_ID,
-        "phase": "baseline",
+        "phase": "specialization",  # start directly here
         "sample_index": 0,
-        "baseline_scores": [],
         "test_scores": [],
-        "baseline_avg": None,
         "test_avg": None,
+        "mode": "online" if ONLINE else "batch",
     }
 
 
@@ -89,19 +89,16 @@ def save_checkpoint(cp: dict) -> None:
 
 
 def save_summary(cp: dict, train_size: int, test_size: int) -> None:
+    mode = cp.get("mode", "batch")
     lines = [
         "=" * 50,
         "ATL RESULTS SUMMARY",
         "=" * 50,
         f"Run ID     : {cp['run_id']}",
-        f"Phase      : {cp['phase']}",
-        f"Iterations : {MAX_ITER}",
+        f"Mode       : {mode}",
+        f"Iterations : {MAX_ITER if mode == 'batch' else 'online (1 pass)'}",
         f"Train size : {train_size}",
         f"Test size  : {test_size}",
-        "",
-        "Baseline (no skill)",
-        f"  scores : {[round(s, 2) for s in cp['baseline_scores']]}",
-        f"  avg    : {cp['baseline_avg']:.2f}" if cp['baseline_avg'] is not None else "  avg    : pending",
         "",
         "After specialization (held-out test)",
         f"  scores : {[round(s, 2) for s in cp['test_scores']]}",
@@ -119,12 +116,13 @@ async def main():
     cp = load_checkpoint()
     run_id = cp.get("run_id", RUN_ID)
 
+    mode = "online" if ONLINE else "batch"
     baseline_log = f"debug_logs/{run_id}_baseline.txt"
-    spec_log     = f"debug_logs/{run_id}_specialization.txt"
+    spec_log     = f"debug_logs/{run_id}_{mode}_specialization.txt"
     test_log     = f"debug_logs/{run_id}_test.txt"
-    spec_ckpt    = f"debug_logs/{run_id}_atl_spec_checkpoint.json"
+    spec_ckpt    = f"debug_logs/{run_id}_atl_{mode}_spec_checkpoint.json"
 
-    print(f"MESA ATL Run — {run_id}")
+    print(f"MESA ATL Run — {run_id} — mode={mode}")
 
     full_dataset = load_specialization_dataset(DATASET_PATH)
     print(f"Loaded {len(full_dataset)} samples.")
@@ -132,7 +130,6 @@ async def main():
     train_dataset, test_dataset = stratified_split(full_dataset, test_size=20)
     print(f"Train: {len(train_dataset)} | Test (held-out): {len(test_dataset)}")
 
-    # Only regenerate skills if starting fresh
     if cp["phase"] == "baseline":
         print("\nInitializing Megamodel Registry...")
         registry = MegamodelRegistry()
@@ -147,45 +144,53 @@ async def main():
 
     meta = MetaAgent()
 
-    # ── PHASE 1: Baseline ────────────────────────────────────
-    if cp["phase"] == "baseline":
-        print(f"\nEvaluating no-skill baseline (resuming from sample {cp['sample_index'] + 1})...")
-        baseline_scores = cp["baseline_scores"]
+    # # ── PHASE 1: Baseline ────────────────────────────────────
+    # if cp["phase"] == "baseline":
+    #     print(f"\nEvaluating no-skill baseline (resuming from sample {cp['sample_index'] + 1})...")
+    #     baseline_scores = cp["baseline_scores"]
 
-        for i in range(cp["sample_index"], len(test_dataset)):
-            sample = test_dataset[i]
-            pct = round((i / len(test_dataset)) * 100)
-            print(f"  [Baseline {i+1}/{len(test_dataset)} — {pct}%] {sample['instruction']}")
-            _, actual_calls = meta.agent.run(sample["instruction"], file=None)
-            score = meta.evaluate(actual_calls, sample["relevant_apis"])
-            baseline_scores.append(score)
-            print(f"  → score={score:.2f}")
-            meta._append_log(
-                baseline_log,
-                f"sample={i+1}/{len(test_dataset)} | score={score:.2f} | instruction={sample['instruction']}"
-            )
-            cp["baseline_scores"] = baseline_scores
-            cp["sample_index"] = i + 1
-            save_checkpoint(cp)
+    #     for i in range(cp["sample_index"], len(test_dataset)):
+    #         sample = test_dataset[i]
+    #         pct = round((i / len(test_dataset)) * 100)
+    #         print(f"  [Baseline {i+1}/{len(test_dataset)} — {pct}%] {sample['instruction']}")
+    #         _, actual_calls = meta.agent.run(sample["instruction"], file=None)
+    #         score = meta.evaluate(actual_calls, sample["relevant_apis"])
+    #         baseline_scores.append(score)
+    #         print(f"  → score={score:.2f}")
+    #         meta._append_log(
+    #             baseline_log,
+    #             f"sample={i+1}/{len(test_dataset)} | score={score:.2f} | instruction={sample['instruction']}"
+    #         )
+    #         cp["baseline_scores"] = baseline_scores
+    #         cp["sample_index"] = i + 1
+    #         save_checkpoint(cp)
 
-        baseline_avg = sum(baseline_scores) / len(baseline_scores)
-        cp["baseline_avg"] = baseline_avg
-        cp["phase"] = "specialization"
-        cp["sample_index"] = 0
-        save_checkpoint(cp)
-        meta._append_log(baseline_log, f"BASELINE avg_score={baseline_avg:.2f}")
-        print(f">>> Baseline complete — avg score: {baseline_avg:.2f}")
+    #     baseline_avg = sum(baseline_scores) / len(baseline_scores)
+    #     cp["baseline_avg"] = baseline_avg
+    #     cp["phase"] = "specialization"
+    #     cp["sample_index"] = 0
+    #     save_checkpoint(cp)
+    #     meta._append_log(baseline_log, f"BASELINE avg_score={baseline_avg:.2f}")
+    #     print(f">>> Baseline complete — avg score: {baseline_avg:.2f}")
 
     # ── PHASE 2: Specialization ──────────────────────────────
     if cp["phase"] == "specialization":
-        print(f"\nStarting specialization ({MAX_ITER} iterations)...")
-        meta.specialize_agent(
-            train_dataset,
-            threshold=2.0,
-            max_iterations=MAX_ITER,
-            log_file=spec_log,
-            checkpoint_file=spec_ckpt,
-        )
+        if ONLINE:
+            print(f"\nStarting ONLINE specialization ({len(train_dataset)} samples, 1 pass)...")
+            meta.specialize_agent_online(
+                train_dataset,
+                log_file=spec_log,
+                checkpoint_file=spec_ckpt,
+            )
+        else:
+            print(f"\nStarting BATCH specialization ({MAX_ITER} iterations)...")
+            meta.specialize_agent(
+                train_dataset,
+                threshold=2.0,
+                max_iterations=MAX_ITER,
+                log_file=spec_log,
+                checkpoint_file=spec_ckpt,
+            )
         cp["phase"] = "test"
         cp["sample_index"] = 0
         save_checkpoint(cp)
