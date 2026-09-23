@@ -1,0 +1,21 @@
+sample=1/20 | score=0.67 | instruction=In session $session_id, create a EEnum, retrieve its properties, then modify its defaultValue to 'Order'
+sample=2/20 | score=0.00 | instruction=Assign 'Service' to the eClassifiers of EPackage object obj_218 in session $session_id
+sample=3/20 | score=1.00 | instruction=Create and register a fresh EDataType object within session $session_id.
+sample=4/20 | score=1.00 | instruction=In session $session_id, create a EParameter, reset its eGenericType, then instantiate a EAttribute
+sample=5/20 | score=0.67 | instruction=In session $session_id, create a EEnumLiteral, retrieve its properties, then modify its literal to 'MyClass'
+sample=6/20 | score=1.00 | instruction=Create three new objects: a EParameter, a ETypeParameter, and a EParameter in session $session_id
+sample=7/20 | score=1.00 | instruction=First create a EEnum instance in session $session_id, then remove the newly created object
+sample=8/20 | score=1.00 | instruction=Create a new EPackage object in session $session_id, update its nsPrefix to 'app', then create another EAttribute object
+sample=9/20 | score=1.00 | instruction=Insert a new instance of EPackage into session $session_id.
+sample=10/20 | score=0.67 | instruction=First create EAnnotation in session $session_id, unset eAnnotations, then check all its attributes
+sample=11/20 | score=1.00 | instruction=In session $session_id, instantiate a EGenericType object and immediately fetch its properties
+sample=12/20 | score=1.00 | instruction=Get all information on display for the ETypeParameter object with id obj_177 in session $session_id that we have access to.
+sample=13/20 | score=1.00 | instruction=Create a new EGenericType object in session $session_id and then delete it
+sample=14/20 | score=1.00 | instruction=In session $session_id, create a EFactory, reset its eAnnotations, then instantiate a EClass
+sample=15/20 | score=1.00 | instruction=Create a new EAttribute object and a new EDataType object in session $session_id, then clear the defaultValue of the first one
+sample=16/20 | score=1.00 | instruction=First create EPackage in session $session_id, unset nsURI, then add a new EClass
+sample=17/20 | score=1.00 | instruction=First create EParameter in session $session_id, unset ordered, then check all its attributes
+sample=18/20 | score=1.00 | instruction=Create a new EParameter object and a new EOperation object in session $session_id, then clear the name of the first one
+sample=19/20 | score=1.00 | instruction=First create EOperation then EGenericType in session $session_id, then configure eContainingClass of the first object to 'Address'
+sample=20/20 | score=1.00 | instruction=Create a new EFactory object in session $session_id and then clear its ePackage
+TEST avg_score=0.90

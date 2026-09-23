@@ -1,0 +1,19 @@
+sample=1/20 | score=1.00 | instruction=Transform the data within the SimpleClass model located at ./atl_zoo/SimpleClass2SimpleRDBMS/Sample-SimpleClass.xmi and convert it to a SimpleRDBMS format.
+sample=2/20 | score=1.00 | instruction=XML2Ant applies to ./atl_zoo/Ant2Maven/example/build1.xmi before SimpleClass2SimpleRDBMS is applied to ./atl_zoo/SimpleClass2SimpleRDBMS/Sample-SimpleClass.xmi
+sample=3/20 | score=1.00 | instruction=Apply KM32EMF to ./atl_zoo/KM32EMF/Sample-KM3.xmi, then review the status of KM32DSL
+sample=4/20 | score=0.00 | instruction=Update the configuration of the metamodel associated with ./atl_zoo/Grafcet2PetriNet/Models/XML2PNML_example.xmi to be equal to XML
+sample=6/20 | score=1.00 | instruction=Transform the data within the XML model located at ./atl_zoo/Ant2Maven/example/build1.xmi and convert it to a Ant format.
+sample=8/20 | score=1.00 | instruction=Transform PNML model at ./atl_zoo/Grafcet2PetriNet/Models/XML2PNML_example.xmi to XML, followed by transforming the Mantis model at ./atl_zoo/SoftwareQualityControl2MantisBTFile/modelsExamples/MantisExample.xmi to XML
+sample=9/20 | score=1.00 | instruction=Obtain the parameters of KM32EMF next to display KM32DSL's settings
+sample=10/20 | score=1.00 | instruction=Show the configuration settings of the transformation that converts a PNML to a XML and then show me the settings for converting a Mantis to a XML
+sample=11/20 | score=1.00 | instruction=Run XML2Ant through ./atl_zoo/Ant2Maven/example/build1.xmi to produce results.
+sample=12/20 | score=1.00 | instruction=Apply SimpleClass2SimpleRDBMS to ./atl_zoo/SimpleClass2SimpleRDBMS/Sample-SimpleClass.xmi after displaying its configuration, which is XML2Ant.
+sample=13/20 | score=1.00 | instruction=After obtaining the configuration, I need you to show me the configuration settings of the transformation that transforms a KM3 into a EMF model and then transform ./atl_zoo/DSLBridge/MetamodelBridge/Models/SimpleExample/DSL2EMF/SimpleExampleMM-KM3.xmi from this model KM3 to a DSL model
+sample=14/20 | score=0.50 | instruction=Modify the model at ./atl_zoo/KM32EMF/Sample-KM3.xmi to conform to EMF standards, then modify the model at ./atl_zoo/DSLBridge/MetamodelBridge/Models/SimpleExample/DSL2EMF/SimpleExampleMM-KM3.xmi to conform to DSL standards
+sample=15/20 | score=0.00 | instruction=Transform the model ./atl_zoo/Ant2Maven/example/build1.xmi to a Ant model, then show the transformation that would convert file ./atl_zoo/SimpleClass2SimpleRDBMS/Sample-SimpleClass.xmi to a SimpleRDBMS model
+sample=16/20 | score=0.00 | instruction=Change the properties of the model situated at ./atl_zoo/DSLBridge/MetamodelBridge/Models/SimpleExample/DSL2EMF/SimpleExampleMM-KM3.xmi and define them as DSL
+sample=17/20 | score=0.00 | instruction=Outline the transformation steps that change file ./atl_zoo/DSLBridge/MetamodelBridge/Models/SimpleExample/DSL2EMF/SimpleExampleMM-KM3.xmi into DSL model
+sample=18/20 | score=1.00 | instruction=Specify the requirements for configuring a transformation from PNML to XML model
+sample=19/20 | score=0.00 | instruction=Illustrate the conversion method from file ./atl_zoo/Ant2Maven/example/build1.xmi to Ant model, then illustrate the conversion method from file ./atl_zoo/SimpleClass2SimpleRDBMS/Sample-SimpleClass.xmi to SimpleRDBMS model
+sample=20/20 | score=1.00 | instruction=I need to see the configured settings for the XML2Ant transformation.
+BASELINE avg_score=0.70
