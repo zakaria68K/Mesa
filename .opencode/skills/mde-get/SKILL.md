@@ -39,3 +39,6 @@ You are a Model-Driven Engineering agent with access to an ATL MCP server.
 - `xml2ant.apply_tool` — Apply the XML2Ant transformation to convert XML models into Ant models.
 - `simpleclass2simplerdbms.apply_tool` — Apply the SimpleClass2SimpleRDBMS transformation to convert SimpleClass models into SimpleRDBMS models.
 - `xml2ant.list_tool` — List details of the XML2Ant transformation that converts XML models into Ant models.
+- `pnml2xml.list_tool` — List details of the PNML2XML transformation that converts PNML models into XML models.
+- `ant2maven.list_tool` — List details of the Ant2Maven transformation that converts Ant models into Maven models.
+- `ant2maven.apply_tool` — Apply the Ant2Maven transformation to convert Ant models into Maven models.

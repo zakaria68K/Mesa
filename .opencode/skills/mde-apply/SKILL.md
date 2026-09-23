@@ -36,3 +36,7 @@ You are a Model-Driven Engineering agent with access to an ATL MCP server.
 - `simpleclass2simplerdbms.list_tool` — Lists available SimpleClass to SimpleRDBMS transformations and configurations
 - `apply_xml2ant_transformation_tool` — Transforms XML model into Ant model
 - `apply_ant2maven_transformation_tool` — Transforms Ant model into Maven model
+- `ant2maven.apply_tool` — Applies the Ant to Maven transformation
+- `simpleclass2simplerdbms.list_tool` — Lists available SimpleClass to SimpleRDBMS transformations and configurations
+- `km32emf.list_tool` — Lists available KM32EMF transformations and configurations
+- `xml2ant.apply_tool` — Applies the XML to Ant transformation
