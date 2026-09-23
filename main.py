@@ -74,15 +74,12 @@ def load_checkpoint() -> dict:
             return cp
     return {
         "run_id": RUN_ID,
-        "phase": "baseline",
+        "phase": "specialization",
         "sample_index": 0,
-        "baseline_scores": [],
         "test_scores": [],
-        "baseline_avg": None,
         "test_avg": None,
         "mode": "online" if ONLINE else "batch",
     }
-
 
 def save_checkpoint(cp: dict) -> None:
     Path("debug_logs").mkdir(exist_ok=True)
@@ -137,8 +134,7 @@ async def main():
     train_dataset, test_dataset = stratified_split(full_dataset, test_size=20)
     print(f"Train: {len(train_dataset)} | Test (held-out): {len(test_dataset)}")
 
-    # Only regenerate skills if starting fresh
-    if cp["phase"] == "baseline":
+    if cp["phase"] == "specialization" and cp.get("sample_index", 0) == 0:
         print("\n> Populating registry and generating skill files...")
         registry = MegamodelRegistry()
         await populate_registry(registry, servers=["emf"])
@@ -152,34 +148,34 @@ async def main():
 
     meta = MetaAgent(metamodel_file=METAMODEL)
 
-    # ── PHASE 1: Baseline ────────────────────────────────────
-    if cp["phase"] == "baseline":
-        print(f"\nEvaluating no-skill baseline (resuming from sample {cp['sample_index'] + 1})...")
-        baseline_scores = cp["baseline_scores"]
+    # # ── PHASE 1: Baseline ────────────────────────────────────
+    # if cp["phase"] == "baseline":
+    #     print(f"\nEvaluating no-skill baseline (resuming from sample {cp['sample_index'] + 1})...")
+    #     baseline_scores = cp["baseline_scores"]
 
-        for i in range(cp["sample_index"], len(test_dataset)):
-            sample = test_dataset[i]
-            pct = round((i / len(test_dataset)) * 100)
-            print(f"  [Baseline {i+1}/{len(test_dataset)} — {pct}%] {sample['instruction']}")
-            _, actual_calls = meta.agent.run(sample["instruction"], file=None)
-            score = meta.evaluate(actual_calls, sample["relevant_apis"])
-            baseline_scores.append(score)
-            print(f"  → score={score:.2f}")
-            meta._append_log(
-                baseline_log,
-                f"sample={i+1}/{len(test_dataset)} | score={score:.2f} | instruction={sample['instruction']}"
-            )
-            cp["baseline_scores"] = baseline_scores
-            cp["sample_index"] = i + 1
-            save_checkpoint(cp)
+    #     for i in range(cp["sample_index"], len(test_dataset)):
+    #         sample = test_dataset[i]
+    #         pct = round((i / len(test_dataset)) * 100)
+    #         print(f"  [Baseline {i+1}/{len(test_dataset)} — {pct}%] {sample['instruction']}")
+    #         _, actual_calls = meta.agent.run(sample["instruction"], file=None)
+    #         score = meta.evaluate(actual_calls, sample["relevant_apis"])
+    #         baseline_scores.append(score)
+    #         print(f"  → score={score:.2f}")
+    #         meta._append_log(
+    #             baseline_log,
+    #             f"sample={i+1}/{len(test_dataset)} | score={score:.2f} | instruction={sample['instruction']}"
+    #         )
+    #         cp["baseline_scores"] = baseline_scores
+    #         cp["sample_index"] = i + 1
+    #         save_checkpoint(cp)
 
-        baseline_avg = sum(baseline_scores) / len(baseline_scores)
-        cp["baseline_avg"] = baseline_avg
-        cp["phase"] = "specialization"
-        cp["sample_index"] = 0
-        save_checkpoint(cp)
-        meta._append_log(baseline_log, f"BASELINE avg_score={baseline_avg:.2f}")
-        print(f">>> Baseline complete — avg score: {baseline_avg:.2f}")
+    #     baseline_avg = sum(baseline_scores) / len(baseline_scores)
+    #     cp["baseline_avg"] = baseline_avg
+    #     cp["phase"] = "specialization"
+    #     cp["sample_index"] = 0
+    #     save_checkpoint(cp)
+    #     meta._append_log(baseline_log, f"BASELINE avg_score={baseline_avg:.2f}")
+    #     print(f">>> Baseline complete — avg score: {baseline_avg:.2f}")
 
     # ── PHASE 2: Specialization ──────────────────────────────
     if cp["phase"] == "specialization":

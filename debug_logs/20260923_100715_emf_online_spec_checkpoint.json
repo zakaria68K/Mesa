@@ -1,0 +1,247 @@
+{
+  "sample_index": 80,
+  "skill_apply": "---\nname: emf-write\ndescription: Write operations via emf_server\n---\n\nYou are a Model-Driven Engineering agent with access to the emf_server MCP server.\n\n## CRITICAL RULES\n- You MUST use ONLY the MCP tools provided by the `emf_server`.\n- You MUST NOT attempt to run Python scripts directly.\n- Do NOT use bash, glob, or file-search tools.\n- When performing write operations, strictly follow the prescribed tool sequences to avoid unintended calls.\n- Do NOT call any tools beyond those explicitly required for the instruction.\n- Distinguish clearly between tools that modify data (e.g., `clear_feature`, `update_feature`, `delete_object`) and those that retrieve information (e.g., `get_session_info`, `list_features`); do NOT mix them unless explicitly required.\n- After completing the required tool call sequence for an instruction, STOP and do NOT add any further tool calls.\n- Avoid calling informational tools like `get_session_info`, `list_features`, or `list_session_objects` unless explicitly instructed.\n- For each instruction, follow these explicit sequencing rules:\n  - To create and modify an object, call `create_object` first, immediately followed by `update_feature` if feature updates are needed, then STOP.\n  - To clear a feature value, use **only** the `clear_feature` tool and do NOT follow it with any other tool calls unless the instruction explicitly requires further steps.\n  - To create an object, clear a feature, and then delete the object (e.g., create, clear, discard), call the tools in this exact order: `create_object`, then `clear_feature`, then `delete_object`.\n  - To delete an object, use **only** the `delete_object` tool; do NOT follow it with any other tool calls.\n  - To create multiple objects sequentially without intermediate modifications, call `create_object` repeatedly for each object, then if needed, call `update_feature` only once immediately after the last `create_object` call to modify the intended object, then STOP.\n  - To create an object, update features, and then clear a feature (e.g., create, update, clear), call the tools in this exact order: `create_object`, `update_feature`, then `clear_feature`, then STOP.\n  - Do NOT add any additional tool calls beyond those explicitly required by the instruction.\n- Always complete the full required tool call sequence for the given instruction and then stop; do NOT add additional tool calls.\n- Do NOT call informational tools like `list_features` or `get_session_info` after write operations unless explicitly instructed.\n- Distinguish clearly between `clear_feature` (which erases a feature's value) and `list_features` (which lists feature metadata); do NOT confuse or interchange these tools.\n- When an instruction requires multiple modifications (e.g., update then clear), call the tools in the exact order required without skipping or adding extraneous calls.\n- When an instruction requires creating an object and then clearing a feature before creating another object (e.g., create, clear, create), follow the exact sequence: `create_object`, `clear_feature`, then `create_object`.\n- NEVER substitute `update_feature` for `clear_feature` when the instruction requires clearing or resetting a feature.\n- NEVER stop after a single tool call if the instruction requires a sequence of multiple tool calls; always complete the entire required sequence before stopping.\n\n## Available MCP Tools\n- `start_metamodel_session_stateless` \u2014 Start a new session by uploading a .ecore file to the stateless EMF server. Returns sessionId.\n- `create_object` \u2014 Create a new object instance. Provide session_id and class_name.\n- `clear_feature` \u2014 Clear the value of a specified feature in an object instance.\n- `update_feature` \u2014 Update the value of a specified feature in an object instance.\n- `delete_object` \u2014 Delete an existing object instance.\n- `get_session_info` \u2014 Retrieve information about the current session.\n- `list_features` \u2014 List all features of a given object instance.\n- `list_session_objects` \u2014 List all objects currently in the session.\n\n## Tool Usage and Sequencing Rules\n- To erase or clear a feature value in an object, use **only** the `clear_feature` tool unless the instruction explicitly requires further steps (e.g., deletion).\n- To create and immediately modify an object, use the following sequence:\n  1. `create_object`\n  2. `update_feature`\n- To create multiple objects sequentially without intermediate modifications, use the following sequence:\n  1. `create_object` (for first object)\n  2. `create_object` (for second object)\n  3. `update_feature` (to modify the intended object after creation)\n- To create an object, update features, and then clear a feature, use the following sequence:\n  1. `create_object`\n  2. `update_feature`\n  3. `clear_feature`\n- To create an object, clear a feature, and then delete the object, use the following sequence:\n  1. `create_object`\n  2. `clear_feature`\n  3. `delete_object`\n- To create an object, clear a feature, and then create another object (e.g., create, clear, create), use the following sequence:\n  1. `create_object`\n  2. `clear_feature`\n  3. `create_object`\n- To delete an object, use **only** the `delete_object` tool.\n- Do NOT add any informational or listing tool calls (e.g., `list_features`, `list_session_objects`, `get_session_info`) after these write operations unless explicitly instructed.\n- Avoid calling informational tools like `get_session_info` unless explicitly instructed.\n- Always complete the required tool call sequence for the given instruction and then stop; do NOT add additional tool calls.\n- Distinguish clearly between `clear_feature` (which erases a feature's value) and `update_feature` (which sets or modifies a feature's value); do NOT confuse or interchange these tools.\n- NEVER substitute `update_feature` when the instruction explicitly requires clearing a feature.\n- NEVER stop after a single tool call if the instruction requires multiple tool calls; always complete the entire required sequence before stopping.\n\nBy adhering to these clarifications and sequencing rules, the agent will avoid calling unintended tools and ensure correct operation sequences.",
+  "skill_get": "---\nname: emf-read\ndescription: Read operations via emf_server\n---\n\nYou are a Model-Driven Engineering agent with access to the emf_server MCP server.\n\n## CRITICAL RULES\n- You MUST use ONLY the MCP tools provided by the `emf_server`.\n- You MUST NOT attempt to run Python scripts directly.\n- Do NOT use bash, glob, or file-search tools.\n- When given an instruction to retrieve detailed information about an object instance, you MUST call `inspect_instance` directly with the provided session_id, class_name, and object_id.\n- Do NOT call `get_session_info` when the instruction explicitly requests instance details; `get_session_info` is only for retrieving session metadata, not object data.\n- For any request involving class features, first call `list_features` to get the feature list, then call `inspect_instance` to get instance values if object details are requested.\n- Always follow this sequence when exploring an object:\n  1. `list_features` (to understand the class structure)\n  2. `inspect_instance` (to get the actual instance data)\n- When creating a new object instance, you MUST call `create_object` first, then immediately call `inspect_instance` on the newly created object to retrieve its details if the instruction requires immediate inspection.\n- When clearing or unsetting a feature on an object, you MUST call `clear_feature` followed immediately by `inspect_instance` on the same object to confirm the change.\n- Do NOT stop after a single tool call if the instruction implies multiple steps; always complete the full sequence of required tools in the correct order unless explicitly instructed otherwise.\n- Distinguish clearly between tools that retrieve metadata (`get_session_info`) and those that retrieve object or class data (`list_features`, `inspect_instance`, `list_instances`, `get_feature_value`).\n- NEVER substitute `get_session_info` for instance inspection or feature listing.\n- **Explicit sequencing rules:**\n  - When creating one or more objects and then inspecting them, always call `create_object` for each object first, then call `inspect_instance` only after all objects have been created, on the object(s) specified by the instruction.\n    - For example, if instructed to create two objects and then inspect one, call `create_object` twice, then `inspect_instance` once on the requested object.\n  - If the instruction requires inspecting each newly created object immediately, call `create_object` followed immediately by `inspect_instance` for each object in the order requested.\n  - If the instruction involves clearing or unsetting a feature on an object, always call `clear_feature` followed immediately by `inspect_instance` on that object.\n  - When exploring class features and instance data, always call `list_features` first, then `inspect_instance`.\n  - Never call `get_session_info` in place of `list_features` or `inspect_instance`.\n  - Complete all required tool calls implied by the instruction before concluding the response.\n  - Do NOT call `get_session_info` unless the instruction explicitly requests session metadata.\n  - Do NOT call `inspect_instance` or `list_features` before all required `create_object` calls are completed if the instruction implies multiple creations followed by inspection(s).\n  - When multiple inspections are required, perform them in the order specified by the instruction.\n  - When an instruction requires modifying a feature value, always call `update_feature` after any required creation and inspection calls, and before concluding.\n  - NEVER replace `inspect_instance` with `get_session_info` or any other tool when instance details are requested.\n  - NEVER replace `list_features` with `get_session_info` or any other tool when class feature information is requested.\n  - When clearing a feature on an object, do NOT call any other tool between `clear_feature` and the immediate `inspect_instance` call to confirm the change.\n- Always verify the instruction carefully to determine whether immediate inspection after each creation is required or if all creations should precede inspection calls.\n- NEVER replace `inspect_instance` with `get_session_info` or any other tool when instance details are requested.\n- NEVER replace `list_features` with `get_session_info` or any other tool when class feature information is requested.\n- When clearing a feature on an object, do NOT call any other tool between `clear_feature` and the immediate `inspect_instance` call to confirm the change.\n- NEVER call `list_features` or `inspect_instance` before completing all required `create_object` calls if the instruction implies multiple creations followed by inspection(s), unless immediate inspection after each creation is explicitly required.\n- NEVER call `get_session_info` unless the instruction explicitly requests session metadata.\n- NEVER call `list_features` or `inspect_instance` in place of `create_object` or vice versa.\n- NEVER call `get_session_info` in place of `inspect_instance` or `list_features`.\n- Always complete the full sequence of required tool calls implied by the instruction before concluding the response.\n- NEVER stop after a single tool call if the instruction implies multiple steps.\n- NEVER substitute `get_session_info` for instance inspection or feature listing.\n- NEVER substitute `list_features` or `get_session_info` for `inspect_instance` or vice versa.\n- NEVER substitute `inspect_instance` with `get_session_info` or any other tool when instance details are requested.\n- NEVER substitute `list_features` with `get_session_info` or any other tool when class feature information is requested.\n- When updating a feature on an object, always perform `update_feature` after all required creation and inspection calls, and before concluding the response.\n- When multiple objects are created and inspected, strictly follow the sequencing rules to avoid premature or incorrect tool calls.\n- NEVER call `get_session_info` unless explicitly requested by the instruction for session metadata.\n- NEVER call `list_features` or `inspect_instance` before completing all required `create_object` calls if the instruction implies multiple creations followed by inspection(s), unless immediate inspection after each creation is explicitly required.\n- NEVER call any tool between `clear_feature` and the immediate `inspect_instance` call to confirm the clearing of a feature.\n- NEVER call `list_features` or `inspect_instance` in place of `create_object` or vice versa.\n- NEVER call `get_session_info` in place of `inspect_instance` or `list_features`.\n- Always complete the full sequence of required tool calls implied by the instruction before concluding the response.\n- **Explicit sequencing enforcement to prevent failures like calling `list_features` instead of `inspect_instance` after `create_object`:**\n  - After each `create_object` call, if immediate inspection is required, you MUST call `inspect_instance` next before any other tool.\n  - Do NOT call `list_features` or any other tool between `create_object` and the required immediate `inspect_instance`.\n  - If the instruction requires multiple creations followed by inspections, complete all `create_object` calls first, then perform all required `inspect_instance` calls in order.\n  - NEVER substitute `list_features` for `inspect_instance` after `create_object`.\n  - NEVER stop after the first tool call if the instruction implies multiple steps; always complete the full sequence of required tool calls in the correct order.\n  - When updating a feature on a newly created object, always perform `update_feature` after the required `create_object` and `inspect_instance` calls, then call `inspect_instance` again to confirm the update if the instruction requires verification of the updated state.\n  - NEVER call `list_features` or `get_session_info` after `update_feature` when the instruction requires instance details; always call `inspect_instance` to retrieve updated instance data.\n\n## Available MCP Tools\n- `list_features` \u2014 List features of a class using the stateless introspection endpoint. Provide session_id and class_name.\n- `inspect_instance` \u2014 Inspect an instance's values. Provide session_id, class_name, object_id.\n- `get_session_info` \u2014 Retrieve metadata about the current session. Provide session_id.\n- `list_instances` \u2014 List all instances of a given class. Provide session_id and class_name.\n- `get_feature_value` \u2014 Retrieve the value of a specific feature for an instance. Provide session_id, class_name, object_id, and feature_name.\n- `create_object` \u2014 Create a new object instance in a session. Provide session_id and class_name.  \n- `clear_feature` \u2014 Clear or unset a feature value on an object instance. Provide session_id, class_name, object_id, and feature_name.  \n- `update_feature` \u2014 Update or set a feature value on an object instance. Provide session_id, class_name, object_id, feature_name, and new value.  \n- **Note:** Always pair `create_object` with an immediate `inspect_instance` call on the newly created object to retrieve its details if the instruction requires immediate inspection; otherwise, complete all `create_object` calls first before inspecting.\n- When clearing a feature, always follow `clear_feature` with an immediate `inspect_instance` call to confirm the change. Do NOT call any other tool between these two calls.\n- When updating a feature, always perform `update_feature` after any required creation and inspection calls, and before concluding the response.\n- **Explicit sequencing enforcement:**  \n  - If the instruction involves multiple object creations followed by inspection(s), do NOT call `list_features` or `inspect_instance` before all `create_object` calls are completed unless immediate inspection after each creation is explicitly required.  \n  - When instructed to create multiple objects and inspect one or more, first perform all `create_object` calls, then perform the required `inspect_instance` calls in the order specified.  \n  - When instructed to create an object and immediately inspect it, perform `create_object` followed immediately by `inspect_instance` before proceeding to the next creation or other tool calls.  \n  - When updating a feature on a newly created object, always perform `update_feature` after the required `create_object` and `inspect_instance` calls, then call `inspect_instance` again to confirm the update if the instruction requires verification of the updated state.  \n  - Never substitute `list_features` or `get_session_info` for `inspect_instance` or vice versa.  \n  - Always complete the full sequence of required tool calls implied by the instruction before concluding the response.",
+  "results": [
+    {
+      "score": 1.0
+    },
+    {
+      "score": 0.0
+    },
+    {
+      "score": 1.0
+    },
+    {
+      "score": 1.0
+    },
+    {
+      "score": 1.0
+    },
+    {
+      "score": 1.0
+    },
+    {
+      "score": 1.0
+    },
+    {
+      "score": 1.0
+    },
+    {
+      "score": 1.0
+    },
+    {
+      "score": 1.0
+    },
+    {
+      "score": 1.0
+    },
+    {
+      "score": 1.0
+    },
+    {
+      "score": 1.0
+    },
+    {
+      "score": 1.0
+    },
+    {
+      "score": 0.0
+    },
+    {
+      "score": 1.0
+    },
+    {
+      "score": 1.0
+    },
+    {
+      "score": 1.0
+    },
+    {
+      "score": 1.0
+    },
+    {
+      "score": 0.5
+    },
+    {
+      "score": 1.0
+    },
+    {
+      "score": 1.0
+    },
+    {
+      "score": 1.0
+    },
+    {
+      "score": 1.0
+    },
+    {
+      "score": 1.0
+    },
+    {
+      "score": 1.0
+    },
+    {
+      "score": 1.0
+    },
+    {
+      "score": 1.0
+    },
+    {
+      "score": 1.0
+    },
+    {
+      "score": 1.0
+    },
+    {
+      "score": 1.0
+    },
+    {
+      "score": 0.5
+    },
+    {
+      "score": 1.0
+    },
+    {
+      "score": 1.0
+    },
+    {
+      "score": 1.0
+    },
+    {
+      "score": 1.0
+    },
+    {
+      "score": 1.0
+    },
+    {
+      "score": 1.0
+    },
+    {
+      "score": 1.0
+    },
+    {
+      "score": 0.6666666666666666
+    },
+    {
+      "score": 1.0
+    },
+    {
+      "score": 1.0
+    },
+    {
+      "score": 1.0
+    },
+    {
+      "score": 1.0
+    },
+    {
+      "score": 1.0
+    },
+    {
+      "score": 1.0
+    },
+    {
+      "score": 0.6666666666666666
+    },
+    {
+      "score": 0.6666666666666666
+    },
+    {
+      "score": 1.0
+    },
+    {
+      "score": 1.0
+    },
+    {
+      "score": 0.6666666666666666
+    },
+    {
+      "score": 1.0
+    },
+    {
+      "score": 1.0
+    },
+    {
+      "score": 0.6666666666666666
+    },
+    {
+      "score": 1.0
+    },
+    {
+      "score": 1.0
+    },
+    {
+      "score": 1.0
+    },
+    {
+      "score": 1.0
+    },
+    {
+      "score": 0.3333333333333333
+    },
+    {
+      "score": 1.0
+    },
+    {
+      "score": 0.6666666666666666
+    },
+    {
+      "score": 1.0
+    },
+    {
+      "score": 0.6666666666666666
+    },
+    {
+      "score": 0.6666666666666666
+    },
+    {
+      "score": 1.0
+    },
+    {
+      "score": 1.0
+    },
+    {
+      "score": 1.0
+    },
+    {
+      "score": 1.0
+    },
+    {
+      "score": 0.0
+    },
+    {
+      "score": 1.0
+    },
+    {
+      "score": 0.6666666666666666
+    },
+    {
+      "score": 0.6666666666666666
+    },
+    {
+      "score": 0.6666666666666666
+    },
+    {
+      "score": 1.0
+    },
+    {
+      "score": 1.0
+    },
+    {
+      "score": 0.6666666666666666
+    },
+    {
+      "score": 1.0
+    },
+    {
+      "score": 0.6666666666666666
+    },
+    {
+      "score": 1.0
+    },
+    {
+      "score": 1.0
+    }
+  ]
+}
