@@ -56,10 +56,10 @@ print(f"Train avg  : {final_avg:.2f}")
 print(f"Test avg   : {test_avg:.2f}")
 
 # ── Plot ──────────────────────────────────────────────────────────────────────
-fig, ax = plt.subplots(figsize=(12, 5))
+fig, ax = plt.subplots(figsize=(12, 6))
 
 colors = ['#d73027' if y < 1.0 else '#4393c3' for y in ys]
-ax.scatter(xs, ys, c=colors, s=30, zorder=4, alpha=0.7)
+ax.scatter(xs, ys, c=colors, s=50, zorder=4, alpha=0.7)
 
 ax.plot(xs, cum_avg, color='#08306b', linewidth=2.5, zorder=5)
 
@@ -88,16 +88,13 @@ if test_avg is not None:
                label=f'Test score (held-out) = {test_avg:.2f}')
     )
 
-ax.legend(handles=legend_elements, fontsize=9, loc='lower left')
+ax.legend(handles=legend_elements, fontsize=11, loc='lower left')
 ax.set_xlim(0.5, len(xs) + 0.5)
 ax.set_ylim(-0.05, 1.1)
-ax.set_xlabel("Training sample index", fontsize=11)
-ax.set_ylabel("Score", fontsize=11)
-ax.set_title(
-    f"EMF — Online specialization: per-sample score and cumulative average "
-    f"(1 pass, {len(xs)} samples)",
-    fontsize=12
-)
+ax.set_xlabel("Training sample index", fontsize=13)
+ax.set_ylabel("Score", fontsize=13)
+ax.tick_params(axis='both', labelsize=11)
+
 ax.grid(alpha=0.3, linestyle='--')
 ax.spines["top"].set_visible(False)
 ax.spines["right"].set_visible(False)
@@ -105,6 +102,6 @@ ax.spines["right"].set_visible(False)
 plt.tight_layout()
 
 out = Path("debug_logs/fig_emf_online_specialization.png")
-plt.savefig(out, dpi=150, bbox_inches="tight")
+plt.savefig(out, dpi=200, bbox_inches="tight")
 plt.savefig(str(out).replace('.png', '.pdf'), bbox_inches="tight")
 print(f"Saved: {out}")
