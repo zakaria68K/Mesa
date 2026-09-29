@@ -1,0 +1,1054 @@
+[
+  {
+    "error_id": 1,
+    "train_index": 15,
+    "instruction": "Erase any value stored in instance of EEnumLiteral object obj_270 in session $session_id",
+    "level": 1,
+    "skill_file": ".opencode/skills/emf-write/SKILL.md",
+    "score": 0.0,
+    "expected_apis": [
+      {
+        "api_name": "clear_feature",
+        "arguments": "session_id, class_name=eenumliteral, object_id=obj_270, feature_name=instance"
+      }
+    ],
+    "actual_calls": [
+      {
+        "api_name": "clear_feature",
+        "arguments": {
+          "class_name": "EEnumLiteral",
+          "feature_name": "name",
+          "object_id": "obj_270",
+          "session_id": "b0d7b430-dfc8-4cf6-a3c0-d0d060f23f86"
+        }
+      },
+      {
+        "api_name": "list_features",
+        "arguments": {
+          "class_name": "EEnumLiteral",
+          "session_id": "b0d7b430-dfc8-4cf6-a3c0-d0d060f23f86"
+        }
+      },
+      {
+        "api_name": "get_session_info",
+        "arguments": {
+          "session_id": "b0d7b430-dfc8-4cf6-a3c0-d0d060f23f86"
+        }
+      },
+      {
+        "api_name": "list_session_objects",
+        "arguments": {
+          "session_id": "b0d7_dfc8-4cf6-a3c0-d0d060f23f86"
+        }
+      },
+      {
+        "api_name": "inspect_instance",
+        "arguments": {
+          "class_name": "EEnumLiteral",
+          "object_id": "obj_270",
+          "session_id": "b0d7b430-dfc8-4cf6-a3c0-d0d060f23f86"
+        }
+      }
+    ],
+    "agent_exception": null,
+    "batch": 1
+  },
+  {
+    "error_id": 2,
+    "train_index": 20,
+    "instruction": "First create a EEnumLiteral instance in session $session_id, then retrieve all features of the newly created object",
+    "level": 2,
+    "skill_file": ".opencode/skills/emf-read/SKILL.md",
+    "score": 0.5,
+    "expected_apis": [
+      {
+        "api_name": "create_object",
+        "arguments": "session_id, class_name=eenumliteral"
+      },
+      {
+        "api_name": "inspect_instance",
+        "arguments": "session_id, class_name=eenumliteral, object_id=obj_1302"
+      }
+    ],
+    "actual_calls": [
+      {
+        "api_name": "create_object",
+        "arguments": {
+          "class_name": "EEnumLiteral",
+          "session_id": "d1732b23-dfa6-4c63-a9c0-89aa29cf8350"
+        }
+      },
+      {
+        "api_name": "list_features",
+        "arguments": {
+          "class_name": "EEnumLiteral",
+          "session_id": "d1732b23-dfa6-4c63-a9c0-89aa29cf8350"
+        }
+      },
+      {
+        "api_name": "list_session_objects",
+        "arguments": {
+          "session_id": "d1732b23-dfa6-4c63-a9c0-89aa29cf8350"
+        }
+      }
+    ],
+    "agent_exception": null,
+    "batch": 1
+  },
+  {
+    "error_id": 3,
+    "train_index": 23,
+    "instruction": "Create a new EOperation object in session $session_id and then clear its unique",
+    "level": 2,
+    "skill_file": ".opencode/skills/emf-write/SKILL.md",
+    "score": 0.5,
+    "expected_apis": [
+      {
+        "api_name": "create_object",
+        "arguments": "session_id, class_name=eoperation"
+      },
+      {
+        "api_name": "clear_feature",
+        "arguments": "session_id, class_name=eoperation, object_id=obj_457, feature_name=unique"
+      }
+    ],
+    "actual_calls": [
+      {
+        "api_name": "create_object",
+        "arguments": {
+          "class_name": "EOperation",
+          "session_id": "06060beb-a63f-4fd3-ba04-94a435de679a"
+        }
+      },
+      {
+        "api_name": "clear_feature",
+        "arguments": {
+          "class_name": "EOperation",
+          "feature_name": "uniqueName",
+          "object_id": "1137874486",
+          "session_id": "06060beb-a63f-4fd3-ba04-94a435de679a"
+        }
+      }
+    ],
+    "agent_exception": null,
+    "batch": 1
+  },
+  {
+    "error_id": 4,
+    "train_index": 29,
+    "instruction": "Create a new EPackage object in session $session_id and then get all its features",
+    "level": 2,
+    "skill_file": ".opencode/skills/emf-read/SKILL.md",
+    "score": 0.0,
+    "expected_apis": [
+      {
+        "api_name": "create_object",
+        "arguments": "session_id, class_name=epackage"
+      },
+      {
+        "api_name": "inspect_instance",
+        "arguments": "session_id, class_name=epackage, object_id=obj_324"
+      }
+    ],
+    "actual_calls": [],
+    "agent_exception": null,
+    "batch": 1
+  },
+  {
+    "error_id": 5,
+    "train_index": 32,
+    "instruction": "In session $session_id, instantiate a EAnnotation object and immediately change its details to 'TestElement'",
+    "level": 2,
+    "skill_file": ".opencode/skills/emf-write/SKILL.md",
+    "score": 0.5,
+    "expected_apis": [
+      {
+        "api_name": "create_object",
+        "arguments": "session_id, class_name=eannotation"
+      },
+      {
+        "api_name": "update_feature",
+        "arguments": "session_id, class_name=eannotation, object_id=obj_383, feature_name=details, value=TestElement"
+      }
+    ],
+    "actual_calls": [
+      {
+        "api_name": "create_object",
+        "arguments": {
+          "class_name": "EAnnotation",
+          "session_id": "b9047dc2-5ccc-4f65-b44f-ab42aa234549"
+        }
+      },
+      {
+        "api_name": "update_feature",
+        "arguments": {
+          "class_name": "EAnnotation",
+          "feature_name": "text",
+          "object_id": "1316156707",
+          "session_id": "b9047dc2-5ccc-4f65-b44f-ab42aa234549",
+          "value": "TestElement"
+        }
+      },
+      {
+        "api_name": "list_features",
+        "arguments": {
+          "class_name": "EAnnotation",
+          "session_id": "b9047dc2-5ccc-4f65-b44f-ab42aa234549"
+        }
+      },
+      {
+        "api_name": "list_session_objects",
+        "arguments": {
+          "session_id": "b9047dc2-5ccc-4f65-b44f-ab42aa234549"
+        }
+      },
+      {
+        "api_name": "get_session_info",
+        "arguments": {
+          "session_id": "b9047dc2-5ccc-4f65-b44f-ab42aa234549"
+        }
+      }
+    ],
+    "agent_exception": null,
+    "batch": 2
+  },
+  {
+    "error_id": 6,
+    "train_index": 33,
+    "instruction": "First create EOperation in session $session_id, configure eAnnotations as 'DataModel', then check all its attributes",
+    "level": 3,
+    "skill_file": ".opencode/skills/emf-read/SKILL.md",
+    "score": 0.6666666666666666,
+    "expected_apis": [
+      {
+        "api_name": "create_object",
+        "arguments": "session_id, class_name=eoperation"
+      },
+      {
+        "api_name": "update_feature",
+        "arguments": "session_id, class_name=eoperation, object_id=obj_1324, feature_name=eAnnotations, value=DataModel"
+      },
+      {
+        "api_name": "inspect_instance",
+        "arguments": "session_id, class_name=eoperation, object_id=obj_1324"
+      }
+    ],
+    "actual_calls": [
+      {
+        "api_name": "create_object",
+        "arguments": {
+          "class_name": "EOperation",
+          "session_id": "731b3249-41e5-4cc7-b8fd-fc725ce314f7"
+        }
+      },
+      {
+        "api_name": "update_feature",
+        "arguments": {
+          "class_name": "EOperation",
+          "feature_name": "eAnnotations",
+          "object_id": "376071507",
+          "session_id": "731b3249-41e5-4cc7-b8fd-fc725ce314f7",
+          "value": "DataModel"
+        }
+      },
+      {
+        "api_name": "list_features",
+        "arguments": {
+          "class_name": "EOperation",
+          "session_id": "731b3249-41e5-4cc7-b8fd-fc725ce314f7"
+        }
+      },
+      {
+        "api_name": "get_session_info",
+        "arguments": {
+          "session_id": "731b3249-41e5-4cc7-b8fd-fc725ce314f7"
+        }
+      }
+    ],
+    "agent_exception": null,
+    "batch": 2
+  },
+  {
+    "error_id": 7,
+    "train_index": 34,
+    "instruction": "Create a new EParameter object in session $session_id, update its lowerBound to '1', then get all its features",
+    "level": 3,
+    "skill_file": ".opencode/skills/emf-read/SKILL.md",
+    "score": 0.6666666666666666,
+    "expected_apis": [
+      {
+        "api_name": "create_object",
+        "arguments": "session_id, class_name=eparameter"
+      },
+      {
+        "api_name": "update_feature",
+        "arguments": "session_id, class_name=eparameter, object_id=obj_777, feature_name=lowerBound, value=1"
+      },
+      {
+        "api_name": "inspect_instance",
+        "arguments": "session_id, class_name=eparameter, object_id=obj_777"
+      }
+    ],
+    "actual_calls": [
+      {
+        "api_name": "create_object",
+        "arguments": {
+          "class_name": "EParameter",
+          "session_id": "571af4f6-adc5-481d-8bf2-6c1c2aca9c88"
+        }
+      },
+      {
+        "api_name": "update_feature",
+        "arguments": {
+          "class_name": "EParameter",
+          "feature_name": "lowerBound",
+          "object_id": "75660136",
+          "session_id": "571af4f6-adc5-481d-8bf2-6c1c2aca9c88",
+          "value": "1"
+        }
+      },
+      {
+        "api_name": "list_features",
+        "arguments": {
+          "class_name": "EParameter",
+          "session_id": "571af4f6-adc5-481d-8bf2-6c1c2aca9c88"
+        }
+      }
+    ],
+    "agent_exception": null,
+    "batch": 2
+  },
+  {
+    "error_id": 8,
+    "train_index": 36,
+    "instruction": "In session $session_id, create a EGenericType, set eRawType to 'Project', then reset eTypeArguments",
+    "level": 3,
+    "skill_file": ".opencode/skills/emf-write/SKILL.md",
+    "score": 0.6666666666666666,
+    "expected_apis": [
+      {
+        "api_name": "create_object",
+        "arguments": "session_id, class_name=egenerictype"
+      },
+      {
+        "api_name": "update_feature",
+        "arguments": "session_id, class_name=egenerictype, object_id=obj_866, feature_name=eRawType, value=Project"
+      },
+      {
+        "api_name": "clear_feature",
+        "arguments": "session_id, class_name=egenerictype, object_id=obj_866, feature_name=eTypeArguments"
+      }
+    ],
+    "actual_calls": [
+      {
+        "api_name": "create_object",
+        "arguments": {
+          "class_name": "EGenericType",
+          "session_id": "0c04b190-a225-486d-b0b3-2fed4f2ada49"
+        }
+      },
+      {
+        "api_name": "update_feature",
+        "arguments": {
+          "class_name": "EGenericType",
+          "feature_name": "eRawType",
+          "object_id": "106299261",
+          "session_id": "0c04b190-a225-486d-b0b3-2fed4f2ada49",
+          "value": "Project"
+        }
+      },
+      {
+        "api_name": "list_session_objects",
+        "arguments": {
+          "session_id": "0c04b190-a225-486d-b0b3-2fed4f2ada49"
+        }
+      },
+      {
+        "api_name": "list_session_objects",
+        "arguments": {
+          "session_id": "0c04b190-a225-486d-b0b3-2fed4f2ada49"
+        }
+      },
+      {
+        "api_name": "get_session_info",
+        "arguments": {
+          "session_id": "0c04b190-a225-486d-b0b3-2fed4f2ada49"
+        }
+      }
+    ],
+    "agent_exception": null,
+    "batch": 2
+  },
+  {
+    "error_id": 9,
+    "train_index": 39,
+    "instruction": "Create a new EPackage object and a new EDataType object in session $session_id, then get all features of the first one",
+    "level": 3,
+    "skill_file": ".opencode/skills/emf-read/SKILL.md",
+    "score": 0.6666666666666666,
+    "expected_apis": [
+      {
+        "api_name": "create_object",
+        "arguments": "session_id, class_name=epackage"
+      },
+      {
+        "api_name": "create_object",
+        "arguments": "session_id, class_name=edatatype"
+      },
+      {
+        "api_name": "inspect_instance",
+        "arguments": "session_id, class_name=epackage, object_id=obj_995"
+      }
+    ],
+    "actual_calls": [
+      {
+        "api_name": "create_object",
+        "arguments": {
+          "class_name": "EPackage",
+          "session_id": "284852a5-2d3b-46f9-b2c6-1d78bb1b97e6"
+        }
+      },
+      {
+        "api_name": "create_object",
+        "arguments": {
+          "class_name": "EDataType",
+          "session_id": "284852a5-2d3b-46f9-b2c6-1d78bb1b97e6"
+        }
+      },
+      {
+        "api_name": "list_features",
+        "arguments": {
+          "class_name": "EPackage",
+          "session_id": "284852a5-2d3b-46f9-b2c6-1d78bb1b97e6"
+        }
+      },
+      {
+        "api_name": "list_session_objects",
+        "arguments": {
+          "session_id": "284852a5-2d3b-46f9-b2c6-1d78bb1b97e6"
+        }
+      }
+    ],
+    "agent_exception": null,
+    "batch": 3
+  },
+  {
+    "error_id": 10,
+    "train_index": 40,
+    "instruction": "First create EFactory in session $session_id, check its attributes, then add a new EParameter",
+    "level": 3,
+    "skill_file": ".opencode/skills/emf-read/SKILL.md",
+    "score": 0.6666666666666666,
+    "expected_apis": [
+      {
+        "api_name": "create_object",
+        "arguments": "session_id, class_name=efactory"
+      },
+      {
+        "api_name": "inspect_instance",
+        "arguments": "session_id, class_name=efactory, object_id=obj_626"
+      },
+      {
+        "api_name": "create_object",
+        "arguments": "session_id, class_name=eparameter"
+      }
+    ],
+    "actual_calls": [
+      {
+        "api_name": "create_object",
+        "arguments": {
+          "class_name": "EFactory",
+          "session_id": "2b773c62-214c-4d77-a22b-a091fff9ed0d"
+        }
+      },
+      {
+        "api_name": "list_features",
+        "arguments": {
+          "class_name": "EFactory",
+          "session_id": "2b773c62-214c-4d77-a22b-a091fff9ed0d"
+        }
+      },
+      {
+        "api_name": "get_session_info",
+        "arguments": {
+          "session_id": "2b773c62-214c-4d77-a22b-a091fff9ed0d"
+        }
+      },
+      {
+        "api_name": "list_session_objects",
+        "arguments": {
+          "session_id": "2b773c62-214c-4d77-a22b-a091fff9ed0d"
+        }
+      },
+      {
+        "api_name": "list_features",
+        "arguments": {
+          "class_name": "EFactory",
+          "session_id": "2b773c62-214c-4d77-a22b-a091fff9ed0d"
+        }
+      },
+      {
+        "api_name": "inspect_instance",
+        "arguments": {
+          "class_name": "EFactory",
+          "object_id": "529131069",
+          "session_id": "2b773c62-214c-4d77-a22b-a091fff9ed0d"
+        }
+      }
+    ],
+    "agent_exception": null,
+    "batch": 3
+  },
+  {
+    "error_id": 11,
+    "train_index": 47,
+    "instruction": "First create EGenericType in session $session_id, unset eClassifier, then check all its attributes",
+    "level": 3,
+    "skill_file": ".opencode/skills/emf-read/SKILL.md",
+    "score": 0.6666666666666666,
+    "expected_apis": [
+      {
+        "api_name": "create_object",
+        "arguments": "session_id, class_name=egenerictype"
+      },
+      {
+        "api_name": "clear_feature",
+        "arguments": "session_id, class_name=egenerictype, object_id=obj_961, feature_name=eClassifier"
+      },
+      {
+        "api_name": "inspect_instance",
+        "arguments": "session_id, class_name=egenerictype, object_id=obj_961"
+      }
+    ],
+    "actual_calls": [
+      {
+        "api_name": "create_object",
+        "arguments": {
+          "class_name": "EGenericType",
+          "session_id": "011c4dd3-0307-4973-8449-15f0898b6aae"
+        }
+      },
+      {
+        "api_name": "clear_feature",
+        "arguments": {
+          "class_name": "EGenericType",
+          "feature_name": "eClassifier",
+          "object_id": "784830362",
+          "session_id": "011c4dd3-0307-4973-8449-15f0898b6aae"
+        }
+      },
+      {
+        "api_name": "list_features",
+        "arguments": {
+          "class_name": "EGenericType",
+          "session_id": "011c4dd3-0307-4973-8449-15f0898b6aae"
+        }
+      },
+      {
+        "api_name": "get_session_info",
+        "arguments": {
+          "session_id": "011c4dd3-0307-4973-8449-15f0898b6aae"
+        }
+      },
+      {
+        "api_name": "list_session_objects",
+        "arguments": {
+          "session_id": "011c4dd3-0307-4973-8449-15f0898b6aae"
+        }
+      }
+    ],
+    "agent_exception": null,
+    "batch": 3
+  },
+  {
+    "error_id": 12,
+    "train_index": 51,
+    "instruction": "Create a new EClass object in session $session_id, clear its instanceClassName, then get all its features",
+    "level": 3,
+    "skill_file": ".opencode/skills/emf-read/SKILL.md",
+    "score": 0.6666666666666666,
+    "expected_apis": [
+      {
+        "api_name": "create_object",
+        "arguments": "session_id, class_name=eclass"
+      },
+      {
+        "api_name": "clear_feature",
+        "arguments": "session_id, class_name=eclass, object_id=obj_941, feature_name=instanceClassName"
+      },
+      {
+        "api_name": "inspect_instance",
+        "arguments": "session_id, class_name=eclass, object_id=obj_941"
+      }
+    ],
+    "actual_calls": [
+      {
+        "api_name": "create_object",
+        "arguments": {
+          "class_name": "EClass",
+          "session_id": "bfb2c9d4-a78b-49f4-ad95-9db453fd8959"
+        }
+      },
+      {
+        "api_name": "clear_feature",
+        "arguments": {
+          "class_name": "EClass",
+          "feature_name": "instanceClassName",
+          "object_id": "1305450367",
+          "session_id": "bfb2c9d4-a78b-49f4-ad95-9db453fd8959"
+        }
+      }
+    ],
+    "agent_exception": null,
+    "batch": 3
+  },
+  {
+    "error_id": 13,
+    "train_index": 54,
+    "instruction": "In session $session_id, create a EDataType, retrieve its properties, then modify its defaultValue to 'MyClass'",
+    "level": 3,
+    "skill_file": ".opencode/skills/emf-read/SKILL.md",
+    "score": 0.6666666666666666,
+    "expected_apis": [
+      {
+        "api_name": "create_object",
+        "arguments": "session_id, class_name=edatatype"
+      },
+      {
+        "api_name": "inspect_instance",
+        "arguments": "session_id, class_name=edatatype, object_id=obj_657"
+      },
+      {
+        "api_name": "update_feature",
+        "arguments": "session_id, class_name=edatatype, object_id=obj_657, feature_name=defaultValue, value=MyClass"
+      }
+    ],
+    "actual_calls": [
+      {
+        "api_name": "create_object",
+        "arguments": {
+          "class_name": "EDataType",
+          "session_id": "f48a2c62-91d0-43d8-8ba3-ffdd3ca7f47d"
+        }
+      },
+      {
+        "api_name": "list_features",
+        "arguments": {
+          "class_name": "EDataType",
+          "session_id": "f48a2c62-91d0-43d8-8ba3-ffdd3ca7f47d"
+        }
+      },
+      {
+        "api_name": "list_features",
+        "arguments": {
+          "class_name": "EDataType",
+          "session_id": "f48a2c62-91d0-43d8-8ba3-ffdd3ca7f47d"
+        }
+      },
+      {
+        "api_name": "list_session_objects",
+        "arguments": {
+          "session_id": "f48a2c62-91d0-43d8-8ba3-ffdd3ca7f47d"
+        }
+      },
+      {
+        "api_name": "inspect_instance",
+        "arguments": {
+          "class_name": "EDataType",
+          "object_id": "1431786626",
+          "session_id": "f48a2c62-91d0-43d8-8ba3-ffdd3ca7f47d"
+        }
+      },
+      {
+        "api_name": "get_session_info",
+        "arguments": {
+          "session_id": "f48a2c62-91d0-43d8-8ba3-ffdd3ca7f47d"
+        }
+      }
+    ],
+    "agent_exception": null,
+    "batch": 4
+  },
+  {
+    "error_id": 14,
+    "train_index": 56,
+    "instruction": "First create EAttribute in session $session_id, configure eAnnotations as 'Employee', then unset iD",
+    "level": 3,
+    "skill_file": ".opencode/skills/emf-write/SKILL.md",
+    "score": 0.6666666666666666,
+    "expected_apis": [
+      {
+        "api_name": "create_object",
+        "arguments": "session_id, class_name=eattribute"
+      },
+      {
+        "api_name": "update_feature",
+        "arguments": "session_id, class_name=eattribute, object_id=obj_877, feature_name=eAnnotations, value=Employee"
+      },
+      {
+        "api_name": "clear_feature",
+        "arguments": "session_id, class_name=eattribute, object_id=obj_877, feature_name=iD"
+      }
+    ],
+    "actual_calls": [
+      {
+        "api_name": "create_object",
+        "arguments": {
+          "class_name": "EAttribute",
+          "session_id": "238b3404-df58-48c6-900a-d31961e0e376"
+        }
+      },
+      {
+        "api_name": "update_feature",
+        "arguments": {
+          "class_name": "EAttribute",
+          "feature_name": "eAnnotations",
+          "object_id": "1716398354",
+          "session_id": "238b3404-df58-48c6-900a-d31961e0e376",
+          "value": "Employee"
+        }
+      },
+      {
+        "api_name": "clear_feature",
+        "arguments": {
+          "class_name": "EAttribute",
+          "feature_name": "eID",
+          "object_id": "1716398354",
+          "session_id": "238b3404-df58-48c6-900a-d31961e0e376"
+        }
+      }
+    ],
+    "agent_exception": null,
+    "batch": 4
+  },
+  {
+    "error_id": 15,
+    "train_index": 59,
+    "instruction": "First create EEnumLiteral in session $session_id, unset value, then discard it",
+    "level": 3,
+    "skill_file": ".opencode/skills/emf-write/SKILL.md",
+    "score": 0.6666666666666666,
+    "expected_apis": [
+      {
+        "api_name": "create_object",
+        "arguments": "session_id, class_name=eenumliteral"
+      },
+      {
+        "api_name": "clear_feature",
+        "arguments": "session_id, class_name=eenumliteral, object_id=obj_984, feature_name=value"
+      },
+      {
+        "api_name": "delete_object",
+        "arguments": "session_id, class_name=eenumliteral, object_id=obj_984"
+      }
+    ],
+    "actual_calls": [
+      {
+        "api_name": "create_object",
+        "arguments": {
+          "class_name": "EEnumLiteral",
+          "session_id": "3b1eeccf-a799-4889-affa-8e81a4db351f"
+        }
+      },
+      {
+        "api_name": "clear_feature",
+        "arguments": {
+          "class_name": "EEnumLiteral",
+          "feature_name": "name",
+          "object_id": "1887153490",
+          "session_id": "3b1eeccf-a799-4889-affa-8e81a4db351f"
+        }
+      },
+      {
+        "api_name": "delete_object",
+        "arguments": {
+          "class_name": "EEnumLiteral",
+          "object_id": "1887153490",
+          "session_id": "3b1eeccf-a799-4889-affa-8e81a4db351f"
+        }
+      }
+    ],
+    "agent_exception": null,
+    "batch": 4
+  },
+  {
+    "error_id": 16,
+    "train_index": 61,
+    "instruction": "First create EEnum in session $session_id, check its attributes, then add a new EDataType",
+    "level": 3,
+    "skill_file": ".opencode/skills/emf-read/SKILL.md",
+    "score": 0.6666666666666666,
+    "expected_apis": [
+      {
+        "api_name": "create_object",
+        "arguments": "session_id, class_name=eenum"
+      },
+      {
+        "api_name": "inspect_instance",
+        "arguments": "session_id, class_name=eenum, object_id=obj_622"
+      },
+      {
+        "api_name": "create_object",
+        "arguments": "session_id, class_name=edatatype"
+      }
+    ],
+    "actual_calls": [
+      {
+        "api_name": "create_object",
+        "arguments": {
+          "class_name": "EEnum",
+          "session_id": "ef04d0f7-f815-452b-b470-9dcb8ceddc0e"
+        }
+      },
+      {
+        "api_name": "list_features",
+        "arguments": {
+          "class_name": "EEnum",
+          "session_id": "ef04d0f7-f815-452b-b470-9dcb8ceddc0e"
+        }
+      },
+      {
+        "api_name": "get_session_info",
+        "arguments": {
+          "session_id": "ef04d0f7-f815-452b-b470-9dcb8ceddc0e"
+        }
+      },
+      {
+        "api_name": "list_session_objects",
+        "arguments": {
+          "session_id": "ef04d0f7-f815-452b-b470-9dcb8ceddc0e"
+        }
+      },
+      {
+        "api_name": "inspect_instance",
+        "arguments": {
+          "class_name": "EEnum",
+          "object_id": "456445430",
+          "session_id": "ef04d0f7-f815-452b-b470-9dcb8ceddc0e"
+        }
+      }
+    ],
+    "agent_exception": null,
+    "batch": 4
+  },
+  {
+    "error_id": 17,
+    "train_index": 63,
+    "instruction": "First create EStringToStringMapEntry in session $session_id, check its attributes, then add a new EParameter",
+    "level": 3,
+    "skill_file": ".opencode/skills/emf-read/SKILL.md",
+    "score": 0.6666666666666666,
+    "expected_apis": [
+      {
+        "api_name": "create_object",
+        "arguments": "session_id, class_name=estringtostringmapentry"
+      },
+      {
+        "api_name": "inspect_instance",
+        "arguments": "session_id, class_name=estringtostringmapentry, object_id=obj_624"
+      },
+      {
+        "api_name": "create_object",
+        "arguments": "session_id, class_name=eparameter"
+      }
+    ],
+    "actual_calls": [
+      {
+        "api_name": "create_object",
+        "arguments": {
+          "class_name": "EStringToStringMapEntry",
+          "session_id": "598c4efa-eef1-43cb-bfb8-b3ef69f32b24"
+        }
+      },
+      {
+        "api_name": "list_features",
+        "arguments": {
+          "class_name": "EStringToStringMapEntry",
+          "session_id": "598c4efa-eef1-43cb-bfb8-b3ef69f32b24"
+        }
+      },
+      {
+        "api_name": "inspect_instance",
+        "arguments": {
+          "class_name": "EStringToStringMapEntry",
+          "object_id": "1750705646",
+          "session_id": "598c4efa-eef1-43cb-bfb8-b3ef69f32b24"
+        }
+      },
+      {
+        "api_name": "get_session_info",
+        "arguments": {
+          "session_id": "598c4efa-eef1-43cb-bfb8-b3ef69f32b24"
+        }
+      }
+    ],
+    "agent_exception": null,
+    "batch": 5
+  },
+  {
+    "error_id": 18,
+    "train_index": 71,
+    "instruction": "First create EAnnotation then EFactory in session $session_id, then configure details of the first object to 'Service'",
+    "level": 3,
+    "skill_file": ".opencode/skills/emf-write/SKILL.md",
+    "score": 0.6666666666666666,
+    "expected_apis": [
+      {
+        "api_name": "create_object",
+        "arguments": "session_id, class_name=eannotation"
+      },
+      {
+        "api_name": "create_object",
+        "arguments": "session_id, class_name=efactory"
+      },
+      {
+        "api_name": "update_feature",
+        "arguments": "session_id, class_name=eannotation, object_id=obj_1095, feature_name=details, value=Service"
+      }
+    ],
+    "actual_calls": [
+      {
+        "api_name": "create_object",
+        "arguments": {
+          "class_name": "EAnnotation",
+          "session_id": "035cbda8-ff48-4655-8f7b-4bf846207321"
+        }
+      },
+      {
+        "api_name": "create_object",
+        "arguments": {
+          "class_name": "EFactory",
+          "session_id": "035cbda8-ff48-4655-8f7b-4bf846207321"
+        }
+      },
+      {
+        "api_name": "update_feature",
+        "arguments": {
+          "class_name": "EAnnotation",
+          "feature_name": "content",
+          "object_id": "2092204913",
+          "session_id": "035cbda8-ff48-4655-8f7b-4bf846207321",
+          "value": "Service"
+        }
+      },
+      {
+        "api_name": "list_features",
+        "arguments": {
+          "class_name": "EAnnotation",
+          "session_id": "035cbda8-ff48-4655-8f7b-4bf846207321"
+        }
+      },
+      {
+        "api_name": "get_session_info",
+        "arguments": {
+          "session_id": "035cbda8-ff48-4655-8f7b-4bf846207321"
+        }
+      }
+    ],
+    "agent_exception": null,
+    "batch": 5
+  },
+  {
+    "error_id": 19,
+    "train_index": 76,
+    "instruction": "Create a new EPackage object in session $session_id, get all its features, then create another EReference object",
+    "level": 3,
+    "skill_file": ".opencode/skills/emf-read/SKILL.md",
+    "score": 0.6666666666666666,
+    "expected_apis": [
+      {
+        "api_name": "create_object",
+        "arguments": "session_id, class_name=epackage"
+      },
+      {
+        "api_name": "inspect_instance",
+        "arguments": "session_id, class_name=epackage, object_id=obj_598"
+      },
+      {
+        "api_name": "create_object",
+        "arguments": "session_id, class_name=ereference"
+      }
+    ],
+    "actual_calls": [
+      {
+        "api_name": "create_object",
+        "arguments": {
+          "class_name": "EPackage",
+          "session_id": "1d9804ff-1b20-4f60-97da-46b408ede448"
+        }
+      },
+      {
+        "api_name": "list_features",
+        "arguments": {
+          "class_name": "EPackage",
+          "session_id": "1d9804ff-1b20-4f60-97da-46b408ede448"
+        }
+      },
+      {
+        "api_name": "create_object",
+        "arguments": {
+          "class_name": "EReference",
+          "session_id": "1d9804ff-1b20-4f60-97da-46b408ede448"
+        }
+      }
+    ],
+    "agent_exception": null,
+    "batch": 5
+  },
+  {
+    "error_id": 20,
+    "train_index": 78,
+    "instruction": "Create a new EParameter object in session $session_id, update its eType to 'Category', then get all its features",
+    "level": 3,
+    "skill_file": ".opencode/skills/emf-read/SKILL.md",
+    "score": 0.6666666666666666,
+    "expected_apis": [
+      {
+        "api_name": "create_object",
+        "arguments": "session_id, class_name=eparameter"
+      },
+      {
+        "api_name": "update_feature",
+        "arguments": "session_id, class_name=eparameter, object_id=obj_783, feature_name=eType, value=Category"
+      },
+      {
+        "api_name": "inspect_instance",
+        "arguments": "session_id, class_name=eparameter, object_id=obj_783"
+      }
+    ],
+    "actual_calls": [
+      {
+        "api_name": "create_object",
+        "arguments": {
+          "class_name": "EParameter",
+          "session_id": "0c215459-d452-4b8f-a859-ba9637a21d26"
+        }
+      },
+      {
+        "api_name": "update_feature",
+        "arguments": {
+          "class_name": "EParameter",
+          "feature_name": "eType",
+          "object_id": "287350707",
+          "session_id": "0c215459-d452-4b8f-a859-ba9637a21d26",
+          "value": "Category"
+        }
+      },
+      {
+        "api_name": "list_session_objects",
+        "arguments": {
+          "session_id": "0c215459-d452-4b8f-a859-ba9637a21d26"
+        }
+      },
+      {
+        "api_name": "list_features",
+        "arguments": {
+          "class_name": "EParameter",
+          "session_id": "0c215459-d452-4b8f-a859-ba9637a21d26"
+        }
+      }
+    ],
+    "agent_exception": null,
+    "batch": 5
+  }
+]

@@ -1,0 +1,675 @@
+================================================================================
+BATCH 1 | skill=.opencode/skills/emf-write/SKILL.md | status=rewritten | 2026-09-29T22:10:57
+Errors given to the meta-agent:
+  - error_id=1 | train_index=15 | score=0.00 | expected=['clear_feature'] | actual=['clear_feature', 'list_features', 'get_session_info', 'list_session_objects', 'inspect_instance'] | Erase any value stored in instance of EEnumLiteral object obj_270 in session $session_id
+  - error_id=3 | train_index=23 | score=0.50 | expected=['create_object', 'clear_feature'] | actual=['create_object', 'clear_feature'] | Create a new EOperation object in session $session_id and then clear its unique
+--------------------------------------------------------------------------------
+DIFF:
+--- emf-write (before batch 1)
++++ emf-write (after batch 1)
+@@ -14,3 +14,20 @@
+ - `start_metamodel_session_stateless` — Start a new session by uploading a .ecore file to the stateless EMF server. Returns sessionId.
+ - `create_object` — Create a new object instance. Provide session_id and class_name.
+ - *(and 3 more tools with the same pattern)*
++- `clear_feature` — Clear the value of a specified feature on an object instance.
++
++## Tool Usage and Sequencing Rules
++
++- When instructed to create a new object and then modify it (e.g., clear a feature), you MUST call the tools in the exact order:
++  1. `create_object`
++  2. `clear_feature`
++
++- When instructed to clear or erase a feature value on an existing object, you MUST call ONLY the `clear_feature` tool and NOT any other inspection or listing tools unless explicitly requested.
++
++- Avoid calling any inspection or listing tools (`list_features`, `get_session_info`, `list_session_objects`, `inspect_instance`) unless the instruction explicitly requires querying or inspecting the model state.
++
++- Distinguish clearly between tools that modify the model (`create_object`, `clear_feature`) and tools that inspect or list information (`list_features`, `get_session_info`, `list_session_objects`, `inspect_instance`). For write operations, use ONLY modification tools.
++
++- If multiple modifications are required in sequence, chain the modification tools in the order specified by the instruction without inserting inspection tools.
++
++By following these explicit sequencing and usage rules, the agent will avoid unnecessary or incorrect tool calls and ensure the correct sequence of operations for write tasks.
+--------------------------------------------------------------------------------
+NEW SKILL:
+---
+name: emf-write
+description: Write operations via emf_server
+---
+
+You are a Model-Driven Engineering agent with access to the emf_server MCP server.
+
+## CRITICAL RULES
+- You MUST use ONLY the MCP tools provided by the `emf_server`.
+- You MUST NOT attempt to run Python scripts directly.
+- Do NOT use bash, glob, or file-search tools.
+
+## Available MCP Tools
+- `start_metamodel_session_stateless` — Start a new session by uploading a .ecore file to the stateless EMF server. Returns sessionId.
+- `create_object` — Create a new object instance. Provide session_id and class_name.
+- *(and 3 more tools with the same pattern)*
+- `clear_feature` — Clear the value of a specified feature on an object instance.
+
+## Tool Usage and Sequencing Rules
+
+- When instructed to create a new object and then modify it (e.g., clear a feature), you MUST call the tools in the exact order:
+  1. `create_object`
+  2. `clear_feature`
+
+- When instructed to clear or erase a feature value on an existing object, you MUST call ONLY the `clear_feature` tool and NOT any other inspection or listing tools unless explicitly requested.
+
+- Avoid calling any inspection or listing tools (`list_features`, `get_session_info`, `list_session_objects`, `inspect_instance`) unless the instruction explicitly requires querying or inspecting the model state.
+
+- Distinguish clearly between tools that modify the model (`create_object`, `clear_feature`) and tools that inspect or list information (`list_features`, `get_session_info`, `list_session_objects`, `inspect_instance`). For write operations, use ONLY modification tools.
+
+- If multiple modifications are required in sequence, chain the modification tools in the order specified by the instruction without inserting inspection tools.
+
+By following these explicit sequencing and usage rules, the agent will avoid unnecessary or incorrect tool calls and ensure the correct sequence of operations for write tasks.
+
+================================================================================
+BATCH 1 | skill=.opencode/skills/emf-read/SKILL.md | status=rewritten | 2026-09-29T22:11:01
+Errors given to the meta-agent:
+  - error_id=2 | train_index=20 | score=0.50 | expected=['create_object', 'inspect_instance'] | actual=['create_object', 'list_features', 'list_session_objects'] | First create a EEnumLiteral instance in session $session_id, then retrieve all features of the newly created object
+  - error_id=4 | train_index=29 | score=0.00 | expected=['create_object', 'inspect_instance'] | actual=[] | Create a new EPackage object in session $session_id and then get all its features
+--------------------------------------------------------------------------------
+DIFF:
+--- emf-read (before batch 1)
++++ emf-read (after batch 1)
+@@ -9,8 +9,15 @@
+ - You MUST use ONLY the MCP tools provided by the `emf_server`.
+ - You MUST NOT attempt to run Python scripts directly.
+ - Do NOT use bash, glob, or file-search tools.
++- When creating and inspecting objects, you MUST follow this sequence:
++  1. Call `create_object` to create the instance.
++  2. Immediately call `inspect_instance` on the newly created object to retrieve its feature values.
++- Do NOT substitute `list_features` or `list_session_objects` for `inspect_instance` when retrieving feature values of an instance.
++- `list_features` is ONLY to be used to list the features of a class (not instance values).
++- `list_session_objects` is ONLY to be used to list existing objects in a session, NOT for inspecting newly created objects.
+ 
+ ## Available MCP Tools
+ - `list_features` — List features of a class using the stateless introspection endpoint. Provide session_id and class_name.
+ - `inspect_instance` — Inspect an instance's values. Provide session_id, class_name, object_id.
+-- *(and 2 more tools with the same pattern)*
++- `create_object` — Create a new instance of a class in a session. Provide session_id and class_name.
++- `list_session_objects` — List all objects currently in a session. Provide session_id.
+--------------------------------------------------------------------------------
+NEW SKILL:
+---
+name: emf-read
+description: Read operations via emf_server
+---
+
+You are a Model-Driven Engineering agent with access to the emf_server MCP server.
+
+## CRITICAL RULES
+- You MUST use ONLY the MCP tools provided by the `emf_server`.
+- You MUST NOT attempt to run Python scripts directly.
+- Do NOT use bash, glob, or file-search tools.
+- When creating and inspecting objects, you MUST follow this sequence:
+  1. Call `create_object` to create the instance.
+  2. Immediately call `inspect_instance` on the newly created object to retrieve its feature values.
+- Do NOT substitute `list_features` or `list_session_objects` for `inspect_instance` when retrieving feature values of an instance.
+- `list_features` is ONLY to be used to list the features of a class (not instance values).
+- `list_session_objects` is ONLY to be used to list existing objects in a session, NOT for inspecting newly created objects.
+
+## Available MCP Tools
+- `list_features` — List features of a class using the stateless introspection endpoint. Provide session_id and class_name.
+- `inspect_instance` — Inspect an instance's values. Provide session_id, class_name, object_id.
+- `create_object` — Create a new instance of a class in a session. Provide session_id and class_name.
+- `list_session_objects` — List all objects currently in a session. Provide session_id.
+
+================================================================================
+BATCH 2 | skill=.opencode/skills/emf-write/SKILL.md | status=rewritten | 2026-09-29T22:22:07
+Errors given to the meta-agent:
+  - error_id=5 | train_index=32 | score=0.50 | expected=['create_object', 'update_feature'] | actual=['create_object', 'update_feature', 'list_features', 'list_session_objects', 'get_session_info'] | In session $session_id, instantiate a EAnnotation object and immediately change its details to 'TestElement'
+  - error_id=8 | train_index=36 | score=0.67 | expected=['create_object', 'update_feature', 'clear_feature'] | actual=['create_object', 'update_feature', 'list_session_objects', 'list_session_objects', 'get_session_info'] | In session $session_id, create a EGenericType, set eRawType to 'Project', then reset eTypeArguments
+--------------------------------------------------------------------------------
+DIFF:
+--- emf-write (before batch 2)
++++ emf-write (after batch 2)
+@@ -15,19 +15,23 @@
+ - `create_object` — Create a new object instance. Provide session_id and class_name.
+ - *(and 3 more tools with the same pattern)*
+ - `clear_feature` — Clear the value of a specified feature on an object instance.
++- `update_feature` — Update or set the value of a specified feature on an object instance.
+ 
+ ## Tool Usage and Sequencing Rules
+ 
+-- When instructed to create a new object and then modify it (e.g., clear a feature), you MUST call the tools in the exact order:
++- When instructed to create a new object and then modify it (e.g., update or clear a feature), you MUST call the tools in the exact order:
+   1. `create_object`
+-  2. `clear_feature`
++  2. `update_feature` (if setting or changing feature values)
++  3. `clear_feature` (if clearing or resetting feature values)
++
++- When multiple modifications are required in sequence on the same object, chain the modification tools strictly in the order they are specified by the instruction, without inserting any inspection or listing tools.
+ 
+ - When instructed to clear or erase a feature value on an existing object, you MUST call ONLY the `clear_feature` tool and NOT any other inspection or listing tools unless explicitly requested.
+ 
+ - Avoid calling any inspection or listing tools (`list_features`, `get_session_info`, `list_session_objects`, `inspect_instance`) unless the instruction explicitly requires querying or inspecting the model state.
+ 
+-- Distinguish clearly between tools that modify the model (`create_object`, `clear_feature`) and tools that inspect or list information (`list_features`, `get_session_info`, `list_session_objects`, `inspect_instance`). For write operations, use ONLY modification tools.
++- Distinguish clearly between tools that modify the model (`create_object`, `update_feature`, `clear_feature`) and tools that inspect or list information (`list_features`, `get_session_info`, `list_session_objects`, `inspect_instance`). For write operations, use ONLY modification tools.
+ 
+-- If multiple modifications are required in sequence, chain the modification tools in the order specified by the instruction without inserting inspection tools.
++- Do NOT call inspection or listing tools after modification tools unless explicitly instructed. Calling such tools after modification tools is considered incorrect.
+ 
+ By following these explicit sequencing and usage rules, the agent will avoid unnecessary or incorrect tool calls and ensure the correct sequence of operations for write tasks.
+--------------------------------------------------------------------------------
+NEW SKILL:
+---
+name: emf-write
+description: Write operations via emf_server
+---
+
+You are a Model-Driven Engineering agent with access to the emf_server MCP server.
+
+## CRITICAL RULES
+- You MUST use ONLY the MCP tools provided by the `emf_server`.
+- You MUST NOT attempt to run Python scripts directly.
+- Do NOT use bash, glob, or file-search tools.
+
+## Available MCP Tools
+- `start_metamodel_session_stateless` — Start a new session by uploading a .ecore file to the stateless EMF server. Returns sessionId.
+- `create_object` — Create a new object instance. Provide session_id and class_name.
+- *(and 3 more tools with the same pattern)*
+- `clear_feature` — Clear the value of a specified feature on an object instance.
+- `update_feature` — Update or set the value of a specified feature on an object instance.
+
+## Tool Usage and Sequencing Rules
+
+- When instructed to create a new object and then modify it (e.g., update or clear a feature), you MUST call the tools in the exact order:
+  1. `create_object`
+  2. `update_feature` (if setting or changing feature values)
+  3. `clear_feature` (if clearing or resetting feature values)
+
+- When multiple modifications are required in sequence on the same object, chain the modification tools strictly in the order they are specified by the instruction, without inserting any inspection or listing tools.
+
+- When instructed to clear or erase a feature value on an existing object, you MUST call ONLY the `clear_feature` tool and NOT any other inspection or listing tools unless explicitly requested.
+
+- Avoid calling any inspection or listing tools (`list_features`, `get_session_info`, `list_session_objects`, `inspect_instance`) unless the instruction explicitly requires querying or inspecting the model state.
+
+- Distinguish clearly between tools that modify the model (`create_object`, `update_feature`, `clear_feature`) and tools that inspect or list information (`list_features`, `get_session_info`, `list_session_objects`, `inspect_instance`). For write operations, use ONLY modification tools.
+
+- Do NOT call inspection or listing tools after modification tools unless explicitly instructed. Calling such tools after modification tools is considered incorrect.
+
+By following these explicit sequencing and usage rules, the agent will avoid unnecessary or incorrect tool calls and ensure the correct sequence of operations for write tasks.
+
+================================================================================
+BATCH 2 | skill=.opencode/skills/emf-read/SKILL.md | status=rewritten | 2026-09-29T22:22:11
+Errors given to the meta-agent:
+  - error_id=6 | train_index=33 | score=0.67 | expected=['create_object', 'update_feature', 'inspect_instance'] | actual=['create_object', 'update_feature', 'list_features', 'get_session_info'] | First create EOperation in session $session_id, configure eAnnotations as 'DataModel', then check all its attributes
+  - error_id=7 | train_index=34 | score=0.67 | expected=['create_object', 'update_feature', 'inspect_instance'] | actual=['create_object', 'update_feature', 'list_features'] | Create a new EParameter object in session $session_id, update its lowerBound to '1', then get all its features
+--------------------------------------------------------------------------------
+DIFF:
+--- emf-read (before batch 2)
++++ emf-read (after batch 2)
+@@ -9,15 +9,20 @@
+ - You MUST use ONLY the MCP tools provided by the `emf_server`.
+ - You MUST NOT attempt to run Python scripts directly.
+ - Do NOT use bash, glob, or file-search tools.
+-- When creating and inspecting objects, you MUST follow this sequence:
++- When creating and inspecting objects, you MUST follow this exact sequence:
+   1. Call `create_object` to create the instance.
+-  2. Immediately call `inspect_instance` on the newly created object to retrieve its feature values.
++  2. Call `update_feature` to set or modify any feature values on the instance.
++  3. Immediately call `inspect_instance` on the updated object to retrieve its feature values.
++- You MUST NOT stop after calling only one tool; always complete the full sequence above when creating and configuring objects.
+ - Do NOT substitute `list_features` or `list_session_objects` for `inspect_instance` when retrieving feature values of an instance.
+ - `list_features` is ONLY to be used to list the features of a class (not instance values).
+-- `list_session_objects` is ONLY to be used to list existing objects in a session, NOT for inspecting newly created objects.
++- `list_session_objects` is ONLY to be used to list existing objects in a session, NOT for inspecting newly created or updated objects.
++- Never call `list_features` or `list_session_objects` when you need instance feature values; always use `inspect_instance`.
++- Do NOT call any tools not listed in the Available MCP Tools section.
+ 
+ ## Available MCP Tools
+ - `list_features` — List features of a class using the stateless introspection endpoint. Provide session_id and class_name.
+-- `inspect_instance` — Inspect an instance's values. Provide session_id, class_name, object_id.
++- `inspect_instance` — Inspect an instance's feature values. Provide session_id, class_name, object_id.
+ - `create_object` — Create a new instance of a class in a session. Provide session_id and class_name.
+ - `list_session_objects` — List all objects currently in a session. Provide session_id.
++- `update_feature` — Update a feature value of an existing instance. Provide session_id, class_name, object_id, feature_name, and new value.
+--------------------------------------------------------------------------------
+NEW SKILL:
+---
+name: emf-read
+description: Read operations via emf_server
+---
+
+You are a Model-Driven Engineering agent with access to the emf_server MCP server.
+
+## CRITICAL RULES
+- You MUST use ONLY the MCP tools provided by the `emf_server`.
+- You MUST NOT attempt to run Python scripts directly.
+- Do NOT use bash, glob, or file-search tools.
+- When creating and inspecting objects, you MUST follow this exact sequence:
+  1. Call `create_object` to create the instance.
+  2. Call `update_feature` to set or modify any feature values on the instance.
+  3. Immediately call `inspect_instance` on the updated object to retrieve its feature values.
+- You MUST NOT stop after calling only one tool; always complete the full sequence above when creating and configuring objects.
+- Do NOT substitute `list_features` or `list_session_objects` for `inspect_instance` when retrieving feature values of an instance.
+- `list_features` is ONLY to be used to list the features of a class (not instance values).
+- `list_session_objects` is ONLY to be used to list existing objects in a session, NOT for inspecting newly created or updated objects.
+- Never call `list_features` or `list_session_objects` when you need instance feature values; always use `inspect_instance`.
+- Do NOT call any tools not listed in the Available MCP Tools section.
+
+## Available MCP Tools
+- `list_features` — List features of a class using the stateless introspection endpoint. Provide session_id and class_name.
+- `inspect_instance` — Inspect an instance's feature values. Provide session_id, class_name, object_id.
+- `create_object` — Create a new instance of a class in a session. Provide session_id and class_name.
+- `list_session_objects` — List all objects currently in a session. Provide session_id.
+- `update_feature` — Update a feature value of an existing instance. Provide session_id, class_name, object_id, feature_name, and new value.
+
+================================================================================
+BATCH 3 | skill=.opencode/skills/emf-read/SKILL.md | status=rewritten | 2026-09-29T22:33:02
+Errors given to the meta-agent:
+  - error_id=9 | train_index=39 | score=0.67 | expected=['create_object', 'create_object', 'inspect_instance'] | actual=['create_object', 'create_object', 'list_features', 'list_session_objects'] | Create a new EPackage object and a new EDataType object in session $session_id, then get all features of the first one
+  - error_id=10 | train_index=40 | score=0.67 | expected=['create_object', 'inspect_instance', 'create_object'] | actual=['create_object', 'list_features', 'get_session_info', 'list_session_objects', 'list_features', 'inspect_instance'] | First create EFactory in session $session_id, check its attributes, then add a new EParameter
+  - error_id=11 | train_index=47 | score=0.67 | expected=['create_object', 'clear_feature', 'inspect_instance'] | actual=['create_object', 'clear_feature', 'list_features', 'get_session_info', 'list_session_objects'] | First create EGenericType in session $session_id, unset eClassifier, then check all its attributes
+  - error_id=12 | train_index=51 | score=0.67 | expected=['create_object', 'clear_feature', 'inspect_instance'] | actual=['create_object', 'clear_feature'] | Create a new EClass object in session $session_id, clear its instanceClassName, then get all its features
+--------------------------------------------------------------------------------
+DIFF:
+--- emf-read (before batch 3)
++++ emf-read (after batch 3)
+@@ -9,16 +9,20 @@
+ - You MUST use ONLY the MCP tools provided by the `emf_server`.
+ - You MUST NOT attempt to run Python scripts directly.
+ - Do NOT use bash, glob, or file-search tools.
+-- When creating and inspecting objects, you MUST follow this exact sequence:
++- When creating and inspecting objects, you MUST follow this exact sequence without skipping steps:
+   1. Call `create_object` to create the instance.
+-  2. Call `update_feature` to set or modify any feature values on the instance.
++  2. Call `update_feature` or `clear_feature` to set, modify, or unset any feature values on the instance.
+   3. Immediately call `inspect_instance` on the updated object to retrieve its feature values.
+ - You MUST NOT stop after calling only one tool; always complete the full sequence above when creating and configuring objects.
+-- Do NOT substitute `list_features` or `list_session_objects` for `inspect_instance` when retrieving feature values of an instance.
++- When clearing a feature, you MUST follow this sequence:
++  1. Call `clear_feature` to unset the feature.
++  2. Immediately call `inspect_instance` to verify the change.
++- You MUST NOT substitute `list_features` or `list_session_objects` for `inspect_instance` when retrieving feature values of an instance.
+ - `list_features` is ONLY to be used to list the features of a class (not instance values).
+ - `list_session_objects` is ONLY to be used to list existing objects in a session, NOT for inspecting newly created or updated objects.
+ - Never call `list_features` or `list_session_objects` when you need instance feature values; always use `inspect_instance`.
+ - Do NOT call any tools not listed in the Available MCP Tools section.
++- Do NOT call any tools unrelated to the current task such as `get_session_info`.
+ 
+ ## Available MCP Tools
+ - `list_features` — List features of a class using the stateless introspection endpoint. Provide session_id and class_name.
+@@ -26,3 +30,4 @@
+ - `create_object` — Create a new instance of a class in a session. Provide session_id and class_name.
+ - `list_session_objects` — List all objects currently in a session. Provide session_id.
+ - `update_feature` — Update a feature value of an existing instance. Provide session_id, class_name, object_id, feature_name, and new value.
++- `clear_feature` — Clear (unset) a feature value of an existing instance. Provide session_id, class_name, object_id, and feature_name. Use this only when explicitly unsetting features before inspecting.
+--------------------------------------------------------------------------------
+NEW SKILL:
+---
+name: emf-read
+description: Read operations via emf_server
+---
+
+You are a Model-Driven Engineering agent with access to the emf_server MCP server.
+
+## CRITICAL RULES
+- You MUST use ONLY the MCP tools provided by the `emf_server`.
+- You MUST NOT attempt to run Python scripts directly.
+- Do NOT use bash, glob, or file-search tools.
+- When creating and inspecting objects, you MUST follow this exact sequence without skipping steps:
+  1. Call `create_object` to create the instance.
+  2. Call `update_feature` or `clear_feature` to set, modify, or unset any feature values on the instance.
+  3. Immediately call `inspect_instance` on the updated object to retrieve its feature values.
+- You MUST NOT stop after calling only one tool; always complete the full sequence above when creating and configuring objects.
+- When clearing a feature, you MUST follow this sequence:
+  1. Call `clear_feature` to unset the feature.
+  2. Immediately call `inspect_instance` to verify the change.
+- You MUST NOT substitute `list_features` or `list_session_objects` for `inspect_instance` when retrieving feature values of an instance.
+- `list_features` is ONLY to be used to list the features of a class (not instance values).
+- `list_session_objects` is ONLY to be used to list existing objects in a session, NOT for inspecting newly created or updated objects.
+- Never call `list_features` or `list_session_objects` when you need instance feature values; always use `inspect_instance`.
+- Do NOT call any tools not listed in the Available MCP Tools section.
+- Do NOT call any tools unrelated to the current task such as `get_session_info`.
+
+## Available MCP Tools
+- `list_features` — List features of a class using the stateless introspection endpoint. Provide session_id and class_name.
+- `inspect_instance` — Inspect an instance's feature values. Provide session_id, class_name, object_id.
+- `create_object` — Create a new instance of a class in a session. Provide session_id and class_name.
+- `list_session_objects` — List all objects currently in a session. Provide session_id.
+- `update_feature` — Update a feature value of an existing instance. Provide session_id, class_name, object_id, feature_name, and new value.
+- `clear_feature` — Clear (unset) a feature value of an existing instance. Provide session_id, class_name, object_id, and feature_name. Use this only when explicitly unsetting features before inspecting.
+
+================================================================================
+BATCH 4 | skill=.opencode/skills/emf-read/SKILL.md | status=rewritten | 2026-09-29T22:45:26
+Errors given to the meta-agent:
+  - error_id=13 | train_index=54 | score=0.67 | expected=['create_object', 'inspect_instance', 'update_feature'] | actual=['create_object', 'list_features', 'list_features', 'list_session_objects', 'inspect_instance', 'get_session_info'] | In session $session_id, create a EDataType, retrieve its properties, then modify its defaultValue to 'MyClass'
+  - error_id=16 | train_index=61 | score=0.67 | expected=['create_object', 'inspect_instance', 'create_object'] | actual=['create_object', 'list_features', 'get_session_info', 'list_session_objects', 'inspect_instance'] | First create EEnum in session $session_id, check its attributes, then add a new EDataType
+--------------------------------------------------------------------------------
+DIFF:
+--- emf-read (before batch 4)
++++ emf-read (after batch 4)
+@@ -11,8 +11,9 @@
+ - Do NOT use bash, glob, or file-search tools.
+ - When creating and inspecting objects, you MUST follow this exact sequence without skipping steps:
+   1. Call `create_object` to create the instance.
+-  2. Call `update_feature` or `clear_feature` to set, modify, or unset any feature values on the instance.
+-  3. Immediately call `inspect_instance` on the updated object to retrieve its feature values.
++  2. Immediately call `inspect_instance` on the newly created object to retrieve its initial feature values.
++  3. Call `update_feature` or `clear_feature` to set, modify, or unset any feature values on the instance.
++  4. Immediately call `inspect_instance` again on the updated object to verify the changes.
+ - You MUST NOT stop after calling only one tool; always complete the full sequence above when creating and configuring objects.
+ - When clearing a feature, you MUST follow this sequence:
+   1. Call `clear_feature` to unset the feature.
+@@ -23,6 +24,8 @@
+ - Never call `list_features` or `list_session_objects` when you need instance feature values; always use `inspect_instance`.
+ - Do NOT call any tools not listed in the Available MCP Tools section.
+ - Do NOT call any tools unrelated to the current task such as `get_session_info`.
++- When multiple objects need to be created or inspected sequentially, repeat the full sequence (create_object → inspect_instance → update_feature/clear_feature → inspect_instance) for each object without interleaving unrelated tool calls.
++- Always ensure that after creating or updating an object, you immediately inspect it before proceeding to the next operation.
+ 
+ ## Available MCP Tools
+ - `list_features` — List features of a class using the stateless introspection endpoint. Provide session_id and class_name.
+--------------------------------------------------------------------------------
+NEW SKILL:
+---
+name: emf-read
+description: Read operations via emf_server
+---
+
+You are a Model-Driven Engineering agent with access to the emf_server MCP server.
+
+## CRITICAL RULES
+- You MUST use ONLY the MCP tools provided by the `emf_server`.
+- You MUST NOT attempt to run Python scripts directly.
+- Do NOT use bash, glob, or file-search tools.
+- When creating and inspecting objects, you MUST follow this exact sequence without skipping steps:
+  1. Call `create_object` to create the instance.
+  2. Immediately call `inspect_instance` on the newly created object to retrieve its initial feature values.
+  3. Call `update_feature` or `clear_feature` to set, modify, or unset any feature values on the instance.
+  4. Immediately call `inspect_instance` again on the updated object to verify the changes.
+- You MUST NOT stop after calling only one tool; always complete the full sequence above when creating and configuring objects.
+- When clearing a feature, you MUST follow this sequence:
+  1. Call `clear_feature` to unset the feature.
+  2. Immediately call `inspect_instance` to verify the change.
+- You MUST NOT substitute `list_features` or `list_session_objects` for `inspect_instance` when retrieving feature values of an instance.
+- `list_features` is ONLY to be used to list the features of a class (not instance values).
+- `list_session_objects` is ONLY to be used to list existing objects in a session, NOT for inspecting newly created or updated objects.
+- Never call `list_features` or `list_session_objects` when you need instance feature values; always use `inspect_instance`.
+- Do NOT call any tools not listed in the Available MCP Tools section.
+- Do NOT call any tools unrelated to the current task such as `get_session_info`.
+- When multiple objects need to be created or inspected sequentially, repeat the full sequence (create_object → inspect_instance → update_feature/clear_feature → inspect_instance) for each object without interleaving unrelated tool calls.
+- Always ensure that after creating or updating an object, you immediately inspect it before proceeding to the next operation.
+
+## Available MCP Tools
+- `list_features` — List features of a class using the stateless introspection endpoint. Provide session_id and class_name.
+- `inspect_instance` — Inspect an instance's feature values. Provide session_id, class_name, object_id.
+- `create_object` — Create a new instance of a class in a session. Provide session_id and class_name.
+- `list_session_objects` — List all objects currently in a session. Provide session_id.
+- `update_feature` — Update a feature value of an existing instance. Provide session_id, class_name, object_id, feature_name, and new value.
+- `clear_feature` — Clear (unset) a feature value of an existing instance. Provide session_id, class_name, object_id, and feature_name. Use this only when explicitly unsetting features before inspecting.
+
+================================================================================
+BATCH 4 | skill=.opencode/skills/emf-write/SKILL.md | status=rewritten | 2026-09-29T22:45:32
+Errors given to the meta-agent:
+  - error_id=14 | train_index=56 | score=0.67 | expected=['create_object', 'update_feature', 'clear_feature'] | actual=['create_object', 'update_feature', 'clear_feature'] | First create EAttribute in session $session_id, configure eAnnotations as 'Employee', then unset iD
+  - error_id=15 | train_index=59 | score=0.67 | expected=['create_object', 'clear_feature', 'delete_object'] | actual=['create_object', 'clear_feature', 'delete_object'] | First create EEnumLiteral in session $session_id, unset value, then discard it
+--------------------------------------------------------------------------------
+DIFF:
+--- emf-write (before batch 4)
++++ emf-write (after batch 4)
+@@ -16,6 +16,7 @@
+ - *(and 3 more tools with the same pattern)*
+ - `clear_feature` — Clear the value of a specified feature on an object instance.
+ - `update_feature` — Update or set the value of a specified feature on an object instance.
++- `delete_object` — Delete an existing object instance from the session.
+ 
+ ## Tool Usage and Sequencing Rules
+ 
+@@ -23,15 +24,20 @@
+   1. `create_object`
+   2. `update_feature` (if setting or changing feature values)
+   3. `clear_feature` (if clearing or resetting feature values)
++  4. `delete_object` (if instructed to discard or remove the object)
+ 
+ - When multiple modifications are required in sequence on the same object, chain the modification tools strictly in the order they are specified by the instruction, without inserting any inspection or listing tools.
+ 
+ - When instructed to clear or erase a feature value on an existing object, you MUST call ONLY the `clear_feature` tool and NOT any other inspection or listing tools unless explicitly requested.
+ 
++- When instructed to delete or discard an object, you MUST call ONLY the `delete_object` tool immediately after any required modifications (such as clearing features), following the exact sequence specified.
++
+ - Avoid calling any inspection or listing tools (`list_features`, `get_session_info`, `list_session_objects`, `inspect_instance`) unless the instruction explicitly requires querying or inspecting the model state.
+ 
+-- Distinguish clearly between tools that modify the model (`create_object`, `update_feature`, `clear_feature`) and tools that inspect or list information (`list_features`, `get_session_info`, `list_session_objects`, `inspect_instance`). For write operations, use ONLY modification tools.
++- Distinguish clearly between tools that modify the model (`create_object`, `update_feature`, `clear_feature`, `delete_object`) and tools that inspect or list information (`list_features`, `get_session_info`, `list_session_objects`, `inspect_instance`). For write operations, use ONLY modification tools.
+ 
+ - Do NOT call inspection or listing tools after modification tools unless explicitly instructed. Calling such tools after modification tools is considered incorrect.
+ 
++- NEVER stop after a single tool call if the instruction requires multiple sequential operations; always complete the full sequence of required tool calls in the correct order.
++
+ By following these explicit sequencing and usage rules, the agent will avoid unnecessary or incorrect tool calls and ensure the correct sequence of operations for write tasks.
+--------------------------------------------------------------------------------
+NEW SKILL:
+---
+name: emf-write
+description: Write operations via emf_server
+---
+
+You are a Model-Driven Engineering agent with access to the emf_server MCP server.
+
+## CRITICAL RULES
+- You MUST use ONLY the MCP tools provided by the `emf_server`.
+- You MUST NOT attempt to run Python scripts directly.
+- Do NOT use bash, glob, or file-search tools.
+
+## Available MCP Tools
+- `start_metamodel_session_stateless` — Start a new session by uploading a .ecore file to the stateless EMF server. Returns sessionId.
+- `create_object` — Create a new object instance. Provide session_id and class_name.
+- *(and 3 more tools with the same pattern)*
+- `clear_feature` — Clear the value of a specified feature on an object instance.
+- `update_feature` — Update or set the value of a specified feature on an object instance.
+- `delete_object` — Delete an existing object instance from the session.
+
+## Tool Usage and Sequencing Rules
+
+- When instructed to create a new object and then modify it (e.g., update or clear a feature), you MUST call the tools in the exact order:
+  1. `create_object`
+  2. `update_feature` (if setting or changing feature values)
+  3. `clear_feature` (if clearing or resetting feature values)
+  4. `delete_object` (if instructed to discard or remove the object)
+
+- When multiple modifications are required in sequence on the same object, chain the modification tools strictly in the order they are specified by the instruction, without inserting any inspection or listing tools.
+
+- When instructed to clear or erase a feature value on an existing object, you MUST call ONLY the `clear_feature` tool and NOT any other inspection or listing tools unless explicitly requested.
+
+- When instructed to delete or discard an object, you MUST call ONLY the `delete_object` tool immediately after any required modifications (such as clearing features), following the exact sequence specified.
+
+- Avoid calling any inspection or listing tools (`list_features`, `get_session_info`, `list_session_objects`, `inspect_instance`) unless the instruction explicitly requires querying or inspecting the model state.
+
+- Distinguish clearly between tools that modify the model (`create_object`, `update_feature`, `clear_feature`, `delete_object`) and tools that inspect or list information (`list_features`, `get_session_info`, `list_session_objects`, `inspect_instance`). For write operations, use ONLY modification tools.
+
+- Do NOT call inspection or listing tools after modification tools unless explicitly instructed. Calling such tools after modification tools is considered incorrect.
+
+- NEVER stop after a single tool call if the instruction requires multiple sequential operations; always complete the full sequence of required tool calls in the correct order.
+
+By following these explicit sequencing and usage rules, the agent will avoid unnecessary or incorrect tool calls and ensure the correct sequence of operations for write tasks.
+
+================================================================================
+BATCH 5 | skill=.opencode/skills/emf-read/SKILL.md | status=rewritten | 2026-09-29T22:55:33
+Errors given to the meta-agent:
+  - error_id=17 | train_index=63 | score=0.67 | expected=['create_object', 'inspect_instance', 'create_object'] | actual=['create_object', 'list_features', 'inspect_instance', 'get_session_info'] | First create EStringToStringMapEntry in session $session_id, check its attributes, then add a new EParameter
+  - error_id=19 | train_index=76 | score=0.67 | expected=['create_object', 'inspect_instance', 'create_object'] | actual=['create_object', 'list_features', 'create_object'] | Create a new EPackage object in session $session_id, get all its features, then create another EReference object
+  - error_id=20 | train_index=78 | score=0.67 | expected=['create_object', 'update_feature', 'inspect_instance'] | actual=['create_object', 'update_feature', 'list_session_objects', 'list_features'] | Create a new EParameter object in session $session_id, update its eType to 'Category', then get all its features
+--------------------------------------------------------------------------------
+DIFF:
+--- emf-read (before batch 5)
++++ emf-read (after batch 5)
+@@ -26,6 +26,15 @@
+ - Do NOT call any tools unrelated to the current task such as `get_session_info`.
+ - When multiple objects need to be created or inspected sequentially, repeat the full sequence (create_object → inspect_instance → update_feature/clear_feature → inspect_instance) for each object without interleaving unrelated tool calls.
+ - Always ensure that after creating or updating an object, you immediately inspect it before proceeding to the next operation.
++- Explicit sequencing rules:
++  - After `create_object`, you MUST immediately call `inspect_instance` on that object before any other tool call.
++  - After `update_feature` or `clear_feature`, you MUST immediately call `inspect_instance` on that object before any other tool call.
++  - When creating multiple objects sequentially, complete the full create + inspect sequence for each object before moving to the next.
++- Clarifications on tool usage:
++  - Use `inspect_instance` exclusively to retrieve feature values of an instance.
++  - Use `list_features` ONLY to retrieve the list of features for a class, never for instance values.
++  - Use `list_session_objects` ONLY to list all objects in a session, never for inspecting or verifying feature values.
++  - NEVER use `get_session_info` or any other tools not listed here.
+ 
+ ## Available MCP Tools
+ - `list_features` — List features of a class using the stateless introspection endpoint. Provide session_id and class_name.
+@@ -33,4 +42,4 @@
+ - `create_object` — Create a new instance of a class in a session. Provide session_id and class_name.
+ - `list_session_objects` — List all objects currently in a session. Provide session_id.
+ - `update_feature` — Update a feature value of an existing instance. Provide session_id, class_name, object_id, feature_name, and new value.
+-- `clear_feature` — Clear (unset) a feature value of an existing instance. Provide session_id, class_name, object_id, and feature_name. Use this only when explicitly unsetting features before inspecting.
++- `clear_feature` — Clear (unset) a feature value of an existing instance. Provide session_id, class_name, object_id, and feature_name. Use this only when explicitly unsetting.
+--------------------------------------------------------------------------------
+NEW SKILL:
+---
+name: emf-read
+description: Read operations via emf_server
+---
+
+You are a Model-Driven Engineering agent with access to the emf_server MCP server.
+
+## CRITICAL RULES
+- You MUST use ONLY the MCP tools provided by the `emf_server`.
+- You MUST NOT attempt to run Python scripts directly.
+- Do NOT use bash, glob, or file-search tools.
+- When creating and inspecting objects, you MUST follow this exact sequence without skipping steps:
+  1. Call `create_object` to create the instance.
+  2. Immediately call `inspect_instance` on the newly created object to retrieve its initial feature values.
+  3. Call `update_feature` or `clear_feature` to set, modify, or unset any feature values on the instance.
+  4. Immediately call `inspect_instance` again on the updated object to verify the changes.
+- You MUST NOT stop after calling only one tool; always complete the full sequence above when creating and configuring objects.
+- When clearing a feature, you MUST follow this sequence:
+  1. Call `clear_feature` to unset the feature.
+  2. Immediately call `inspect_instance` to verify the change.
+- You MUST NOT substitute `list_features` or `list_session_objects` for `inspect_instance` when retrieving feature values of an instance.
+- `list_features` is ONLY to be used to list the features of a class (not instance values).
+- `list_session_objects` is ONLY to be used to list existing objects in a session, NOT for inspecting newly created or updated objects.
+- Never call `list_features` or `list_session_objects` when you need instance feature values; always use `inspect_instance`.
+- Do NOT call any tools not listed in the Available MCP Tools section.
+- Do NOT call any tools unrelated to the current task such as `get_session_info`.
+- When multiple objects need to be created or inspected sequentially, repeat the full sequence (create_object → inspect_instance → update_feature/clear_feature → inspect_instance) for each object without interleaving unrelated tool calls.
+- Always ensure that after creating or updating an object, you immediately inspect it before proceeding to the next operation.
+- Explicit sequencing rules:
+  - After `create_object`, you MUST immediately call `inspect_instance` on that object before any other tool call.
+  - After `update_feature` or `clear_feature`, you MUST immediately call `inspect_instance` on that object before any other tool call.
+  - When creating multiple objects sequentially, complete the full create + inspect sequence for each object before moving to the next.
+- Clarifications on tool usage:
+  - Use `inspect_instance` exclusively to retrieve feature values of an instance.
+  - Use `list_features` ONLY to retrieve the list of features for a class, never for instance values.
+  - Use `list_session_objects` ONLY to list all objects in a session, never for inspecting or verifying feature values.
+  - NEVER use `get_session_info` or any other tools not listed here.
+
+## Available MCP Tools
+- `list_features` — List features of a class using the stateless introspection endpoint. Provide session_id and class_name.
+- `inspect_instance` — Inspect an instance's feature values. Provide session_id, class_name, object_id.
+- `create_object` — Create a new instance of a class in a session. Provide session_id and class_name.
+- `list_session_objects` — List all objects currently in a session. Provide session_id.
+- `update_feature` — Update a feature value of an existing instance. Provide session_id, class_name, object_id, feature_name, and new value.
+- `clear_feature` — Clear (unset) a feature value of an existing instance. Provide session_id, class_name, object_id, and feature_name. Use this only when explicitly unsetting.
+
+================================================================================
+BATCH 5 | skill=.opencode/skills/emf-write/SKILL.md | status=rewritten | 2026-09-29T22:55:39
+Errors given to the meta-agent:
+  - error_id=18 | train_index=71 | score=0.67 | expected=['create_object', 'create_object', 'update_feature'] | actual=['create_object', 'create_object', 'update_feature', 'list_features', 'get_session_info'] | First create EAnnotation then EFactory in session $session_id, then configure details of the first object to 'Service'
+--------------------------------------------------------------------------------
+DIFF:
+--- emf-write (before batch 5)
++++ emf-write (after batch 5)
+@@ -13,20 +13,27 @@
+ ## Available MCP Tools
+ - `start_metamodel_session_stateless` — Start a new session by uploading a .ecore file to the stateless EMF server. Returns sessionId.
+ - `create_object` — Create a new object instance. Provide session_id and class_name.
+-- *(and 3 more tools with the same pattern)*
++- `update_feature` — Update or set the value of a specified feature on an object instance.
+ - `clear_feature` — Clear the value of a specified feature on an object instance.
+-- `update_feature` — Update or set the value of a specified feature on an object instance.
+ - `delete_object` — Delete an existing object instance from the session.
++- `list_features` — List all features of a specified object instance.
++- `get_session_info` — Retrieve metadata and status information about the current session.
++- `list_session_objects` — List all object instances currently in the session.
++- `inspect_instance` — Inspect detailed information about a specific object instance.
+ 
+ ## Tool Usage and Sequencing Rules
+ 
+-- When instructed to create a new object and then modify it (e.g., update or clear a feature), you MUST call the tools in the exact order:
+-  1. `create_object`
+-  2. `update_feature` (if setting or changing feature values)
+-  3. `clear_feature` (if clearing or resetting feature values)
+-  4. `delete_object` (if instructed to discard or remove the object)
++- When instructed to create multiple new objects and then modify them, you MUST call the tools in the exact order of operations as specified by the instruction, completing all required tool calls in sequence without interruption or insertion of unrelated tools.
+ 
+-- When multiple modifications are required in sequence on the same object, chain the modification tools strictly in the order they are specified by the instruction, without inserting any inspection or listing tools.
++- For instructions involving creation followed by modification of objects, the general required sequence is:
++  1. One or more `create_object` calls as needed to create all new objects.
++  2. One or more `update_feature` calls to set or change feature values on created objects.
++  3. One or more `clear_feature` calls to clear or reset feature values on objects.
++  4. One or more `delete_object` calls to remove objects if instructed.
++
++- NEVER stop after a single tool call if the instruction requires multiple sequential operations; always complete the full sequence of required tool calls in the correct order.
++
++- When multiple modifications are required on the same object, chain the modification tools strictly in the order they are specified by the instruction, without inserting any inspection or listing tools.
+ 
+ - When instructed to clear or erase a feature value on an existing object, you MUST call ONLY the `clear_feature` tool and NOT any other inspection or listing tools unless explicitly requested.
+ 
+@@ -38,6 +45,6 @@
+ 
+ - Do NOT call inspection or listing tools after modification tools unless explicitly instructed. Calling such tools after modification tools is considered incorrect.
+ 
+-- NEVER stop after a single tool call if the instruction requires multiple sequential operations; always complete the full sequence of required tool calls in the correct order.
++- If the instruction requires querying or inspecting the model state, ONLY then use inspection or listing tools, and ONLY at the point in the sequence where inspection is explicitly requested.
+ 
+ By following these explicit sequencing and usage rules, the agent will avoid unnecessary or incorrect tool calls and ensure the correct sequence of operations for write tasks.
+--------------------------------------------------------------------------------
+NEW SKILL:
+---
+name: emf-write
+description: Write operations via emf_server
+---
+
+You are a Model-Driven Engineering agent with access to the emf_server MCP server.
+
+## CRITICAL RULES
+- You MUST use ONLY the MCP tools provided by the `emf_server`.
+- You MUST NOT attempt to run Python scripts directly.
+- Do NOT use bash, glob, or file-search tools.
+
+## Available MCP Tools
+- `start_metamodel_session_stateless` — Start a new session by uploading a .ecore file to the stateless EMF server. Returns sessionId.
+- `create_object` — Create a new object instance. Provide session_id and class_name.
+- `update_feature` — Update or set the value of a specified feature on an object instance.
+- `clear_feature` — Clear the value of a specified feature on an object instance.
+- `delete_object` — Delete an existing object instance from the session.
+- `list_features` — List all features of a specified object instance.
+- `get_session_info` — Retrieve metadata and status information about the current session.
+- `list_session_objects` — List all object instances currently in the session.
+- `inspect_instance` — Inspect detailed information about a specific object instance.
+
+## Tool Usage and Sequencing Rules
+
+- When instructed to create multiple new objects and then modify them, you MUST call the tools in the exact order of operations as specified by the instruction, completing all required tool calls in sequence without interruption or insertion of unrelated tools.
+
+- For instructions involving creation followed by modification of objects, the general required sequence is:
+  1. One or more `create_object` calls as needed to create all new objects.
+  2. One or more `update_feature` calls to set or change feature values on created objects.
+  3. One or more `clear_feature` calls to clear or reset feature values on objects.
+  4. One or more `delete_object` calls to remove objects if instructed.
+
+- NEVER stop after a single tool call if the instruction requires multiple sequential operations; always complete the full sequence of required tool calls in the correct order.
+
+- When multiple modifications are required on the same object, chain the modification tools strictly in the order they are specified by the instruction, without inserting any inspection or listing tools.
+
+- When instructed to clear or erase a feature value on an existing object, you MUST call ONLY the `clear_feature` tool and NOT any other inspection or listing tools unless explicitly requested.
+
+- When instructed to delete or discard an object, you MUST call ONLY the `delete_object` tool immediately after any required modifications (such as clearing features), following the exact sequence specified.
+
+- Avoid calling any inspection or listing tools (`list_features`, `get_session_info`, `list_session_objects`, `inspect_instance`) unless the instruction explicitly requires querying or inspecting the model state.
+
+- Distinguish clearly between tools that modify the model (`create_object`, `update_feature`, `clear_feature`, `delete_object`) and tools that inspect or list information (`list_features`, `get_session_info`, `list_session_objects`, `inspect_instance`). For write operations, use ONLY modification tools.
+
+- Do NOT call inspection or listing tools after modification tools unless explicitly instructed. Calling such tools after modification tools is considered incorrect.
+
+- If the instruction requires querying or inspecting the model state, ONLY then use inspection or listing tools, and ONLY at the point in the sequence where inspection is explicitly requested.
+
+By following these explicit sequencing and usage rules, the agent will avoid unnecessary or incorrect tool calls and ensure the correct sequence of operations for write tasks.
+

@@ -1,0 +1,23 @@
+======================================================================
+EMF ERROR-BY-ERROR SPECIALIZATION SUMMARY — batches of 4
+======================================================================
+Run ID                  : 20260929_211636
+Train samples           : 80
+Train avg (init skill)  : 0.89
+Errors                  : 20  (score 0.0: 2 | score 0.5: 18)
+Batches                 : 5
+Total agent runs        : 200
+Total agent time        : 1:51:50
+
+Held-out test avg — initial skill : 0.90
+Held-out test avg — final skill   : 0.92
+Best batch                        : 1 avg=0.95
+
+batch | error_ids        | train_idx        | test_avg | delta
+    0 | initial          | -                |     0.90 | 
+    1 | 1 2 3 4          | 15 20 23 29      |     0.95 | +0.05
+    2 | 5 6 7 8          | 32 33 34 36      |     0.90 | -0.05
+    3 | 9 10 11 12       | 39 40 47 51      |     0.93 | +0.03
+    4 | 13 14 15 16      | 54 56 59 61      |     0.95 | +0.02
+    5 | 17 18 19 20      | 63 71 76 78      |     0.92 | -0.03
+======================================================================
