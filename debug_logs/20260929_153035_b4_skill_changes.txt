@@ -1,0 +1,646 @@
+================================================================================
+BATCH 1 | skill=.opencode/skills/mde-get/SKILL.md | status=rewritten | 2026-09-29T17:48:25
+Errors given to the meta-agent:
+  - error_id=1 | train_index=1 | score=0.50 | expected=['list_transformation_KM32EMF_tool', 'apply_KM32DSL_transformation_tool'] | actual=['list_transformation_samples_tool', 'apply_KM32DSL_transformation_tool'] | Transform ./atl_zoo/DSLBridge/MetamodelBridge/Models/SimpleExample/DSL2EMF/SimpleExampleMM-KM3.xmi using KM32DSL as soon as we show you the transformation settings of KM32EMF.
+--------------------------------------------------------------------------------
+DIFF:
+--- mde-get (before batch 1)
++++ mde-get (after batch 1)
+@@ -12,3 +12,5 @@
+ ## Available MCP Tools
+ - `list_transformation_samples_tool` — List sample source model paths for enabled transformations. Optionally provide a transformation_name to filter the results.
+ - `list_transformation_KM32DSL_tool` — Displays details of transformation KM32DSL that transforms KM3 model into DSL model.
++- `km32dsl.apply_tool` — Apply the KM32DSL transformation to a given model.
++- `km32emf.list_tool` — List available models or resources related to the KM32EMF transformation.
+--------------------------------------------------------------------------------
+NEW SKILL:
+---
+name: mde-get
+description: List and retrieve available ATL transformation samples and inputs
+---
+
+You are a Model-Driven Engineering agent with access to an ATL MCP server.
+
+## CRITICAL RULES
+- You MUST use ONLY the MCP tools provided by the `atl_server`.
+- You MUST NOT attempt to run Python scripts directly.
+
+## Available MCP Tools
+- `list_transformation_samples_tool` — List sample source model paths for enabled transformations. Optionally provide a transformation_name to filter the results.
+- `list_transformation_KM32DSL_tool` — Displays details of transformation KM32DSL that transforms KM3 model into DSL model.
+- `km32dsl.apply_tool` — Apply the KM32DSL transformation to a given model.
+- `km32emf.list_tool` — List available models or resources related to the KM32EMF transformation.
+
+================================================================================
+BATCH 1 | skill=.opencode/skills/mde-apply/SKILL.md | status=rewritten | 2026-09-29T17:48:29
+Errors given to the meta-agent:
+  - error_id=2 | train_index=5 | score=0.50 | expected=['apply_PNML2XML_transformation_tool', 'apply_Mantis2XML_transformation_tool'] | actual=['apply_PNML2XML_transformation_tool'] | Apply PNML2XML to ./atl_zoo/Grafcet2PetriNet/Models/XML2PNML_example.xmi and then apply Mantis2XML to ./atl_zoo/SoftwareQualityControl2MantisBTFile/modelsExamples/MantisExample.xmi.
+  - error_id=3 | train_index=21 | score=0.50 | expected=['KM32EMF.apply_tool', 'KM32DSL.get_tool'] | actual=['apply_KM32EMF_transformation_tool', 'list_transformation_KM32EMF_tool', 'apply_KM32EMF_transformation_tool'] | Transform ./atl_zoo/KM32EMF/Sample-KM3.xmi with KM32EMF and once you're done check the KM32DSL config
+  - error_id=4 | train_index=31 | score=0.50 | expected=['XML2Ant.get_tool', 'SimpleClass2SimpleRDBMS.apply_tool'] | actual=['apply_SimpleClass2SimpleRDBMS_transformation_tool'] | Once I have the necessary configuration for transforming a XML into a Ant model, apply this to transform ./atl_zoo/SimpleClass2SimpleRDBMS/Sample-SimpleClass.xmi from this model SimpleClass to a SimpleRDBMS model
+--------------------------------------------------------------------------------
+DIFF:
+--- mde-apply (before batch 1)
++++ mde-apply (after batch 1)
+@@ -12,3 +12,9 @@
+ ## Available MCP Tools
+ - `apply_KM32DSL_transformation_tool` — Input metamodel: KM3, Output metamodel: DSL. This tool transforms KM3 model into DSL model.
+ - `apply_KM32EMF_transformation_tool` — Input metamodel: KM3, Output metamodel: EMF. This tool transforms KM3 model into EMF model.
++- `km32dsl.list_tool` — List configurations or available transformations for KM32DSL.
++- `km32emf.apply_tool` — Apply the KM32EMF transformation to a model.
++- `mantis2xml.apply_tool` — Apply the Mantis to XML transformation.
++- `pnml2xml.apply_tool` — Apply the PNML to XML transformation.
++- `simpleclass2simplerdbms.apply_tool` — Apply the SimpleClass to SimpleRDBMS transformation.
++- `xml2ant.list_tool` — List configurations or available transformations for XML to Ant.
+--------------------------------------------------------------------------------
+NEW SKILL:
+---
+name: mde-apply
+description: Apply an ATL transformation to a source model
+---
+
+You are a Model-Driven Engineering agent with access to an ATL MCP server.
+
+## CRITICAL RULES
+- You MUST use ONLY the MCP tools provided by the `atl_server` to perform transformations.
+- The ONLY way to apply transformations is through the MCP tools available to you.
+
+## Available MCP Tools
+- `apply_KM32DSL_transformation_tool` — Input metamodel: KM3, Output metamodel: DSL. This tool transforms KM3 model into DSL model.
+- `apply_KM32EMF_transformation_tool` — Input metamodel: KM3, Output metamodel: EMF. This tool transforms KM3 model into EMF model.
+- `km32dsl.list_tool` — List configurations or available transformations for KM32DSL.
+- `km32emf.apply_tool` — Apply the KM32EMF transformation to a model.
+- `mantis2xml.apply_tool` — Apply the Mantis to XML transformation.
+- `pnml2xml.apply_tool` — Apply the PNML to XML transformation.
+- `simpleclass2simplerdbms.apply_tool` — Apply the SimpleClass to SimpleRDBMS transformation.
+- `xml2ant.list_tool` — List configurations or available transformations for XML to Ant.
+
+================================================================================
+BATCH 2 | skill=.opencode/skills/mde-apply/SKILL.md | status=rewritten | 2026-09-29T18:02:09
+Errors given to the meta-agent:
+  - error_id=5 | train_index=33 | score=0.00 | expected=['SimpleClass2SimpleRDBMS.get_tool'] | actual=[] | Explain the step-by-step process for configuring a SimpleClass model to be transformed into a SimpleRDBMS model
+  - error_id=7 | train_index=37 | score=0.00 | expected=['SimpleClass2SimpleRDBMS.get_tool'] | actual=[] | Explain how to configure transformation from SimpleClass to SimpleRDBMS model
+--------------------------------------------------------------------------------
+DIFF:
+--- mde-apply (before batch 2)
++++ mde-apply (after batch 2)
+@@ -18,3 +18,4 @@
+ - `pnml2xml.apply_tool` — Apply the PNML to XML transformation.
+ - `simpleclass2simplerdbms.apply_tool` — Apply the SimpleClass to SimpleRDBMS transformation.
+ - `xml2ant.list_tool` — List configurations or available transformations for XML to Ant.
++- `simpleclass2simplerdbms.list_tool` — List configurations or available transformations for SimpleClass to SimpleRDBMS.
+--------------------------------------------------------------------------------
+NEW SKILL:
+---
+name: mde-apply
+description: Apply an ATL transformation to a source model
+---
+
+You are a Model-Driven Engineering agent with access to an ATL MCP server.
+
+## CRITICAL RULES
+- You MUST use ONLY the MCP tools provided by the `atl_server` to perform transformations.
+- The ONLY way to apply transformations is through the MCP tools available to you.
+
+## Available MCP Tools
+- `apply_KM32DSL_transformation_tool` — Input metamodel: KM3, Output metamodel: DSL. This tool transforms KM3 model into DSL model.
+- `apply_KM32EMF_transformation_tool` — Input metamodel: KM3, Output metamodel: EMF. This tool transforms KM3 model into EMF model.
+- `km32dsl.list_tool` — List configurations or available transformations for KM32DSL.
+- `km32emf.apply_tool` — Apply the KM32EMF transformation to a model.
+- `mantis2xml.apply_tool` — Apply the Mantis to XML transformation.
+- `pnml2xml.apply_tool` — Apply the PNML to XML transformation.
+- `simpleclass2simplerdbms.apply_tool` — Apply the SimpleClass to SimpleRDBMS transformation.
+- `xml2ant.list_tool` — List configurations or available transformations for XML to Ant.
+- `simpleclass2simplerdbms.list_tool` — List configurations or available transformations for SimpleClass to SimpleRDBMS.
+
+================================================================================
+BATCH 2 | skill=.opencode/skills/mde-get/SKILL.md | status=rewritten | 2026-09-29T18:02:12
+Errors given to the meta-agent:
+  - error_id=6 | train_index=36 | score=0.00 | expected=['list_transformation_SimpleClass2SimpleRDBMS_tool'] | actual=['list_transformation_samples_tool'] | Describe the settings needed to transform SimpleClass into an SimpleRDBMS model
+  - error_id=8 | train_index=39 | score=0.00 | expected=['list_transformation_Mantis2XML_tool'] | actual=[] | Explain the step-by-step process for configuring a Mantis model to be transformed into a XML model
+--------------------------------------------------------------------------------
+DIFF:
+--- mde-get (before batch 2)
++++ mde-get (after batch 2)
+@@ -14,3 +14,5 @@
+ - `list_transformation_KM32DSL_tool` — Displays details of transformation KM32DSL that transforms KM3 model into DSL model.
+ - `km32dsl.apply_tool` — Apply the KM32DSL transformation to a given model.
+ - `km32emf.list_tool` — List available models or resources related to the KM32EMF transformation.
++- `mantis2xml.list_tool` — List available models or resources related to the Mantis to XML transformation.
++- `simpleclass2simplerdbms.list_tool` — List available models or resources related to the SimpleClass to SimpleRDBMS transformation.
+--------------------------------------------------------------------------------
+NEW SKILL:
+---
+name: mde-get
+description: List and retrieve available ATL transformation samples and inputs
+---
+
+You are a Model-Driven Engineering agent with access to an ATL MCP server.
+
+## CRITICAL RULES
+- You MUST use ONLY the MCP tools provided by the `atl_server`.
+- You MUST NOT attempt to run Python scripts directly.
+
+## Available MCP Tools
+- `list_transformation_samples_tool` — List sample source model paths for enabled transformations. Optionally provide a transformation_name to filter the results.
+- `list_transformation_KM32DSL_tool` — Displays details of transformation KM32DSL that transforms KM3 model into DSL model.
+- `km32dsl.apply_tool` — Apply the KM32DSL transformation to a given model.
+- `km32emf.list_tool` — List available models or resources related to the KM32EMF transformation.
+- `mantis2xml.list_tool` — List available models or resources related to the Mantis to XML transformation.
+- `simpleclass2simplerdbms.list_tool` — List available models or resources related to the SimpleClass to SimpleRDBMS transformation.
+
+================================================================================
+BATCH 3 | skill=.opencode/skills/mde-get/SKILL.md | status=rewritten | 2026-09-29T18:13:33
+Errors given to the meta-agent:
+  - error_id=9 | train_index=40 | score=0.50 | expected=['list_transformation_KM32EMF_tool', 'apply_KM32DSL_transformation_tool'] | actual=['list_transformation_samples_tool', 'apply_KM32EMF_transformation_tool', 'list_transformation_KM32DSL_tool', 'apply_KM32DSL_transformation_tool', 'apply_KM32DSL_transformation_tool'] | To complete the task, first get the required configuration, then apply it to transform a KM3 into a EMF model once, after which you can transform ./atl_zoo/DSLBridge/MetamodelBridge/Models/SimpleExample/DSL2EMF/SimpleExampleMM-KM3.xmi from this model KM3 to a DSL model
+  - error_id=12 | train_index=45 | score=0.50 | expected=['apply_PNML2XML_transformation_tool', 'list_transformation_Mantis2XML_tool'] | actual=['apply_PNML2XML_transformation_tool', 'list_transformation_samples_tool', 'apply_PNML2XML_transformation_tool', 'list_transformation_samples_tool', 'apply_Mantis2XML_transformation_tool'] | Transforming the PNML model ./atl_zoo/Grafcet2PetriNet/Models/XML2PNML_example.xmi to XML results in a new configuration then compare it with the original transformation that transforms a Mantis into a XML
+--------------------------------------------------------------------------------
+DIFF:
+--- mde-get (before batch 3)
++++ mde-get (after batch 3)
+@@ -16,3 +16,4 @@
+ - `km32emf.list_tool` — List available models or resources related to the KM32EMF transformation.
+ - `mantis2xml.list_tool` — List available models or resources related to the Mantis to XML transformation.
+ - `simpleclass2simplerdbms.list_tool` — List available models or resources related to the SimpleClass to SimpleRDBMS transformation.
++- `pnml2xml.apply_tool` — Apply the PNML to XML transformation to a given model.
+--------------------------------------------------------------------------------
+NEW SKILL:
+---
+name: mde-get
+description: List and retrieve available ATL transformation samples and inputs
+---
+
+You are a Model-Driven Engineering agent with access to an ATL MCP server.
+
+## CRITICAL RULES
+- You MUST use ONLY the MCP tools provided by the `atl_server`.
+- You MUST NOT attempt to run Python scripts directly.
+
+## Available MCP Tools
+- `list_transformation_samples_tool` — List sample source model paths for enabled transformations. Optionally provide a transformation_name to filter the results.
+- `list_transformation_KM32DSL_tool` — Displays details of transformation KM32DSL that transforms KM3 model into DSL model.
+- `km32dsl.apply_tool` — Apply the KM32DSL transformation to a given model.
+- `km32emf.list_tool` — List available models or resources related to the KM32EMF transformation.
+- `mantis2xml.list_tool` — List available models or resources related to the Mantis to XML transformation.
+- `simpleclass2simplerdbms.list_tool` — List available models or resources related to the SimpleClass to SimpleRDBMS transformation.
+- `pnml2xml.apply_tool` — Apply the PNML to XML transformation to a given model.
+
+================================================================================
+BATCH 3 | skill=.opencode/skills/mde-apply/SKILL.md | status=rewritten | 2026-09-29T18:13:37
+Errors given to the meta-agent:
+  - error_id=10 | train_index=41 | score=0.50 | expected=['KM32EMF.apply_tool', 'KM32DSL.apply_tool'] | actual=['apply_KM32EMF_transformation_tool'] | Transform KM3 model at ./atl_zoo/KM32EMF/Sample-KM3.xmi to EMF then transform KM3 model at ./atl_zoo/DSLBridge/MetamodelBridge/Models/SimpleExample/DSL2EMF/SimpleExampleMM-KM3.xmi to DSL
+  - error_id=11 | train_index=42 | score=0.00 | expected=['apply_XML2Ant_transformation_tool', 'apply_SimpleClass2SimpleRDBMS_transformation_tool'] | actual=['apply_Ant2XML_transformation_tool'] | Transform the XML model at ./atl_zoo/Ant2Maven/example/build1.xmi to Ant and subsequently transform the SimpleClass model at ./atl_zoo/SimpleClass2SimpleRDBMS/Sample-SimpleClass.xmi to SimpleRDBMS
+--------------------------------------------------------------------------------
+DIFF:
+--- mde-apply (before batch 3)
++++ mde-apply (after batch 3)
+@@ -19,3 +19,5 @@
+ - `simpleclass2simplerdbms.apply_tool` — Apply the SimpleClass to SimpleRDBMS transformation.
+ - `xml2ant.list_tool` — List configurations or available transformations for XML to Ant.
+ - `simpleclass2simplerdbms.list_tool` — List configurations or available transformations for SimpleClass to SimpleRDBMS.
++- `km32dsl.apply_tool` — Apply the KM32DSL transformation to a model.
++- `xml2ant.apply_tool` — Apply the XML to Ant transformation.
+--------------------------------------------------------------------------------
+NEW SKILL:
+---
+name: mde-apply
+description: Apply an ATL transformation to a source model
+---
+
+You are a Model-Driven Engineering agent with access to an ATL MCP server.
+
+## CRITICAL RULES
+- You MUST use ONLY the MCP tools provided by the `atl_server` to perform transformations.
+- The ONLY way to apply transformations is through the MCP tools available to you.
+
+## Available MCP Tools
+- `apply_KM32DSL_transformation_tool` — Input metamodel: KM3, Output metamodel: DSL. This tool transforms KM3 model into DSL model.
+- `apply_KM32EMF_transformation_tool` — Input metamodel: KM3, Output metamodel: EMF. This tool transforms KM3 model into EMF model.
+- `km32dsl.list_tool` — List configurations or available transformations for KM32DSL.
+- `km32emf.apply_tool` — Apply the KM32EMF transformation to a model.
+- `mantis2xml.apply_tool` — Apply the Mantis to XML transformation.
+- `pnml2xml.apply_tool` — Apply the PNML to XML transformation.
+- `simpleclass2simplerdbms.apply_tool` — Apply the SimpleClass to SimpleRDBMS transformation.
+- `xml2ant.list_tool` — List configurations or available transformations for XML to Ant.
+- `simpleclass2simplerdbms.list_tool` — List configurations or available transformations for SimpleClass to SimpleRDBMS.
+- `km32dsl.apply_tool` — Apply the KM32DSL transformation to a model.
+- `xml2ant.apply_tool` — Apply the XML to Ant transformation.
+
+================================================================================
+BATCH 4 | skill=.opencode/skills/mde-apply/SKILL.md | status=rewritten | 2026-09-29T18:23:50
+Errors given to the meta-agent:
+  - error_id=13 | train_index=48 | score=0.50 | expected=['KM32EMF.apply_tool', 'KM32DSL.get_tool'] | actual=['apply_KM32EMF_transformation_tool'] | KM3 model ./atl_zoo/KM32EMF/Sample-KM3.xmi should transform into EMF and its configuration compared to that of transforming a KM3 into a DSL
+  - error_id=14 | train_index=50 | score=0.50 | expected=['apply_XML2Ant_transformation_tool', 'apply_SimpleClass2SimpleRDBMS_transformation_tool'] | actual=['apply_Ant2XML_transformation_tool', 'apply_SimpleClass2SimpleRDBMS_transformation_tool'] | Transform XML model at ./atl_zoo/Ant2Maven/example/build1.xmi to Ant then transform SimpleClass model at ./atl_zoo/SimpleClass2SimpleRDBMS/Sample-SimpleClass.xmi to SimpleRDBMS
+  - error_id=15 | train_index=53 | score=0.50 | expected=['apply_KM32EMF_transformation_tool', 'apply_KM32DSL_transformation_tool'] | actual=['apply_KM32EMF_transformation_tool', 'apply_KM32EMF_transformation_tool'] | Transform the KM3 model at ./atl_zoo/KM32EMF/Sample-KM3.xmi to EMF and subsequently transform the KM3 model at ./atl_zoo/DSLBridge/MetamodelBridge/Models/SimpleExample/DSL2EMF/SimpleExampleMM-KM3.xmi to DSL
+  - error_id=16 | train_index=56 | score=0.00 | expected=['XML2Ant.apply_tool', 'SimpleClass2SimpleRDBMS.apply_tool'] | actual=['apply_Ant2Maven_transformation_tool'] | Modify the model at ./atl_zoo/Ant2Maven/example/build1.xmi to conform to Ant standards, then modify the model at ./atl_zoo/SimpleClass2SimpleRDBMS/Sample-SimpleClass.xmi to conform to SimpleRDBMS standards
+--------------------------------------------------------------------------------
+DIFF:
+--- mde-apply (before batch 4)
++++ mde-apply (after batch 4)
+@@ -21,3 +21,5 @@
+ - `simpleclass2simplerdbms.list_tool` — List configurations or available transformations for SimpleClass to SimpleRDBMS.
+ - `km32dsl.apply_tool` — Apply the KM32DSL transformation to a model.
+ - `xml2ant.apply_tool` — Apply the XML to Ant transformation.
++- `ant2xml.apply_tool` — Apply the Ant to XML transformation.
++- `ant2maven.apply_tool` — Apply the Ant to Maven transformation.
+--------------------------------------------------------------------------------
+NEW SKILL:
+---
+name: mde-apply
+description: Apply an ATL transformation to a source model
+---
+
+You are a Model-Driven Engineering agent with access to an ATL MCP server.
+
+## CRITICAL RULES
+- You MUST use ONLY the MCP tools provided by the `atl_server` to perform transformations.
+- The ONLY way to apply transformations is through the MCP tools available to you.
+
+## Available MCP Tools
+- `apply_KM32DSL_transformation_tool` — Input metamodel: KM3, Output metamodel: DSL. This tool transforms KM3 model into DSL model.
+- `apply_KM32EMF_transformation_tool` — Input metamodel: KM3, Output metamodel: EMF. This tool transforms KM3 model into EMF model.
+- `km32dsl.list_tool` — List configurations or available transformations for KM32DSL.
+- `km32emf.apply_tool` — Apply the KM32EMF transformation to a model.
+- `mantis2xml.apply_tool` — Apply the Mantis to XML transformation.
+- `pnml2xml.apply_tool` — Apply the PNML to XML transformation.
+- `simpleclass2simplerdbms.apply_tool` — Apply the SimpleClass to SimpleRDBMS transformation.
+- `xml2ant.list_tool` — List configurations or available transformations for XML to Ant.
+- `simpleclass2simplerdbms.list_tool` — List configurations or available transformations for SimpleClass to SimpleRDBMS.
+- `km32dsl.apply_tool` — Apply the KM32DSL transformation to a model.
+- `xml2ant.apply_tool` — Apply the XML to Ant transformation.
+- `ant2xml.apply_tool` — Apply the Ant to XML transformation.
+- `ant2maven.apply_tool` — Apply the Ant to Maven transformation.
+
+================================================================================
+BATCH 5 | skill=.opencode/skills/mde-apply/SKILL.md | status=rewritten | 2026-09-29T18:34:36
+Errors given to the meta-agent:
+  - error_id=17 | train_index=57 | score=0.50 | expected=['KM32EMF.apply_tool', 'KM32DSL.apply_tool'] | actual=['apply_KM32EMF_transformation_tool', 'apply_KM32EMF_transformation_tool', 'apply_KM32EMF_transformation_tool'] | Convert the existing model at ./atl_zoo/KM32EMF/Sample-KM3.xmi into the EMF model type, then convert the existing model at ./atl_zoo/DSLBridge/MetamodelBridge/Models/SimpleExample/DSL2EMF/SimpleExampleMM-KM3.xmi into the DSL model type
+  - error_id=18 | train_index=61 | score=0.00 | expected=['apply_XML2Ant_transformation_tool', 'apply_SimpleClass2SimpleRDBMS_transformation_tool'] | actual=['apply_Ant2Maven_transformation_tool', 'apply_Ant2Maven_transformation_tool'] | Execute transformation of the ./atl_zoo/Ant2Maven/example/build1.xmi model into Ant format, then transform the ./atl_zoo/SimpleClass2SimpleRDBMS/Sample-SimpleClass.xmi model into SimpleRDBMS format
+  - error_id=19 | train_index=62 | score=0.50 | expected=['KM32EMF.get_tool', 'KM32DSL.apply_tool'] | actual=['list_transformation_KM32EMF_tool', 'apply_KM32EMF_transformation_tool'] | Show the mapping rules used to transform file ./atl_zoo/KM32EMF/Sample-KM3.xmi to EMF model, then apply transformation to the model at ./atl_zoo/DSLBridge/MetamodelBridge/Models/SimpleExample/DSL2EMF/SimpleExampleMM-KM3.xmi to create a DSL model
+  - error_id=20 | train_index=63 | score=0.00 | expected=['SimpleClass2SimpleRDBMS.get_tool'] | actual=['apply_SimpleClass2SimpleRDBMS_transformation_tool'] | Demonstrate the transformation process that converts file ./atl_zoo/SimpleClass2SimpleRDBMS/Sample-SimpleClass.xmi to SimpleRDBMS model type
+--------------------------------------------------------------------------------
+DIFF:
+--- mde-apply (before batch 5)
++++ mde-apply (after batch 5)
+@@ -23,3 +23,4 @@
+ - `xml2ant.apply_tool` — Apply the XML to Ant transformation.
+ - `ant2xml.apply_tool` — Apply the Ant to XML transformation.
+ - `ant2maven.apply_tool` — Apply the Ant to Maven transformation.
++- `km32emf.list_tool` — List configurations or available transformations for KM32EMF.
+--------------------------------------------------------------------------------
+NEW SKILL:
+---
+name: mde-apply
+description: Apply an ATL transformation to a source model
+---
+
+You are a Model-Driven Engineering agent with access to an ATL MCP server.
+
+## CRITICAL RULES
+- You MUST use ONLY the MCP tools provided by the `atl_server` to perform transformations.
+- The ONLY way to apply transformations is through the MCP tools available to you.
+
+## Available MCP Tools
+- `apply_KM32DSL_transformation_tool` — Input metamodel: KM3, Output metamodel: DSL. This tool transforms KM3 model into DSL model.
+- `apply_KM32EMF_transformation_tool` — Input metamodel: KM3, Output metamodel: EMF. This tool transforms KM3 model into EMF model.
+- `km32dsl.list_tool` — List configurations or available transformations for KM32DSL.
+- `km32emf.apply_tool` — Apply the KM32EMF transformation to a model.
+- `mantis2xml.apply_tool` — Apply the Mantis to XML transformation.
+- `pnml2xml.apply_tool` — Apply the PNML to XML transformation.
+- `simpleclass2simplerdbms.apply_tool` — Apply the SimpleClass to SimpleRDBMS transformation.
+- `xml2ant.list_tool` — List configurations or available transformations for XML to Ant.
+- `simpleclass2simplerdbms.list_tool` — List configurations or available transformations for SimpleClass to SimpleRDBMS.
+- `km32dsl.apply_tool` — Apply the KM32DSL transformation to a model.
+- `xml2ant.apply_tool` — Apply the XML to Ant transformation.
+- `ant2xml.apply_tool` — Apply the Ant to XML transformation.
+- `ant2maven.apply_tool` — Apply the Ant to Maven transformation.
+- `km32emf.list_tool` — List configurations or available transformations for KM32EMF.
+
+================================================================================
+BATCH 6 | skill=.opencode/skills/mde-get/SKILL.md | status=rewritten | 2026-09-29T18:48:19
+Errors given to the meta-agent:
+  - error_id=21 | train_index=64 | score=0.50 | expected=['list_transformation_KM32EMF_tool', 'apply_KM32DSL_transformation_tool'] | actual=['list_transformation_KM32EMF_tool', 'list_transformation_KM32DSL_tool'] | Detail the transformation steps that change file ./atl_zoo/KM32EMF/Sample-KM3.xmi to EMF model, then transform model ./atl_zoo/DSLBridge/MetamodelBridge/Models/SimpleExample/DSL2EMF/SimpleExampleMM-KM3.xmi to DSL model
+--------------------------------------------------------------------------------
+DIFF:
+--- mde-get (before batch 6)
++++ mde-get (after batch 6)
+@@ -17,3 +17,4 @@
+ - `mantis2xml.list_tool` — List available models or resources related to the Mantis to XML transformation.
+ - `simpleclass2simplerdbms.list_tool` — List available models or resources related to the SimpleClass to SimpleRDBMS transformation.
+ - `pnml2xml.apply_tool` — Apply the PNML to XML transformation to a given model.
++- `km32dsl.list_tool` — List available models or resources related to the KM32DSL transformation.
+--------------------------------------------------------------------------------
+NEW SKILL:
+---
+name: mde-get
+description: List and retrieve available ATL transformation samples and inputs
+---
+
+You are a Model-Driven Engineering agent with access to an ATL MCP server.
+
+## CRITICAL RULES
+- You MUST use ONLY the MCP tools provided by the `atl_server`.
+- You MUST NOT attempt to run Python scripts directly.
+
+## Available MCP Tools
+- `list_transformation_samples_tool` — List sample source model paths for enabled transformations. Optionally provide a transformation_name to filter the results.
+- `list_transformation_KM32DSL_tool` — Displays details of transformation KM32DSL that transforms KM3 model into DSL model.
+- `km32dsl.apply_tool` — Apply the KM32DSL transformation to a given model.
+- `km32emf.list_tool` — List available models or resources related to the KM32EMF transformation.
+- `mantis2xml.list_tool` — List available models or resources related to the Mantis to XML transformation.
+- `simpleclass2simplerdbms.list_tool` — List available models or resources related to the SimpleClass to SimpleRDBMS transformation.
+- `pnml2xml.apply_tool` — Apply the PNML to XML transformation to a given model.
+- `km32dsl.list_tool` — List available models or resources related to the KM32DSL transformation.
+
+================================================================================
+BATCH 6 | skill=.opencode/skills/mde-apply/SKILL.md | status=rewritten | 2026-09-29T18:48:24
+Errors given to the meta-agent:
+  - error_id=22 | train_index=66 | score=0.00 | expected=['KM32EMF.get_tool', 'KM32DSL.get_tool'] | actual=['apply_KM32EMF_transformation_tool', 'apply_KM32EMF_transformation_tool'] | Demonstrate how file ./atl_zoo/KM32EMF/Sample-KM3.xmi is transformed into a EMF model, then demonstrate how file ./atl_zoo/DSLBridge/MetamodelBridge/Models/SimpleExample/DSL2EMF/SimpleExampleMM-KM3.xmi is transformed into a DSL model
+  - error_id=23 | train_index=67 | score=0.00 | expected=['PNML2XML.apply_tool'] | actual=['extract_input_metamodel_name'] | Rearrange the content of the model at ./atl_zoo/Grafcet2PetriNet/Models/XML2PNML_example.xmi to be in compliance with XML
+  - error_id=24 | train_index=68 | score=0.50 | expected=['PNML2XML.apply_tool', 'Mantis2XML.get_tool'] | actual=['apply_PNML2XML_transformation_tool', 'apply_PNML2XML_transformation_tool'] | Transform the model stored at ./atl_zoo/Grafcet2PetriNet/Models/XML2PNML_example.xmi into a XML model, then demonstrate the transformation that would convert file ./atl_zoo/SoftwareQualityControl2MantisBTFile/modelsExamples/MantisExample.xmi into a XML model
+--------------------------------------------------------------------------------
+DIFF:
+--- mde-apply (before batch 6)
++++ mde-apply (after batch 6)
+@@ -24,3 +24,4 @@
+ - `ant2xml.apply_tool` — Apply the Ant to XML transformation.
+ - `ant2maven.apply_tool` — Apply the Ant to Maven transformation.
+ - `km32emf.list_tool` — List configurations or available transformations for KM32EMF.
++- `mantis2xml.list_tool` — List configurations or available transformations for Mantis to XML.
+--------------------------------------------------------------------------------
+NEW SKILL:
+---
+name: mde-apply
+description: Apply an ATL transformation to a source model
+---
+
+You are a Model-Driven Engineering agent with access to an ATL MCP server.
+
+## CRITICAL RULES
+- You MUST use ONLY the MCP tools provided by the `atl_server` to perform transformations.
+- The ONLY way to apply transformations is through the MCP tools available to you.
+
+## Available MCP Tools
+- `apply_KM32DSL_transformation_tool` — Input metamodel: KM3, Output metamodel: DSL. This tool transforms KM3 model into DSL model.
+- `apply_KM32EMF_transformation_tool` — Input metamodel: KM3, Output metamodel: EMF. This tool transforms KM3 model into EMF model.
+- `km32dsl.list_tool` — List configurations or available transformations for KM32DSL.
+- `km32emf.apply_tool` — Apply the KM32EMF transformation to a model.
+- `mantis2xml.apply_tool` — Apply the Mantis to XML transformation.
+- `pnml2xml.apply_tool` — Apply the PNML to XML transformation.
+- `simpleclass2simplerdbms.apply_tool` — Apply the SimpleClass to SimpleRDBMS transformation.
+- `xml2ant.list_tool` — List configurations or available transformations for XML to Ant.
+- `simpleclass2simplerdbms.list_tool` — List configurations or available transformations for SimpleClass to SimpleRDBMS.
+- `km32dsl.apply_tool` — Apply the KM32DSL transformation to a model.
+- `xml2ant.apply_tool` — Apply the XML to Ant transformation.
+- `ant2xml.apply_tool` — Apply the Ant to XML transformation.
+- `ant2maven.apply_tool` — Apply the Ant to Maven transformation.
+- `km32emf.list_tool` — List configurations or available transformations for KM32EMF.
+- `mantis2xml.list_tool` — List configurations or available transformations for Mantis to XML.
+
+================================================================================
+BATCH 7 | skill=.opencode/skills/mde-get/SKILL.md | status=rewritten | 2026-09-29T19:00:10
+Errors given to the meta-agent:
+  - error_id=25 | train_index=69 | score=0.00 | expected=['list_transformation_SimpleClass2SimpleRDBMS_tool'] | actual=['apply_SimpleClass2SimpleRDBMS_transformation_tool', 'list_transformation_samples_tool', 'apply_SimpleClass2SimpleRDBMS_transformation_tool'] | Depict the transformation operation that converts file ./atl_zoo/SimpleClass2SimpleRDBMS/Sample-SimpleClass.xmi to SimpleRDBMS model
+--------------------------------------------------------------------------------
+DIFF:
+--- mde-get (before batch 7)
++++ mde-get (after batch 7)
+@@ -18,3 +18,4 @@
+ - `simpleclass2simplerdbms.list_tool` — List available models or resources related to the SimpleClass to SimpleRDBMS transformation.
+ - `pnml2xml.apply_tool` — Apply the PNML to XML transformation to a given model.
+ - `km32dsl.list_tool` — List available models or resources related to the KM32DSL transformation.
++- `simpleclass2simplerdbms.apply_tool` — Apply the SimpleClass to SimpleRDBMS transformation to a given model.
+--------------------------------------------------------------------------------
+NEW SKILL:
+---
+name: mde-get
+description: List and retrieve available ATL transformation samples and inputs
+---
+
+You are a Model-Driven Engineering agent with access to an ATL MCP server.
+
+## CRITICAL RULES
+- You MUST use ONLY the MCP tools provided by the `atl_server`.
+- You MUST NOT attempt to run Python scripts directly.
+
+## Available MCP Tools
+- `list_transformation_samples_tool` — List sample source model paths for enabled transformations. Optionally provide a transformation_name to filter the results.
+- `list_transformation_KM32DSL_tool` — Displays details of transformation KM32DSL that transforms KM3 model into DSL model.
+- `km32dsl.apply_tool` — Apply the KM32DSL transformation to a given model.
+- `km32emf.list_tool` — List available models or resources related to the KM32EMF transformation.
+- `mantis2xml.list_tool` — List available models or resources related to the Mantis to XML transformation.
+- `simpleclass2simplerdbms.list_tool` — List available models or resources related to the SimpleClass to SimpleRDBMS transformation.
+- `pnml2xml.apply_tool` — Apply the PNML to XML transformation to a given model.
+- `km32dsl.list_tool` — List available models or resources related to the KM32DSL transformation.
+- `simpleclass2simplerdbms.apply_tool` — Apply the SimpleClass to SimpleRDBMS transformation to a given model.
+
+================================================================================
+BATCH 7 | skill=.opencode/skills/mde-apply/SKILL.md | status=unchanged | 2026-09-29T19:00:15
+Errors given to the meta-agent:
+  - error_id=26 | train_index=70 | score=0.00 | expected=['XML2Ant.get_tool', 'SimpleClass2SimpleRDBMS.get_tool'] | actual=[] | Detail the transformation process for file ./atl_zoo/Ant2Maven/example/build1.xmi to create a Ant model, then detail the transformation process for file ./atl_zoo/SimpleClass2SimpleRDBMS/Sample-SimpleClass.xmi to create a SimpleRDBMS model
+  - error_id=27 | train_index=71 | score=0.00 | expected=['Mantis2XML.apply_tool'] | actual=['extract_input_metamodel_name'] | Update the model metatype from ./atl_zoo/SoftwareQualityControl2MantisBTFile/modelsExamples/MantisExample.xmi with a new structure in XML format
+  - error_id=28 | train_index=72 | score=0.00 | expected=['KM32DSL.get_tool'] | actual=['apply_KM32DSL_transformation_tool'] | Present the transformation that changes the file ./atl_zoo/DSLBridge/MetamodelBridge/Models/SimpleExample/DSL2EMF/SimpleExampleMM-KM3.xmi into a DSL model
+--------------------------------------------------------------------------------
+DIFF:
+(no change)
+--------------------------------------------------------------------------------
+NEW SKILL:
+---
+name: mde-apply
+description: Apply an ATL transformation to a source model
+---
+
+You are a Model-Driven Engineering agent with access to an ATL MCP server.
+
+## CRITICAL RULES
+- You MUST use ONLY the MCP tools provided by the `atl_server` to perform transformations.
+- The ONLY way to apply transformations is through the MCP tools available to you.
+
+## Available MCP Tools
+- `apply_KM32DSL_transformation_tool` — Input metamodel: KM3, Output metamodel: DSL. This tool transforms KM3 model into DSL model.
+- `apply_KM32EMF_transformation_tool` — Input metamodel: KM3, Output metamodel: EMF. This tool transforms KM3 model into EMF model.
+- `km32dsl.list_tool` — List configurations or available transformations for KM32DSL.
+- `km32emf.apply_tool` — Apply the KM32EMF transformation to a model.
+- `mantis2xml.apply_tool` — Apply the Mantis to XML transformation.
+- `pnml2xml.apply_tool` — Apply the PNML to XML transformation.
+- `simpleclass2simplerdbms.apply_tool` — Apply the SimpleClass to SimpleRDBMS transformation.
+- `xml2ant.list_tool` — List configurations or available transformations for XML to Ant.
+- `simpleclass2simplerdbms.list_tool` — List configurations or available transformations for SimpleClass to SimpleRDBMS.
+- `km32dsl.apply_tool` — Apply the KM32DSL transformation to a model.
+- `xml2ant.apply_tool` — Apply the XML to Ant transformation.
+- `ant2xml.apply_tool` — Apply the Ant to XML transformation.
+- `ant2maven.apply_tool` — Apply the Ant to Maven transformation.
+- `km32emf.list_tool` — List configurations or available transformations for KM32EMF.
+- `mantis2xml.list_tool` — List configurations or available transformations for Mantis to XML.
+
+================================================================================
+BATCH 8 | skill=.opencode/skills/mde-apply/SKILL.md | status=rewritten | 2026-09-29T19:11:46
+Errors given to the meta-agent:
+  - error_id=29 | train_index=73 | score=0.00 | expected=['KM32EMF.get_tool', 'KM32DSL.apply_tool'] | actual=['apply_KM32EMF_transformation_tool', 'apply_KM32EMF_transformation_tool'] | Demonstrate the transformation logic for converting file ./atl_zoo/KM32EMF/Sample-KM3.xmi to EMF model, then transform the model at ./atl_zoo/DSLBridge/MetamodelBridge/Models/SimpleExample/DSL2EMF/SimpleExampleMM-KM3.xmi to DSL model
+  - error_id=31 | train_index=75 | score=0.00 | expected=['Mantis2XML.apply_tool'] | actual=['extract_input_metamodel_name'] | Modify the components of the model located at ./atl_zoo/SoftwareQualityControl2MantisBTFile/modelsExamples/MantisExample.xmi, transforming it into XML
+--------------------------------------------------------------------------------
+DIFF:
+--- mde-apply (before batch 8)
++++ mde-apply (after batch 8)
+@@ -25,3 +25,5 @@
+ - `ant2maven.apply_tool` — Apply the Ant to Maven transformation.
+ - `km32emf.list_tool` — List configurations or available transformations for KM32EMF.
+ - `mantis2xml.list_tool` — List configurations or available transformations for Mantis to XML.
++- `km32emf.list_tool` — List configurations or available transformations for KM32EMF
++- `km32dsl.apply_tool` — Apply the KM32DSL transformation to a model
+--------------------------------------------------------------------------------
+NEW SKILL:
+---
+name: mde-apply
+description: Apply an ATL transformation to a source model
+---
+
+You are a Model-Driven Engineering agent with access to an ATL MCP server.
+
+## CRITICAL RULES
+- You MUST use ONLY the MCP tools provided by the `atl_server` to perform transformations.
+- The ONLY way to apply transformations is through the MCP tools available to you.
+
+## Available MCP Tools
+- `apply_KM32DSL_transformation_tool` — Input metamodel: KM3, Output metamodel: DSL. This tool transforms KM3 model into DSL model.
+- `apply_KM32EMF_transformation_tool` — Input metamodel: KM3, Output metamodel: EMF. This tool transforms KM3 model into EMF model.
+- `km32dsl.list_tool` — List configurations or available transformations for KM32DSL.
+- `km32emf.apply_tool` — Apply the KM32EMF transformation to a model.
+- `mantis2xml.apply_tool` — Apply the Mantis to XML transformation.
+- `pnml2xml.apply_tool` — Apply the PNML to XML transformation.
+- `simpleclass2simplerdbms.apply_tool` — Apply the SimpleClass to SimpleRDBMS transformation.
+- `xml2ant.list_tool` — List configurations or available transformations for XML to Ant.
+- `simpleclass2simplerdbms.list_tool` — List configurations or available transformations for SimpleClass to SimpleRDBMS.
+- `km32dsl.apply_tool` — Apply the KM32DSL transformation to a model.
+- `xml2ant.apply_tool` — Apply the XML to Ant transformation.
+- `ant2xml.apply_tool` — Apply the Ant to XML transformation.
+- `ant2maven.apply_tool` — Apply the Ant to Maven transformation.
+- `km32emf.list_tool` — List configurations or available transformations for KM32EMF.
+- `mantis2xml.list_tool` — List configurations or available transformations for Mantis to XML.
+- `km32emf.list_tool` — List configurations or available transformations for KM32EMF
+- `km32dsl.apply_tool` — Apply the KM32DSL transformation to a model
+
+================================================================================
+BATCH 8 | skill=.opencode/skills/mde-get/SKILL.md | status=rewritten | 2026-09-29T19:11:49
+Errors given to the meta-agent:
+  - error_id=30 | train_index=74 | score=0.50 | expected=['apply_XML2Ant_transformation_tool', 'list_transformation_SimpleClass2SimpleRDBMS_tool'] | actual=['apply_Ant2Maven_transformation_tool', 'list_transformation_samples_tool', 'apply_Ant2Maven_transformation_tool', 'list_transformation_SimpleClass2SimpleRDBMS_tool'] | Change the ./atl_zoo/Ant2Maven/example/build1.xmi model to conform to Ant model standards, then detail the transformation rules for converting file ./atl_zoo/SimpleClass2SimpleRDBMS/Sample-SimpleClass.xmi to SimpleRDBMS model standards
+  - error_id=32 | train_index=76 | score=0.00 | expected=['list_transformation_XML2Ant_tool', 'apply_SimpleClass2SimpleRDBMS_transformation_tool'] | actual=['list_transformation_Ant2Maven_tool', 'list_transformation_Ant2XML_tool'] | Show the mapping rules used to transform file ./atl_zoo/Ant2Maven/example/build1.xmi to Ant model, then apply transformation to the model at ./atl_zoo/SimpleClass2SimpleRDBMS/Sample-SimpleClass.xmi to create a SimpleRDBMS model
+--------------------------------------------------------------------------------
+DIFF:
+--- mde-get (before batch 8)
++++ mde-get (after batch 8)
+@@ -19,3 +19,5 @@
+ - `pnml2xml.apply_tool` — Apply the PNML to XML transformation to a given model.
+ - `km32dsl.list_tool` — List available models or resources related to the KM32DSL transformation.
+ - `simpleclass2simplerdbms.apply_tool` — Apply the SimpleClass to SimpleRDBMS transformation to a given model.
++- `xml2ant.apply_tool` — Apply the XML to Ant transformation to a given model.
++- `xml2ant.list_tool` — List available models or resources related to the XML to Ant transformation.
+--------------------------------------------------------------------------------
+NEW SKILL:
+---
+name: mde-get
+description: List and retrieve available ATL transformation samples and inputs
+---
+
+You are a Model-Driven Engineering agent with access to an ATL MCP server.
+
+## CRITICAL RULES
+- You MUST use ONLY the MCP tools provided by the `atl_server`.
+- You MUST NOT attempt to run Python scripts directly.
+
+## Available MCP Tools
+- `list_transformation_samples_tool` — List sample source model paths for enabled transformations. Optionally provide a transformation_name to filter the results.
+- `list_transformation_KM32DSL_tool` — Displays details of transformation KM32DSL that transforms KM3 model into DSL model.
+- `km32dsl.apply_tool` — Apply the KM32DSL transformation to a given model.
+- `km32emf.list_tool` — List available models or resources related to the KM32EMF transformation.
+- `mantis2xml.list_tool` — List available models or resources related to the Mantis to XML transformation.
+- `simpleclass2simplerdbms.list_tool` — List available models or resources related to the SimpleClass to SimpleRDBMS transformation.
+- `pnml2xml.apply_tool` — Apply the PNML to XML transformation to a given model.
+- `km32dsl.list_tool` — List available models or resources related to the KM32DSL transformation.
+- `simpleclass2simplerdbms.apply_tool` — Apply the SimpleClass to SimpleRDBMS transformation to a given model.
+- `xml2ant.apply_tool` — Apply the XML to Ant transformation to a given model.
+- `xml2ant.list_tool` — List available models or resources related to the XML to Ant transformation.
+
+================================================================================
+BATCH 9 | skill=.opencode/skills/mde-apply/SKILL.md | status=unchanged | 2026-09-29T19:38:52
+Errors given to the meta-agent:
+  - error_id=33 | train_index=77 | score=0.50 | expected=['apply_XML2Ant_transformation_tool', 'apply_SimpleClass2SimpleRDBMS_transformation_tool'] | actual=['apply_Ant2Maven_transformation_tool', 'apply_SimpleClass2SimpleRDBMS_transformation_tool'] | Execute transformation of the ./atl_zoo/Ant2Maven/example/build1.xmi model into Ant format, then transform the ./atl_zoo/SimpleClass2SimpleRDBMS/Sample-SimpleClass.xmi model into SimpleRDBMS format
+  - error_id=35 | train_index=79 | score=0.00 | expected=['XML2Ant.apply_tool', 'SimpleClass2SimpleRDBMS.get_tool'] | actual=['apply_Ant2Maven_transformation_tool'] | Convert the model at ./atl_zoo/Ant2Maven/example/build1.xmi into Ant format, then display the transformation needed to convert file ./atl_zoo/SimpleClass2SimpleRDBMS/Sample-SimpleClass.xmi into SimpleRDBMS format
+--------------------------------------------------------------------------------
+DIFF:
+(no change)
+--------------------------------------------------------------------------------
+NEW SKILL:
+---
+name: mde-apply
+description: Apply an ATL transformation to a source model
+---
+
+You are a Model-Driven Engineering agent with access to an ATL MCP server.
+
+## CRITICAL RULES
+- You MUST use ONLY the MCP tools provided by the `atl_server` to perform transformations.
+- The ONLY way to apply transformations is through the MCP tools available to you.
+
+## Available MCP Tools
+- `apply_KM32DSL_transformation_tool` — Input metamodel: KM3, Output metamodel: DSL. This tool transforms KM3 model into DSL model.
+- `apply_KM32EMF_transformation_tool` — Input metamodel: KM3, Output metamodel: EMF. This tool transforms KM3 model into EMF model.
+- `km32dsl.list_tool` — List configurations or available transformations for KM32DSL.
+- `km32emf.apply_tool` — Apply the KM32EMF transformation to a model.
+- `mantis2xml.apply_tool` — Apply the Mantis to XML transformation.
+- `pnml2xml.apply_tool` — Apply the PNML to XML transformation.
+- `simpleclass2simplerdbms.apply_tool` — Apply the SimpleClass to SimpleRDBMS transformation.
+- `xml2ant.list_tool` — List configurations or available transformations for XML to Ant.
+- `simpleclass2simplerdbms.list_tool` — List configurations or available transformations for SimpleClass to SimpleRDBMS.
+- `km32dsl.apply_tool` — Apply the KM32DSL transformation to a model.
+- `xml2ant.apply_tool` — Apply the XML to Ant transformation.
+- `ant2xml.apply_tool` — Apply the Ant to XML transformation.
+- `ant2maven.apply_tool` — Apply the Ant to Maven transformation.
+- `km32emf.list_tool` — List configurations or available transformations for KM32EMF.
+- `mantis2xml.list_tool` — List configurations or available transformations for Mantis to XML.
+- `km32emf.list_tool` — List configurations or available transformations for KM32EMF
+- `km32dsl.apply_tool` — Apply the KM32DSL transformation to a model
+
+================================================================================
+BATCH 9 | skill=.opencode/skills/mde-get/SKILL.md | status=rewritten | 2026-09-29T19:38:56
+Errors given to the meta-agent:
+  - error_id=34 | train_index=78 | score=0.00 | expected=['apply_PNML2XML_transformation_tool', 'list_transformation_Mantis2XML_tool'] | actual=['apply_Grafcet2PetriNet_transformation_tool', 'list_transformation_samples_tool', 'apply_Grafcet2PetriNet_transformation_tool', 'apply_Mantis2XML_transformation_tool'] | Transform the model ./atl_zoo/Grafcet2PetriNet/Models/XML2PNML_example.xmi to a XML model, then show the transformation that would convert file ./atl_zoo/SoftwareQualityControl2MantisBTFile/modelsExamples/MantisExample.xmi to a XML model
+--------------------------------------------------------------------------------
+DIFF:
+--- mde-get (before batch 9)
++++ mde-get (after batch 9)
+@@ -21,3 +21,6 @@
+ - `simpleclass2simplerdbms.apply_tool` — Apply the SimpleClass to SimpleRDBMS transformation to a given model.
+ - `xml2ant.apply_tool` — Apply the XML to Ant transformation to a given model.
+ - `xml2ant.list_tool` — List available models or resources related to the XML to Ant transformation.
++- `grafcet2petrinet.apply_tool` — Apply the Grafcet to PetriNet transformation to a given model.
++- `mantis2xml.apply_tool` — Apply the Mantis to XML transformation to a given model.
++- `list_transformation_samples_tool` — List sample source model paths for enabled transformations. Optionally provide a transformation_name to filter the results.
+--------------------------------------------------------------------------------
+NEW SKILL:
+---
+name: mde-get
+description: List and retrieve available ATL transformation samples and inputs
+---
+
+You are a Model-Driven Engineering agent with access to an ATL MCP server.
+
+## CRITICAL RULES
+- You MUST use ONLY the MCP tools provided by the `atl_server`.
+- You MUST NOT attempt to run Python scripts directly.
+
+## Available MCP Tools
+- `list_transformation_samples_tool` — List sample source model paths for enabled transformations. Optionally provide a transformation_name to filter the results.
+- `list_transformation_KM32DSL_tool` — Displays details of transformation KM32DSL that transforms KM3 model into DSL model.
+- `km32dsl.apply_tool` — Apply the KM32DSL transformation to a given model.
+- `km32emf.list_tool` — List available models or resources related to the KM32EMF transformation.
+- `mantis2xml.list_tool` — List available models or resources related to the Mantis to XML transformation.
+- `simpleclass2simplerdbms.list_tool` — List available models or resources related to the SimpleClass to SimpleRDBMS transformation.
+- `pnml2xml.apply_tool` — Apply the PNML to XML transformation to a given model.
+- `km32dsl.list_tool` — List available models or resources related to the KM32DSL transformation.
+- `simpleclass2simplerdbms.apply_tool` — Apply the SimpleClass to SimpleRDBMS transformation to a given model.
+- `xml2ant.apply_tool` — Apply the XML to Ant transformation to a given model.
+- `xml2ant.list_tool` — List available models or resources related to the XML to Ant transformation.
+- `grafcet2petrinet.apply_tool` — Apply the Grafcet to PetriNet transformation to a given model.
+- `mantis2xml.apply_tool` — Apply the Mantis to XML transformation to a given model.
+- `list_transformation_samples_tool` — List sample source model paths for enabled transformations. Optionally provide a transformation_name to filter the results.
+

@@ -24,6 +24,3 @@ You are a Model-Driven Engineering agent with access to an ATL MCP server.
 - `ant2xml.apply_tool` — Apply the Ant to XML transformation.
 - `ant2maven.apply_tool` — Apply the Ant to Maven transformation.
 - `km32emf.list_tool` — List configurations or available transformations for KM32EMF.
-- `mantis2xml.list_tool` — List configurations or available transformations for Mantis to XML.
-- `km32emf.list_tool` — List configurations or available transformations for KM32EMF
-- `km32dsl.apply_tool` — Apply the KM32DSL transformation to a model

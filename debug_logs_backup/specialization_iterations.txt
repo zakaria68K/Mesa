@@ -1,0 +1,288 @@
+================================================================================
+Specialization run started at 2026-04-19T17:14:30 | samples=51 | threshold=0.75 | max_iterations=10
+--------------------------------------------------------------------------------
+Iteration 0 started
+Iteration 0 | sample=1/51 | score=1.00 | skill=SKILL.md
+Iteration 0 | sample=2/51 | score=1.00 | skill=SKILL.md
+Iteration 0 | sample=3/51 | score=1.00 | skill=SKILL.md
+Iteration 0 | sample=4/51 | score=1.00 | skill=SKILL.md
+Iteration 0 | sample=5/51 | score=1.00 | skill=SKILL.md
+Iteration 0 | sample=6/51 | score=1.00 | skill=SKILL.md
+Iteration 0 | sample=7/51 | score=1.00 | skill=SKILL.md
+Iteration 0 | sample=8/51 | score=1.00 | skill=SKILL.md
+Iteration 0 | sample=9/51 | score=0.00 | skill=SKILL.md
+Iteration 0 | sample=10/51 | score=0.00 | skill=SKILL.md
+Iteration 0 | sample=11/51 | score=0.00 | skill=SKILL.md
+Iteration 0 | sample=12/51 | score=0.00 | skill=SKILL.md
+Iteration 0 | sample=13/51 | score=0.00 | skill=SKILL.md
+Iteration 0 | sample=14/51 | score=1.00 | skill=SKILL.md
+Iteration 0 | sample=15/51 | score=0.00 | skill=SKILL.md
+Iteration 0 | sample=16/51 | score=0.00 | skill=SKILL.md
+Iteration 0 | sample=17/51 | score=0.00 | skill=SKILL.md
+Iteration 0 | sample=18/51 | score=0.00 | skill=SKILL.md
+Iteration 0 | sample=19/51 | score=0.00 | skill=SKILL.md
+Iteration 0 | sample=20/51 | score=0.00 | skill=SKILL.md
+Iteration 0 | sample=21/51 | score=0.00 | skill=SKILL.md
+Iteration 0 | sample=22/51 | score=0.00 | skill=SKILL.md
+Iteration 0 | sample=23/51 | score=1.00 | skill=SKILL.md
+Iteration 0 | sample=24/51 | score=0.00 | skill=SKILL.md
+Iteration 0 | sample=25/51 | score=0.00 | skill=SKILL.md
+Iteration 0 | sample=26/51 | score=0.00 | skill=SKILL.md
+Iteration 0 | sample=27/51 | score=1.00 | skill=SKILL.md
+Iteration 0 | sample=28/51 | score=1.00 | skill=SKILL.md
+Iteration 0 | sample=29/51 | score=1.00 | skill=SKILL.md
+Iteration 0 | sample=30/51 | score=1.00 | skill=SKILL.md
+Iteration 0 | sample=31/51 | score=1.00 | skill=SKILL.md
+Iteration 0 | sample=32/51 | score=0.00 | skill=SKILL.md
+Iteration 0 | sample=33/51 | score=0.00 | skill=SKILL.md
+Iteration 0 | sample=34/51 | score=0.00 | skill=SKILL.md
+Iteration 0 | sample=35/51 | score=0.00 | skill=SKILL.md
+Iteration 0 | sample=36/51 | score=0.00 | skill=SKILL.md
+Iteration 0 | sample=37/51 | score=0.00 | skill=SKILL.md
+Iteration 0 | sample=38/51 | score=0.00 | skill=SKILL.md
+Iteration 0 | sample=39/51 | score=0.00 | skill=SKILL.md
+Iteration 0 | sample=40/51 | score=0.00 | skill=SKILL.md
+Iteration 0 | sample=41/51 | score=0.00 | skill=SKILL.md
+Iteration 0 | sample=42/51 | score=0.00 | skill=SKILL.md
+Iteration 0 | sample=43/51 | score=1.00 | skill=SKILL.md
+Iteration 0 | sample=44/51 | score=0.00 | skill=SKILL.md
+Iteration 0 | sample=45/51 | score=1.00 | skill=SKILL.md
+Iteration 0 | sample=46/51 | score=0.00 | skill=SKILL.md
+Iteration 0 | sample=47/51 | score=0.00 | skill=SKILL.md
+Iteration 0 | sample=48/51 | score=0.00 | skill=SKILL.md
+Iteration 0 | sample=49/51 | score=0.00 | skill=SKILL.md
+Iteration 0 | sample=50/51 | score=0.00 | skill=SKILL.md
+Iteration 0 | sample=51/51 | score=1.00 | skill=SKILL.md
+Iteration 0 summary | avg_score=0.35 | failing_samples=33/51
+Iteration 0 refinement phase started
+Iteration 0 | refining skill=SKILL.md | failures=23 | patterns=19 | examples_used=9
+Iteration 0 | refining skill=SKILL.md | failures=10 | patterns=6 | examples_used=8
+Iteration 0 refinement_count=2
+--------------------------------------------------------------------------------
+Iteration 1 started
+Iteration 1 | sample=1/51 | score=1.00 | skill=SKILL.md
+Iteration 1 | sample=2/51 | score=1.00 | skill=SKILL.md
+Iteration 1 | sample=3/51 | score=1.00 | skill=SKILL.md
+Iteration 1 | sample=4/51 | score=1.00 | skill=SKILL.md
+Iteration 1 | sample=5/51 | score=1.00 | skill=SKILL.md
+Iteration 1 | sample=6/51 | score=1.00 | skill=SKILL.md
+Iteration 1 | sample=7/51 | score=1.00 | skill=SKILL.md
+Iteration 1 | sample=8/51 | score=1.00 | skill=SKILL.md
+Iteration 1 | sample=9/51 | score=1.00 | skill=SKILL.md
+Iteration 1 | sample=10/51 | score=0.00 | skill=SKILL.md
+Iteration 1 | sample=11/51 | score=0.00 | skill=SKILL.md
+Iteration 1 | sample=12/51 | score=0.00 | skill=SKILL.md
+Iteration 1 | sample=13/51 | score=1.00 | skill=SKILL.md
+Iteration 1 | sample=14/51 | score=1.00 | skill=SKILL.md
+Iteration 1 | sample=15/51 | score=0.00 | skill=SKILL.md
+Iteration 1 | sample=16/51 | score=1.00 | skill=SKILL.md
+Iteration 1 | sample=17/51 | score=0.00 | skill=SKILL.md
+Iteration 1 | sample=18/51 | score=0.00 | skill=SKILL.md
+Iteration 1 | sample=19/51 | score=1.00 | skill=SKILL.md
+Iteration 1 | sample=20/51 | score=0.00 | skill=SKILL.md
+Iteration 1 | sample=21/51 | score=0.00 | skill=SKILL.md
+Iteration 1 | sample=22/51 | score=0.00 | skill=SKILL.md
+Iteration 1 | sample=23/51 | score=1.00 | skill=SKILL.md
+Iteration 1 | sample=24/51 | score=1.00 | skill=SKILL.md
+Iteration 1 | sample=25/51 | score=1.00 | skill=SKILL.md
+Iteration 1 | sample=26/51 | score=0.00 | skill=SKILL.md
+Iteration 1 | sample=27/51 | score=1.00 | skill=SKILL.md
+Iteration 1 | sample=28/51 | score=1.00 | skill=SKILL.md
+Iteration 1 | sample=29/51 | score=1.00 | skill=SKILL.md
+Iteration 1 | sample=30/51 | score=1.00 | skill=SKILL.md
+Iteration 1 | sample=31/51 | score=1.00 | skill=SKILL.md
+Iteration 1 | sample=32/51 | score=0.00 | skill=SKILL.md
+Iteration 1 | sample=33/51 | score=0.00 | skill=SKILL.md
+Iteration 1 | sample=34/51 | score=0.00 | skill=SKILL.md
+Iteration 1 | sample=35/51 | score=0.00 | skill=SKILL.md
+Iteration 1 | sample=36/51 | score=0.00 | skill=SKILL.md
+Iteration 1 | sample=37/51 | score=0.00 | skill=SKILL.md
+Iteration 1 | sample=38/51 | score=0.00 | skill=SKILL.md
+Iteration 1 | sample=39/51 | score=0.00 | skill=SKILL.md
+Iteration 1 | sample=40/51 | score=0.00 | skill=SKILL.md
+Iteration 1 | sample=41/51 | score=1.00 | skill=SKILL.md
+Iteration 1 | sample=42/51 | score=0.00 | skill=SKILL.md
+Iteration 1 | sample=43/51 | score=1.00 | skill=SKILL.md
+Iteration 1 | sample=44/51 | score=1.00 | skill=SKILL.md
+Iteration 1 | sample=45/51 | score=1.00 | skill=SKILL.md
+Iteration 1 | sample=46/51 | score=1.00 | skill=SKILL.md
+Iteration 1 | sample=47/51 | score=0.00 | skill=SKILL.md
+Iteration 1 | sample=48/51 | score=1.00 | skill=SKILL.md
+Iteration 1 | sample=49/51 | score=0.00 | skill=SKILL.md
+Iteration 1 | sample=50/51 | score=1.00 | skill=SKILL.md
+Iteration 1 | sample=51/51 | score=1.00 | skill=SKILL.md
+Iteration 1 summary | avg_score=0.57 | failing_samples=22/51
+Iteration 1 refinement phase started
+Iteration 1 | refining skill=SKILL.md | failures=9 | patterns=5 | examples_used=8
+Iteration 1 | refining skill=SKILL.md | failures=13 | patterns=13 | examples_used=8
+Iteration 1 refinement_count=2
+--------------------------------------------------------------------------------
+Iteration 2 started
+Iteration 2 | sample=1/51 | score=1.00 | skill=SKILL.md
+Iteration 2 | sample=2/51 | score=1.00 | skill=SKILL.md
+Iteration 2 | sample=3/51 | score=1.00 | skill=SKILL.md
+Iteration 2 | sample=4/51 | score=1.00 | skill=SKILL.md
+Iteration 2 | sample=5/51 | score=1.00 | skill=SKILL.md
+Iteration 2 | sample=6/51 | score=1.00 | skill=SKILL.md
+Iteration 2 | sample=7/51 | score=1.00 | skill=SKILL.md
+Iteration 2 | sample=8/51 | score=1.00 | skill=SKILL.md
+Iteration 2 | sample=9/51 | score=1.00 | skill=SKILL.md
+Iteration 2 | sample=10/51 | score=1.00 | skill=SKILL.md
+Iteration 2 | sample=11/51 | score=1.00 | skill=SKILL.md
+Iteration 2 | sample=12/51 | score=0.00 | skill=SKILL.md
+Iteration 2 | sample=13/51 | score=1.00 | skill=SKILL.md
+Iteration 2 | sample=14/51 | score=1.00 | skill=SKILL.md
+Iteration 2 | sample=15/51 | score=1.00 | skill=SKILL.md
+Iteration 2 | sample=16/51 | score=0.00 | skill=SKILL.md
+Iteration 2 | sample=17/51 | score=1.00 | skill=SKILL.md
+Iteration 2 | sample=18/51 | score=0.00 | skill=SKILL.md
+Iteration 2 | sample=19/51 | score=1.00 | skill=SKILL.md
+Iteration 2 | sample=20/51 | score=1.00 | skill=SKILL.md
+Iteration 2 | sample=21/51 | score=1.00 | skill=SKILL.md
+Iteration 2 | sample=22/51 | score=0.00 | skill=SKILL.md
+Iteration 2 | sample=23/51 | score=1.00 | skill=SKILL.md
+Iteration 2 | sample=24/51 | score=1.00 | skill=SKILL.md
+Iteration 2 | sample=25/51 | score=1.00 | skill=SKILL.md
+Iteration 2 | sample=26/51 | score=0.00 | skill=SKILL.md
+Iteration 2 | sample=27/51 | score=1.00 | skill=SKILL.md
+Iteration 2 | sample=28/51 | score=1.00 | skill=SKILL.md
+Iteration 2 | sample=29/51 | score=1.00 | skill=SKILL.md
+Iteration 2 | sample=30/51 | score=1.00 | skill=SKILL.md
+Iteration 2 | sample=31/51 | score=1.00 | skill=SKILL.md
+Iteration 2 | sample=32/51 | score=0.00 | skill=SKILL.md
+Iteration 2 | sample=33/51 | score=0.00 | skill=SKILL.md
+Iteration 2 | sample=34/51 | score=0.00 | skill=SKILL.md
+Iteration 2 | sample=35/51 | score=0.00 | skill=SKILL.md
+Iteration 2 | sample=36/51 | score=1.00 | skill=SKILL.md
+Iteration 2 | sample=37/51 | score=0.00 | skill=SKILL.md
+Iteration 2 | sample=38/51 | score=0.00 | skill=SKILL.md
+Iteration 2 | sample=39/51 | score=0.00 | skill=SKILL.md
+Iteration 2 | sample=40/51 | score=0.00 | skill=SKILL.md
+Iteration 2 | sample=41/51 | score=1.00 | skill=SKILL.md
+Iteration 2 | sample=42/51 | score=0.00 | skill=SKILL.md
+Iteration 2 | sample=43/51 | score=1.00 | skill=SKILL.md
+Iteration 2 | sample=44/51 | score=0.00 | skill=SKILL.md
+Iteration 2 | sample=45/51 | score=1.00 | skill=SKILL.md
+Iteration 2 | sample=46/51 | score=0.00 | skill=SKILL.md
+Iteration 2 | sample=47/51 | score=0.00 | skill=SKILL.md
+Iteration 2 | sample=48/51 | score=1.00 | skill=SKILL.md
+Iteration 2 | sample=49/51 | score=0.00 | skill=SKILL.md
+Iteration 2 | sample=50/51 | score=1.00 | skill=SKILL.md
+Iteration 2 | sample=51/51 | score=1.00 | skill=SKILL.md
+Iteration 2 summary | avg_score=0.65 | failing_samples=18/51
+Iteration 2 refinement phase started
+Iteration 2 | refining skill=SKILL.md | failures=5 | patterns=2 | examples_used=5
+Iteration 2 | refining skill=SKILL.md | failures=13 | patterns=12 | examples_used=8
+Iteration 2 refinement_count=2
+--------------------------------------------------------------------------------
+Iteration 3 started
+Iteration 3 | sample=1/51 | score=1.00 | skill=SKILL.md
+Iteration 3 | sample=2/51 | score=1.00 | skill=SKILL.md
+Iteration 3 | sample=3/51 | score=1.00 | skill=SKILL.md
+Iteration 3 | sample=4/51 | score=1.00 | skill=SKILL.md
+Iteration 3 | sample=5/51 | score=1.00 | skill=SKILL.md
+Iteration 3 | sample=6/51 | score=1.00 | skill=SKILL.md
+Iteration 3 | sample=7/51 | score=1.00 | skill=SKILL.md
+Iteration 3 | sample=8/51 | score=1.00 | skill=SKILL.md
+Iteration 3 | sample=9/51 | score=1.00 | skill=SKILL.md
+Iteration 3 | sample=10/51 | score=1.00 | skill=SKILL.md
+Iteration 3 | sample=11/51 | score=1.00 | skill=SKILL.md
+Iteration 3 | sample=12/51 | score=0.00 | skill=SKILL.md
+Iteration 3 | sample=13/51 | score=1.00 | skill=SKILL.md
+Iteration 3 | sample=14/51 | score=1.00 | skill=SKILL.md
+Iteration 3 | sample=15/51 | score=1.00 | skill=SKILL.md
+Iteration 3 | sample=16/51 | score=1.00 | skill=SKILL.md
+Iteration 3 | sample=17/51 | score=0.00 | skill=SKILL.md
+Iteration 3 | sample=18/51 | score=1.00 | skill=SKILL.md
+Iteration 3 | sample=19/51 | score=0.00 | skill=SKILL.md
+Iteration 3 | sample=20/51 | score=1.00 | skill=SKILL.md
+Iteration 3 | sample=21/51 | score=0.00 | skill=SKILL.md
+Iteration 3 | sample=22/51 | score=0.00 | skill=SKILL.md
+Iteration 3 | sample=23/51 | score=1.00 | skill=SKILL.md
+Iteration 3 | sample=24/51 | score=1.00 | skill=SKILL.md
+Iteration 3 | sample=25/51 | score=1.00 | skill=SKILL.md
+Iteration 3 | sample=26/51 | score=0.00 | skill=SKILL.md
+Iteration 3 | sample=27/51 | score=1.00 | skill=SKILL.md
+Iteration 3 | sample=28/51 | score=1.00 | skill=SKILL.md
+Iteration 3 | sample=29/51 | score=0.00 | skill=SKILL.md
+Iteration 3 | sample=30/51 | score=1.00 | skill=SKILL.md
+Iteration 3 | sample=31/51 | score=1.00 | skill=SKILL.md
+Iteration 3 | sample=32/51 | score=0.00 | skill=SKILL.md
+Iteration 3 | sample=33/51 | score=0.00 | skill=SKILL.md
+Iteration 3 | sample=34/51 | score=0.00 | skill=SKILL.md
+Iteration 3 | sample=35/51 | score=0.00 | skill=SKILL.md
+Iteration 3 | sample=36/51 | score=1.00 | skill=SKILL.md
+Iteration 3 | sample=37/51 | score=0.00 | skill=SKILL.md
+Iteration 3 | sample=38/51 | score=0.00 | skill=SKILL.md
+Iteration 3 | sample=39/51 | score=0.00 | skill=SKILL.md
+Iteration 3 | sample=40/51 | score=0.00 | skill=SKILL.md
+Iteration 3 | sample=41/51 | score=0.00 | skill=SKILL.md
+Iteration 3 | sample=42/51 | score=0.00 | skill=SKILL.md
+Iteration 3 | sample=43/51 | score=1.00 | skill=SKILL.md
+Iteration 3 | sample=44/51 | score=0.00 | skill=SKILL.md
+Iteration 3 | sample=45/51 | score=1.00 | skill=SKILL.md
+Iteration 3 | sample=46/51 | score=0.00 | skill=SKILL.md
+Iteration 3 | sample=47/51 | score=0.00 | skill=SKILL.md
+Iteration 3 | sample=48/51 | score=1.00 | skill=SKILL.md
+Iteration 3 | sample=49/51 | score=0.00 | skill=SKILL.md
+Iteration 3 | sample=50/51 | score=1.00 | skill=SKILL.md
+Iteration 3 | sample=51/51 | score=1.00 | skill=SKILL.md
+Iteration 3 summary | avg_score=0.59 | failing_samples=21/51
+Iteration 3 refinement phase started
+Iteration 3 | refining skill=SKILL.md | failures=5 | patterns=3 | examples_used=5
+Iteration 3 | refining skill=SKILL.md | failures=16 | patterns=15 | examples_used=8
+Iteration 3 refinement_count=2
+--------------------------------------------------------------------------------
+Iteration 4 started
+Iteration 4 | sample=1/51 | score=1.00 | skill=SKILL.md
+Iteration 4 | sample=2/51 | score=1.00 | skill=SKILL.md
+Iteration 4 | sample=3/51 | score=1.00 | skill=SKILL.md
+Iteration 4 | sample=4/51 | score=1.00 | skill=SKILL.md
+Iteration 4 | sample=5/51 | score=1.00 | skill=SKILL.md
+Iteration 4 | sample=6/51 | score=1.00 | skill=SKILL.md
+Iteration 4 | sample=7/51 | score=0.00 | skill=SKILL.md
+Iteration 4 | sample=8/51 | score=1.00 | skill=SKILL.md
+Iteration 4 | sample=9/51 | score=1.00 | skill=SKILL.md
+Iteration 4 | sample=10/51 | score=1.00 | skill=SKILL.md
+Iteration 4 | sample=11/51 | score=1.00 | skill=SKILL.md
+Iteration 4 | sample=12/51 | score=0.00 | skill=SKILL.md
+Iteration 4 | sample=13/51 | score=1.00 | skill=SKILL.md
+Iteration 4 | sample=14/51 | score=1.00 | skill=SKILL.md
+Iteration 4 | sample=15/51 | score=1.00 | skill=SKILL.md
+Iteration 4 | sample=16/51 | score=1.00 | skill=SKILL.md
+Iteration 4 | sample=17/51 | score=1.00 | skill=SKILL.md
+Iteration 4 | sample=18/51 | score=1.00 | skill=SKILL.md
+Iteration 4 | sample=19/51 | score=1.00 | skill=SKILL.md
+Iteration 4 | sample=20/51 | score=1.00 | skill=SKILL.md
+Iteration 4 | sample=21/51 | score=1.00 | skill=SKILL.md
+Iteration 4 | sample=22/51 | score=0.00 | skill=SKILL.md
+Iteration 4 | sample=23/51 | score=1.00 | skill=SKILL.md
+Iteration 4 | sample=24/51 | score=1.00 | skill=SKILL.md
+Iteration 4 | sample=25/51 | score=1.00 | skill=SKILL.md
+Iteration 4 | sample=26/51 | score=1.00 | skill=SKILL.md
+Iteration 4 | sample=27/51 | score=1.00 | skill=SKILL.md
+Iteration 4 | sample=28/51 | score=1.00 | skill=SKILL.md
+Iteration 4 | sample=29/51 | score=1.00 | skill=SKILL.md
+Iteration 4 | sample=30/51 | score=1.00 | skill=SKILL.md
+Iteration 4 | sample=31/51 | score=1.00 | skill=SKILL.md
+Iteration 4 | sample=32/51 | score=0.00 | skill=SKILL.md
+Iteration 4 | sample=33/51 | score=0.00 | skill=SKILL.md
+Iteration 4 | sample=34/51 | score=0.00 | skill=SKILL.md
+Iteration 4 | sample=35/51 | score=0.00 | skill=SKILL.md
+Iteration 4 | sample=36/51 | score=1.00 | skill=SKILL.md
+Iteration 4 | sample=37/51 | score=0.00 | skill=SKILL.md
+Iteration 4 | sample=38/51 | score=1.00 | skill=SKILL.md
+Iteration 4 | sample=39/51 | score=1.00 | skill=SKILL.md
+Iteration 4 | sample=40/51 | score=1.00 | skill=SKILL.md
+Iteration 4 | sample=41/51 | score=1.00 | skill=SKILL.md
+Iteration 4 | sample=42/51 | score=1.00 | skill=SKILL.md
+Iteration 4 | sample=43/51 | score=1.00 | skill=SKILL.md
+Iteration 4 | sample=44/51 | score=0.00 | skill=SKILL.md
+Iteration 4 | sample=45/51 | score=1.00 | skill=SKILL.md
+Iteration 4 | sample=46/51 | score=1.00 | skill=SKILL.md
+Iteration 4 | sample=47/51 | score=1.00 | skill=SKILL.md
+Iteration 4 | sample=48/51 | score=1.00 | skill=SKILL.md
+Iteration 4 | sample=49/51 | score=0.00 | skill=SKILL.md
+Iteration 4 | sample=50/51 | score=1.00 | skill=SKILL.md
+Iteration 4 | sample=51/51 | score=0.00 | skill=SKILL.md
+Iteration 4 summary | avg_score=0.78 | failing_samples=11/51

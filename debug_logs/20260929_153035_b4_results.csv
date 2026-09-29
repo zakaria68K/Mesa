@@ -1,0 +1,11 @@
+step,error_ids,train_indexes,error_scores,refine_status,test_avg,delta_vs_prev,delta_vs_initial
+0,-,-,-,initial,0.675,,0.0
+1,1 2 3 4,1 5 21 31,0.5 0.5 0.5 0.5,mde-get: rewritten; mde-apply: rewritten,0.7,0.025,0.025
+2,5 6 7 8,33 36 37 39,0.0 0.0 0.0 0.0,mde-apply: rewritten; mde-get: rewritten,0.75,0.05,0.075
+3,9 10 11 12,40 41 42 45,0.5 0.5 0.0 0.5,mde-get: rewritten; mde-apply: rewritten,0.725,-0.025,0.05
+4,13 14 15 16,48 50 53 56,0.5 0.5 0.5 0.0,mde-apply: rewritten,0.725,0.0,0.05
+5,17 18 19 20,57 61 62 63,0.5 0.0 0.5 0.0,mde-apply: rewritten,0.725,0.0,0.05
+6,21 22 23 24,64 66 67 68,0.5 0.0 0.0 0.5,mde-get: rewritten; mde-apply: rewritten,0.775,0.05,0.1
+7,25 26 27 28,69 70 71 72,0.0 0.0 0.0 0.0,mde-get: rewritten; mde-apply: unchanged,0.725,-0.05,0.05
+8,29 30 31 32,73 74 75 76,0.0 0.5 0.0 0.0,mde-apply: rewritten; mde-get: rewritten,0.7,-0.025,0.025
+9,33 34 35,77 78 79,0.5 0.0 0.0,mde-apply: unchanged; mde-get: rewritten,0.725,0.025,0.05

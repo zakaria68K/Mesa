@@ -1,0 +1,479 @@
+[
+  {
+    "step": 0,
+    "error_ids": [],
+    "train_indexes": [],
+    "error_scores": [],
+    "refine_status": "initial",
+    "test_avg": 0.675,
+    "delta_vs_prev": null,
+    "delta_vs_initial": 0.0,
+    "test_scores": [
+      1.0,
+      1.0,
+      1.0,
+      0.0,
+      0.5,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      0.5,
+      0.5,
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  },
+  {
+    "step": 1,
+    "error_ids": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "train_indexes": [
+      1,
+      5,
+      21,
+      31
+    ],
+    "error_scores": [
+      0.5,
+      0.5,
+      0.5,
+      0.5
+    ],
+    "refine_status": {
+      "mde-get": "rewritten",
+      "mde-apply": "rewritten"
+    },
+    "test_avg": 0.7,
+    "delta_vs_prev": 0.025,
+    "delta_vs_initial": 0.025,
+    "test_scores": [
+      1.0,
+      0.5,
+      1.0,
+      0.0,
+      1.0,
+      1.0,
+      1.0,
+      0.5,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      0.5,
+      0.5,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  },
+  {
+    "step": 2,
+    "error_ids": [
+      5,
+      6,
+      7,
+      8
+    ],
+    "train_indexes": [
+      33,
+      36,
+      37,
+      39
+    ],
+    "error_scores": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "refine_status": {
+      "mde-apply": "rewritten",
+      "mde-get": "rewritten"
+    },
+    "test_avg": 0.75,
+    "delta_vs_prev": 0.05,
+    "delta_vs_initial": 0.075,
+    "test_scores": [
+      1.0,
+      0.5,
+      1.0,
+      0.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      0.5,
+      0.5,
+      1.0,
+      0.0,
+      0.0,
+      0.5,
+      1.0
+    ]
+  },
+  {
+    "step": 3,
+    "error_ids": [
+      9,
+      10,
+      11,
+      12
+    ],
+    "train_indexes": [
+      40,
+      41,
+      42,
+      45
+    ],
+    "error_scores": [
+      0.5,
+      0.5,
+      0.0,
+      0.5
+    ],
+    "refine_status": {
+      "mde-get": "rewritten",
+      "mde-apply": "rewritten"
+    },
+    "test_avg": 0.725,
+    "delta_vs_prev": -0.025,
+    "delta_vs_initial": 0.05,
+    "test_scores": [
+      1.0,
+      1.0,
+      1.0,
+      0.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      0.5,
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  },
+  {
+    "step": 4,
+    "error_ids": [
+      13,
+      14,
+      15,
+      16
+    ],
+    "train_indexes": [
+      48,
+      50,
+      53,
+      56
+    ],
+    "error_scores": [
+      0.5,
+      0.5,
+      0.5,
+      0.0
+    ],
+    "refine_status": {
+      "mde-apply": "rewritten"
+    },
+    "test_avg": 0.725,
+    "delta_vs_prev": 0.0,
+    "delta_vs_initial": 0.05,
+    "test_scores": [
+      1.0,
+      0.5,
+      1.0,
+      0.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      0.5,
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      0.5,
+      1.0
+    ]
+  },
+  {
+    "step": 5,
+    "error_ids": [
+      17,
+      18,
+      19,
+      20
+    ],
+    "train_indexes": [
+      57,
+      61,
+      62,
+      63
+    ],
+    "error_scores": [
+      0.5,
+      0.0,
+      0.5,
+      0.0
+    ],
+    "refine_status": {
+      "mde-apply": "rewritten"
+    },
+    "test_avg": 0.725,
+    "delta_vs_prev": 0.0,
+    "delta_vs_initial": 0.05,
+    "test_scores": [
+      1.0,
+      0.5,
+      1.0,
+      0.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      0.5,
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      0.5,
+      1.0
+    ]
+  },
+  {
+    "step": 6,
+    "error_ids": [
+      21,
+      22,
+      23,
+      24
+    ],
+    "train_indexes": [
+      64,
+      66,
+      67,
+      68
+    ],
+    "error_scores": [
+      0.5,
+      0.0,
+      0.0,
+      0.5
+    ],
+    "refine_status": {
+      "mde-get": "rewritten",
+      "mde-apply": "rewritten"
+    },
+    "test_avg": 0.775,
+    "delta_vs_prev": 0.05,
+    "delta_vs_initial": 0.1,
+    "test_scores": [
+      1.0,
+      1.0,
+      1.0,
+      0.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      0.5,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  },
+  {
+    "step": 7,
+    "error_ids": [
+      25,
+      26,
+      27,
+      28
+    ],
+    "train_indexes": [
+      69,
+      70,
+      71,
+      72
+    ],
+    "error_scores": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "refine_status": {
+      "mde-get": "rewritten",
+      "mde-apply": "unchanged"
+    },
+    "test_avg": 0.725,
+    "delta_vs_prev": -0.05,
+    "delta_vs_initial": 0.05,
+    "test_scores": [
+      1.0,
+      0.5,
+      1.0,
+      0.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      0.5,
+      0.5,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  },
+  {
+    "step": 8,
+    "error_ids": [
+      29,
+      30,
+      31,
+      32
+    ],
+    "train_indexes": [
+      73,
+      74,
+      75,
+      76
+    ],
+    "error_scores": [
+      0.0,
+      0.5,
+      0.0,
+      0.0
+    ],
+    "refine_status": {
+      "mde-apply": "rewritten",
+      "mde-get": "rewritten"
+    },
+    "test_avg": 0.7,
+    "delta_vs_prev": -0.025,
+    "delta_vs_initial": 0.025,
+    "test_scores": [
+      1.0,
+      1.0,
+      1.0,
+      0.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      0.0,
+      1.0,
+      1.0,
+      1.0,
+      0.5,
+      0.5,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  },
+  {
+    "step": 9,
+    "error_ids": [
+      33,
+      34,
+      35
+    ],
+    "train_indexes": [
+      77,
+      78,
+      79
+    ],
+    "error_scores": [
+      0.5,
+      0.0,
+      0.0
+    ],
+    "refine_status": {
+      "mde-apply": "unchanged",
+      "mde-get": "rewritten"
+    },
+    "test_avg": 0.725,
+    "delta_vs_prev": 0.025,
+    "delta_vs_initial": 0.05,
+    "test_scores": [
+      1.0,
+      1.0,
+      1.0,
+      0.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      0.5,
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  }
+]
