@@ -90,7 +90,7 @@ ax.set_xticks(bx)
 ax.set_ylim(0, 1.05)
 ax.set_xlabel("Training items processed", fontsize=11, color=INK)
 ax.set_ylabel("Avg score", fontsize=11, color=INK)
-ax.set_title("EMF (metamodel editing) — batch iterations vs. error batches", fontsize=12, color=INK)
+ax.set_title("EMF (metamodel editing): batch iterations vs. error batches", fontsize=12, color=INK)
 style(ax)
 
 # ── Zoom on items 0–80 ───────────────────────────────────────────────────────
