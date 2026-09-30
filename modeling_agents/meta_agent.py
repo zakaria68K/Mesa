@@ -517,26 +517,25 @@ class MetaAgent:
             messages=[
                 {
                     "role": "user",
-                    "content": f"""You must update this SKILL.md by adding missing tool entries.
+                    "content": f"""You must refine this SKILL.md so the agent avoids the failures observed below.
 
 Current SKILL.md:
 {prompt_content}
 
-The agent failed because it tried to perform tasks that required tools not listed in the skill.
+The agent failed on some tasks because the skill did not give it enough guidance.
 
-Tools that are MISSING from the skill and caused failures ({len(missing_tools)} tools):
+Tools involved in the failures ({len(missing_tools)} tools):
 {json.dumps(missing_tools, ensure_ascii=False, indent=2)}
 
-Failing examples showing what tool was needed vs what was called:
+Failing examples showing the expected behavior vs the agent's behavior:
 {json.dumps(compact_examples, ensure_ascii=False, indent=2)}
 
 Instructions:
-- Keep the frontmatter (---) and all existing content EXACTLY unchanged
-- For each tool in the missing tools list, append one bullet under ## Available MCP Tools:
-  `- \`<tool_name>_tool\` — [infer a one-line description from the tool name]`
-- Do NOT remove, reorder, or rewrite any existing tool entries
-- Do NOT add commentary, headers, or explanation outside the tool list
-- Add only minimal clarifications to prevent repeating these mistakes
+- Keep the frontmatter (---) unchanged
+- Add or refine rules so the agent handles these cases correctly (tool choice, sequencing, arguments)
+- Complete the ## Available MCP Tools list only if a failure requires it
+- Do NOT remove existing rules unless they directly caused a failure
+- Keep additions minimal and general, do not copy the failing examples into the skill
 - Return ONLY the complete raw SKILL.md content with no markdown fences
 """
                 }
