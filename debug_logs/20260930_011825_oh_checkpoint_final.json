@@ -1,0 +1,3689 @@
+{
+  "run_id": "20260930_011825",
+  "phase": "done",
+  "shuffle_train": true,
+  "train_seed": 2026,
+  "train_order": [
+    27,
+    6,
+    41,
+    66,
+    7,
+    45,
+    69,
+    11,
+    59,
+    49,
+    37,
+    61,
+    44,
+    76,
+    26,
+    55,
+    48,
+    8,
+    50,
+    73,
+    72,
+    42,
+    60,
+    68,
+    3,
+    79,
+    17,
+    39,
+    63,
+    2,
+    54,
+    38,
+    33,
+    23,
+    1,
+    19,
+    77,
+    9,
+    29,
+    46,
+    18,
+    34,
+    35,
+    5,
+    21,
+    4,
+    78,
+    32,
+    47,
+    24,
+    51,
+    22,
+    16,
+    25,
+    75,
+    20,
+    58,
+    31,
+    43,
+    57,
+    52,
+    67,
+    74,
+    12,
+    36,
+    14,
+    10,
+    0,
+    30,
+    56,
+    62,
+    70,
+    53,
+    71,
+    28,
+    13,
+    65,
+    64,
+    40,
+    15
+  ],
+  "items": [
+    {
+      "pos": 1,
+      "train_index": 28,
+      "level": 1,
+      "instruction": "Show me the settings for KM32EMF then display the configuration for KM32DSL",
+      "skill_file": ".opencode/skills/mde-apply/SKILL.md",
+      "score": 1.0,
+      "expected_apis": [
+        {
+          "api_name": "KM32EMF.get_tool",
+          "arguments": ""
+        },
+        {
+          "api_name": "KM32DSL.get_tool",
+          "arguments": ""
+        }
+      ],
+      "actual_calls": [
+        {
+          "api_name": "list_transformation_KM32EMF_tool",
+          "arguments": {}
+        },
+        {
+          "api_name": "list_transformation_KM32DSL_tool",
+          "arguments": {}
+        }
+      ],
+      "agent_exception": null,
+      "refine_status": null,
+      "rewritten": false,
+      "step": 0,
+      "heldout_avg": 0.675
+    },
+    {
+      "pos": 2,
+      "train_index": 7,
+      "level": 1,
+      "instruction": "Show the detailed settings for the XML2Ant transformation.",
+      "skill_file": ".opencode/skills/mde-apply/SKILL.md",
+      "score": 1.0,
+      "expected_apis": [
+        {
+          "api_name": "XML2Ant.get_tool",
+          "arguments": ""
+        }
+      ],
+      "actual_calls": [
+        {
+          "api_name": "list_transformation_XML2Ant_tool",
+          "arguments": {}
+        }
+      ],
+      "agent_exception": null,
+      "refine_status": null,
+      "rewritten": false,
+      "step": 0,
+      "heldout_avg": 0.675
+    },
+    {
+      "pos": 3,
+      "train_index": 42,
+      "level": 2,
+      "instruction": "Transform the XML model at ./atl_zoo/Ant2Maven/example/build1.xmi to Ant and subsequently transform the SimpleClass model at ./atl_zoo/SimpleClass2SimpleRDBMS/Sample-SimpleClass.xmi to SimpleRDBMS",
+      "skill_file": ".opencode/skills/mde-apply/SKILL.md",
+      "score": 0.0,
+      "expected_apis": [
+        {
+          "api_name": "apply_XML2Ant_transformation_tool",
+          "arguments": "./atl_zoo/Ant2Maven/example/build1.xmi"
+        },
+        {
+          "api_name": "apply_SimpleClass2SimpleRDBMS_transformation_tool",
+          "arguments": "./atl_zoo/SimpleClass2SimpleRDBMS/Sample-SimpleClass.xmi"
+        }
+      ],
+      "actual_calls": [],
+      "agent_exception": null,
+      "refine_status": "rewritten",
+      "rewritten": true,
+      "step": 1,
+      "heldout_avg": 0.775
+    },
+    {
+      "pos": 4,
+      "train_index": 67,
+      "level": 3,
+      "instruction": "Rearrange the content of the model at ./atl_zoo/Grafcet2PetriNet/Models/XML2PNML_example.xmi to be in compliance with XML",
+      "skill_file": ".opencode/skills/mde-apply/SKILL.md",
+      "score": 1.0,
+      "expected_apis": [
+        {
+          "api_name": "PNML2XML.apply_tool",
+          "arguments": "./atl_zoo/Grafcet2PetriNet/Models/XML2PNML_example.xmi"
+        }
+      ],
+      "actual_calls": [
+        {
+          "api_name": "apply_PNML2XML_transformation_tool",
+          "arguments": {
+            "file_path": "./atl_zoo/Grafcet2PetriNet/Models/XML2PNML_example.xmi"
+          }
+        }
+      ],
+      "agent_exception": null,
+      "refine_status": null,
+      "rewritten": false,
+      "step": 1,
+      "heldout_avg": 0.775
+    },
+    {
+      "pos": 5,
+      "train_index": 8,
+      "level": 1,
+      "instruction": "Show me the settings for KM32EMF then display the configuration for KM32DSL",
+      "skill_file": ".opencode/skills/mde-apply/SKILL.md",
+      "score": 1.0,
+      "expected_apis": [
+        {
+          "api_name": "KM32EMF.get_tool",
+          "arguments": ""
+        },
+        {
+          "api_name": "KM32DSL.get_tool",
+          "arguments": ""
+        }
+      ],
+      "actual_calls": [
+        {
+          "api_name": "list_transformation_KM32EMF_tool",
+          "arguments": {}
+        },
+        {
+          "api_name": "list_transformation_KM32DSL_tool",
+          "arguments": {}
+        }
+      ],
+      "agent_exception": null,
+      "refine_status": null,
+      "rewritten": false,
+      "step": 1,
+      "heldout_avg": 0.775
+    },
+    {
+      "pos": 6,
+      "train_index": 46,
+      "level": 2,
+      "instruction": "Provide me with the detailed configuration needed for the transformation from KM3 to EMF",
+      "skill_file": ".opencode/skills/mde-apply/SKILL.md",
+      "score": 1.0,
+      "expected_apis": [
+        {
+          "api_name": "KM32EMF.get_tool",
+          "arguments": ""
+        }
+      ],
+      "actual_calls": [
+        {
+          "api_name": "list_transformation_KM32EMF_tool",
+          "arguments": {}
+        }
+      ],
+      "agent_exception": null,
+      "refine_status": null,
+      "rewritten": false,
+      "step": 1,
+      "heldout_avg": 0.775
+    },
+    {
+      "pos": 7,
+      "train_index": 70,
+      "level": 3,
+      "instruction": "Detail the transformation process for file ./atl_zoo/Ant2Maven/example/build1.xmi to create a Ant model, then detail the transformation process for file ./atl_zoo/SimpleClass2SimpleRDBMS/Sample-SimpleClass.xmi to create a SimpleRDBMS model",
+      "skill_file": ".opencode/skills/mde-apply/SKILL.md",
+      "score": 0.0,
+      "expected_apis": [
+        {
+          "api_name": "XML2Ant.get_tool",
+          "arguments": ""
+        },
+        {
+          "api_name": "SimpleClass2SimpleRDBMS.get_tool",
+          "arguments": ""
+        }
+      ],
+      "actual_calls": [],
+      "agent_exception": null,
+      "refine_status": "rewritten",
+      "rewritten": true,
+      "step": 2,
+      "heldout_avg": 0.75
+    },
+    {
+      "pos": 8,
+      "train_index": 12,
+      "level": 1,
+      "instruction": "Apply Mantis2XML to ./atl_zoo/SoftwareQualityControl2MantisBTFile/modelsExamples/MantisExample.xmi immediately.",
+      "skill_file": ".opencode/skills/mde-apply/SKILL.md",
+      "score": 1.0,
+      "expected_apis": [
+        {
+          "api_name": "Mantis2XML.apply_tool",
+          "arguments": "./atl_zoo/SoftwareQualityControl2MantisBTFile/modelsExamples/MantisExample.xmi"
+        }
+      ],
+      "actual_calls": [
+        {
+          "api_name": "apply_Mantis2XML_transformation_tool",
+          "arguments": {
+            "file_path": "./atl_zoo/SoftwareQualityControl2MantisBTFile/modelsExamples/MantisExample.xmi"
+          }
+        }
+      ],
+      "agent_exception": null,
+      "refine_status": null,
+      "rewritten": false,
+      "step": 2,
+      "heldout_avg": 0.75
+    },
+    {
+      "pos": 9,
+      "train_index": 60,
+      "level": 3,
+      "instruction": "Explain the transformation logic used to convert file ./atl_zoo/Grafcet2PetriNet/Models/XML2PNML_example.xmi to XML model, then explain the transformation logic used to convert file ./atl_zoo/SoftwareQualityControl2MantisBTFile/modelsExamples/MantisExample.xmi to XML model",
+      "skill_file": ".opencode/skills/mde-get/SKILL.md",
+      "score": 0.0,
+      "expected_apis": [
+        {
+          "api_name": "list_transformation_PNML2XML_tool",
+          "arguments": ""
+        },
+        {
+          "api_name": "list_transformation_Mantis2XML_tool",
+          "arguments": ""
+        }
+      ],
+      "actual_calls": [
+        {
+          "api_name": "list_transformation_samples_tool",
+          "arguments": {}
+        }
+      ],
+      "agent_exception": null,
+      "refine_status": "rewritten",
+      "rewritten": true,
+      "step": 3,
+      "heldout_avg": 0.775
+    },
+    {
+      "pos": 10,
+      "train_index": 50,
+      "level": 2,
+      "instruction": "Transform XML model at ./atl_zoo/Ant2Maven/example/build1.xmi to Ant then transform SimpleClass model at ./atl_zoo/SimpleClass2SimpleRDBMS/Sample-SimpleClass.xmi to SimpleRDBMS",
+      "skill_file": ".opencode/skills/mde-apply/SKILL.md",
+      "score": 1.0,
+      "expected_apis": [
+        {
+          "api_name": "apply_XML2Ant_transformation_tool",
+          "arguments": "./atl_zoo/Ant2Maven/example/build1.xmi"
+        },
+        {
+          "api_name": "apply_SimpleClass2SimpleRDBMS_transformation_tool",
+          "arguments": "./atl_zoo/SimpleClass2SimpleRDBMS/Sample-SimpleClass.xmi"
+        }
+      ],
+      "actual_calls": [
+        {
+          "api_name": "apply_XML2Ant_transformation_tool",
+          "arguments": {
+            "file_path": "./atl_zoo/Ant2Maven/example/build1.xmi"
+          }
+        },
+        {
+          "api_name": "apply_SimpleClass2SimpleRDBMS_transformation_tool",
+          "arguments": {
+            "file_path": "./atl_zoo/SimpleClass2SimpleRDBMS/Sample-SimpleClass.xmi"
+          }
+        }
+      ],
+      "agent_exception": null,
+      "refine_status": null,
+      "rewritten": false,
+      "step": 3,
+      "heldout_avg": 0.775
+    },
+    {
+      "pos": 11,
+      "train_index": 38,
+      "level": 2,
+      "instruction": "Change the format of the PNML model found at ./atl_zoo/Grafcet2PetriNet/Models/XML2PNML_example.xmi to match the structure of the XML model.",
+      "skill_file": ".opencode/skills/mde-apply/SKILL.md",
+      "score": 1.0,
+      "expected_apis": [
+        {
+          "api_name": "apply_PNML2XML_transformation_tool",
+          "arguments": "./atl_zoo/Grafcet2PetriNet/Models/XML2PNML_example.xmi"
+        }
+      ],
+      "actual_calls": [
+        {
+          "api_name": "apply_PNML2XML_transformation_tool",
+          "arguments": {
+            "file_path": "./atl_zoo/Grafcet2PetriNet/Models/XML2PNML_example.xmi"
+          }
+        }
+      ],
+      "agent_exception": null,
+      "refine_status": null,
+      "rewritten": false,
+      "step": 3,
+      "heldout_avg": 0.775
+    },
+    {
+      "pos": 12,
+      "train_index": 62,
+      "level": 3,
+      "instruction": "Show the mapping rules used to transform file ./atl_zoo/KM32EMF/Sample-KM3.xmi to EMF model, then apply transformation to the model at ./atl_zoo/DSLBridge/MetamodelBridge/Models/SimpleExample/DSL2EMF/SimpleExampleMM-KM3.xmi to create a DSL model",
+      "skill_file": ".opencode/skills/mde-apply/SKILL.md",
+      "score": 0.5,
+      "expected_apis": [
+        {
+          "api_name": "KM32EMF.get_tool",
+          "arguments": ""
+        },
+        {
+          "api_name": "KM32DSL.apply_tool",
+          "arguments": "./atl_zoo/DSLBridge/MetamodelBridge/Models/SimpleExample/DSL2EMF/SimpleExampleMM-KM3.xmi"
+        }
+      ],
+      "actual_calls": [
+        {
+          "api_name": "list_transformation_KM32EMF_tool",
+          "arguments": {}
+        },
+        {
+          "api_name": "apply_KM32EMF_transformation_tool",
+          "arguments": {
+            "file_path": "./atl_zoo/DSLBridge/MetamodelBridge/Models/SimpleExample/DSL2EMF/SimpleExampleMM-KM3.xmi"
+          }
+        },
+        {
+          "api_name": "apply_KM32EMF_transformation_tool",
+          "arguments": {
+            "file_path": "/Users/zakariahachm/Downloads/atl_zoo/KM32EMF/Sample-KM3.xmi"
+          }
+        }
+      ],
+      "agent_exception": null,
+      "refine_status": "rewritten",
+      "rewritten": true,
+      "step": 4,
+      "heldout_avg": 0.725
+    },
+    {
+      "pos": 13,
+      "train_index": 45,
+      "level": 2,
+      "instruction": "Transforming the PNML model ./atl_zoo/Grafcet2PetriNet/Models/XML2PNML_example.xmi to XML results in a new configuration then compare it with the original transformation that transforms a Mantis into a XML",
+      "skill_file": ".opencode/skills/mde-get/SKILL.md",
+      "score": 0.5,
+      "expected_apis": [
+        {
+          "api_name": "apply_PNML2XML_transformation_tool",
+          "arguments": "./atl_zoo/Grafcet2PetriNet/Models/XML2PNML_example.xmi"
+        },
+        {
+          "api_name": "list_transformation_Mantis2XML_tool",
+          "arguments": ""
+        }
+      ],
+      "actual_calls": [
+        {
+          "api_name": "apply_PNML2XML_transformation_tool",
+          "arguments": {
+            "file_path": "./atl_zoo/Grafcet2PetriNet/Models/XML2PNML_example.xmi"
+          }
+        },
+        {
+          "api_name": "list_transformation_samples_tool",
+          "arguments": {
+            "transformation_name": "PNML2XML"
+          }
+        },
+        {
+          "api_name": "apply_PNML2XML_transformation_tool",
+          "arguments": {
+            "file_path": "/Users/zakariahachm/Downloads/atl_zoo/Grafcet2PetriNet/Models/XML2PNML_example.xmi"
+          }
+        },
+        {
+          "api_name": "list_transformation_samples_tool",
+          "arguments": {
+            "transformation_name": "Mantis2XML"
+          }
+        },
+        {
+          "api_name": "apply_Mantis2XML_transformation_tool",
+          "arguments": {
+            "file_path": "/Users/zakariahachm/Downloads/atl_zoo/SoftwareQualityControl2MantisBTFile/modelsExamples/MantisExample.xmi"
+          }
+        }
+      ],
+      "agent_exception": null,
+      "refine_status": "rewritten",
+      "rewritten": true,
+      "step": 5,
+      "heldout_avg": 0.75
+    },
+    {
+      "pos": 14,
+      "train_index": 77,
+      "level": 3,
+      "instruction": "Execute transformation of the ./atl_zoo/Ant2Maven/example/build1.xmi model into Ant format, then transform the ./atl_zoo/SimpleClass2SimpleRDBMS/Sample-SimpleClass.xmi model into SimpleRDBMS format",
+      "skill_file": ".opencode/skills/mde-apply/SKILL.md",
+      "score": 0.0,
+      "expected_apis": [
+        {
+          "api_name": "apply_XML2Ant_transformation_tool",
+          "arguments": "./atl_zoo/Ant2Maven/example/build1.xmi"
+        },
+        {
+          "api_name": "apply_SimpleClass2SimpleRDBMS_transformation_tool",
+          "arguments": "./atl_zoo/SimpleClass2SimpleRDBMS/Sample-SimpleClass.xmi"
+        }
+      ],
+      "actual_calls": [
+        {
+          "api_name": "apply_Ant2Maven_transformation_tool",
+          "arguments": {
+            "file_path": "./atl_zoo/Ant2Maven/example/build1.xmi"
+          }
+        }
+      ],
+      "agent_exception": null,
+      "refine_status": "rewritten",
+      "rewritten": true,
+      "step": 6,
+      "heldout_avg": 0.75
+    },
+    {
+      "pos": 15,
+      "train_index": 27,
+      "level": 1,
+      "instruction": "Once you've processed ./atl_zoo/KM32EMF/Sample-KM3.xmi with KM32EMF, apply KM32DSL to ./atl_zoo/DSLBridge/MetamodelBridge/Models/SimpleExample/DSL2EMF/SimpleExampleMM-KM3.xmi",
+      "skill_file": ".opencode/skills/mde-apply/SKILL.md",
+      "score": 1.0,
+      "expected_apis": [
+        {
+          "api_name": "KM32EMF.apply_tool",
+          "arguments": "./atl_zoo/KM32EMF/Sample-KM3.xmi"
+        },
+        {
+          "api_name": "KM32DSL.apply_tool",
+          "arguments": "./atl_zoo/DSLBridge/MetamodelBridge/Models/SimpleExample/DSL2EMF/SimpleExampleMM-KM3.xmi"
+        }
+      ],
+      "actual_calls": [
+        {
+          "api_name": "apply_KM32EMF_transformation_tool",
+          "arguments": {
+            "file_path": "./atl_zoo/KM32EMF/Sample-KM3.xmi"
+          }
+        },
+        {
+          "api_name": "apply_KM32DSL_transformation_tool",
+          "arguments": {
+            "file_path": "./atl_zoo/DSLBridge/MetamodelBridge/Models/SimpleExample/DSL2EMF/SimpleExampleMM-KM3.xmi"
+          }
+        }
+      ],
+      "agent_exception": null,
+      "refine_status": null,
+      "rewritten": false,
+      "step": 6,
+      "heldout_avg": 0.75
+    },
+    {
+      "pos": 16,
+      "train_index": 56,
+      "level": 3,
+      "instruction": "Modify the model at ./atl_zoo/Ant2Maven/example/build1.xmi to conform to Ant standards, then modify the model at ./atl_zoo/SimpleClass2SimpleRDBMS/Sample-SimpleClass.xmi to conform to SimpleRDBMS standards",
+      "skill_file": ".opencode/skills/mde-apply/SKILL.md",
+      "score": 0.0,
+      "expected_apis": [
+        {
+          "api_name": "XML2Ant.apply_tool",
+          "arguments": "./atl_zoo/Ant2Maven/example/build1.xmi"
+        },
+        {
+          "api_name": "SimpleClass2SimpleRDBMS.apply_tool",
+          "arguments": "./atl_zoo/SimpleClass2SimpleRDBMS/Sample-SimpleClass.xmi"
+        }
+      ],
+      "actual_calls": [
+        {
+          "api_name": "apply_Ant2Maven_transformation_tool",
+          "arguments": {
+            "file_path": "./atl_zoo/Ant2Maven/example/build1.xmi"
+          }
+        },
+        {
+          "api_name": "apply_Ant2Maven_transformation_tool",
+          "arguments": {
+            "file_path": "/Users/zakariahachm/Documents/Phd_Zakaria/MESA/atl_zoo/Ant2Maven/example/build1.xmi"
+          }
+        }
+      ],
+      "agent_exception": null,
+      "refine_status": "rewritten",
+      "rewritten": true,
+      "step": 7,
+      "heldout_avg": 0.7
+    },
+    {
+      "pos": 17,
+      "train_index": 49,
+      "level": 2,
+      "instruction": "After transforming the PNML model ./atl_zoo/Grafcet2PetriNet/Models/XML2PNML_example.xmi to XML, compare the configurations of the transformation that transforms a Mantis into a XML",
+      "skill_file": ".opencode/skills/mde-apply/SKILL.md",
+      "score": 1.0,
+      "expected_apis": [
+        {
+          "api_name": "PNML2XML.apply_tool",
+          "arguments": "./atl_zoo/Grafcet2PetriNet/Models/XML2PNML_example.xmi"
+        },
+        {
+          "api_name": "Mantis2XML.get_tool",
+          "arguments": ""
+        }
+      ],
+      "actual_calls": [
+        {
+          "api_name": "apply_PNML2XML_transformation_tool",
+          "arguments": {
+            "file_path": "./atl_zoo/Grafcet2PetriNet/Models/XML2PNML_example.xmi"
+          }
+        },
+        {
+          "api_name": "list_transformation_PNML2XML_tool",
+          "arguments": {}
+        },
+        {
+          "api_name": "apply_PNML2XML_transformation_tool",
+          "arguments": {
+            "file_path": "/Users/zakariahachm/Downloads/atl_zoo/Grafcet2PetriNet/Models/XML2PNML_example.xmi"
+          }
+        },
+        {
+          "api_name": "list_transformation_Mantis2XML_tool",
+          "arguments": {}
+        }
+      ],
+      "agent_exception": null,
+      "refine_status": null,
+      "rewritten": false,
+      "step": 7,
+      "heldout_avg": 0.7
+    },
+    {
+      "pos": 18,
+      "train_index": 9,
+      "level": 1,
+      "instruction": "Retrieve the configuration of PNML2XML followed by the settings of Mantis2XML",
+      "skill_file": ".opencode/skills/mde-get/SKILL.md",
+      "score": 1.0,
+      "expected_apis": [
+        {
+          "api_name": "list_transformation_PNML2XML_tool",
+          "arguments": ""
+        },
+        {
+          "api_name": "list_transformation_Mantis2XML_tool",
+          "arguments": ""
+        }
+      ],
+      "actual_calls": [
+        {
+          "api_name": "list_transformation_PNML2XML_tool",
+          "arguments": {}
+        },
+        {
+          "api_name": "list_transformation_Mantis2XML_tool",
+          "arguments": {}
+        }
+      ],
+      "agent_exception": null,
+      "refine_status": null,
+      "rewritten": false,
+      "step": 7,
+      "heldout_avg": 0.7
+    },
+    {
+      "pos": 19,
+      "train_index": 51,
+      "level": 2,
+      "instruction": "Morph the SimpleClass model present in ./atl_zoo/SimpleClass2SimpleRDBMS/Sample-SimpleClass.xmi to align with the requirements of the SimpleRDBMS model.",
+      "skill_file": ".opencode/skills/mde-apply/SKILL.md",
+      "score": 1.0,
+      "expected_apis": [
+        {
+          "api_name": "SimpleClass2SimpleRDBMS.apply_tool",
+          "arguments": "./atl_zoo/SimpleClass2SimpleRDBMS/Sample-SimpleClass.xmi"
+        }
+      ],
+      "actual_calls": [
+        {
+          "api_name": "apply_SimpleClass2SimpleRDBMS_transformation_tool",
+          "arguments": {
+            "file_path": "./atl_zoo/SimpleClass2SimpleRDBMS/Sample-SimpleClass.xmi"
+          }
+        },
+        {
+          "api_name": "list_transformation_SimpleClass2SimpleRDBMS_tool",
+          "arguments": {}
+        },
+        {
+          "api_name": "apply_SimpleClass2SimpleRDBMS_transformation_tool",
+          "arguments": {
+            "file_path": "./atl_zoo/SimpleClass2SimpleRDBMS/Sample-SimpleClass.xmi"
+          }
+        },
+        {
+          "api_name": "apply_SimpleClass2SimpleRDBMS_transformation_tool",
+          "arguments": {
+            "file_path": "/Users/zakariahachm/Downloads/atl_zoo/SimpleClass2SimpleRDBMS/Sample-SimpleClass.xmi"
+          }
+        }
+      ],
+      "agent_exception": null,
+      "refine_status": null,
+      "rewritten": false,
+      "step": 7,
+      "heldout_avg": 0.7
+    },
+    {
+      "pos": 20,
+      "train_index": 74,
+      "level": 3,
+      "instruction": "Change the ./atl_zoo/Ant2Maven/example/build1.xmi model to conform to Ant model standards, then detail the transformation rules for converting file ./atl_zoo/SimpleClass2SimpleRDBMS/Sample-SimpleClass.xmi to SimpleRDBMS model standards",
+      "skill_file": ".opencode/skills/mde-get/SKILL.md",
+      "score": 0.5,
+      "expected_apis": [
+        {
+          "api_name": "apply_XML2Ant_transformation_tool",
+          "arguments": "./atl_zoo/Ant2Maven/example/build1.xmi"
+        },
+        {
+          "api_name": "list_transformation_SimpleClass2SimpleRDBMS_tool",
+          "arguments": ""
+        }
+      ],
+      "actual_calls": [
+        {
+          "api_name": "apply_Ant2Maven_transformation_tool",
+          "arguments": {
+            "file_path": "./atl_zoo/Ant2Maven/example/build1.xmi"
+          }
+        },
+        {
+          "api_name": "list_transformation_samples_tool",
+          "arguments": {
+            "transformation_name": "Ant2Maven"
+          }
+        },
+        {
+          "api_name": "apply_Ant2Maven_transformation_tool",
+          "arguments": {
+            "file_path": "/Users/zakariahachm/Downloads/atl_zoo/Ant2Maven/example/build1Ant.xmi"
+          }
+        },
+        {
+          "api_name": "list_transformation_SimpleClass2SimpleRDBMS_tool",
+          "arguments": {}
+        }
+      ],
+      "agent_exception": null,
+      "refine_status": "rewritten",
+      "rewritten": true,
+      "step": 8,
+      "heldout_avg": 0.8
+    },
+    {
+      "pos": 21,
+      "train_index": 73,
+      "level": 3,
+      "instruction": "Demonstrate the transformation logic for converting file ./atl_zoo/KM32EMF/Sample-KM3.xmi to EMF model, then transform the model at ./atl_zoo/DSLBridge/MetamodelBridge/Models/SimpleExample/DSL2EMF/SimpleExampleMM-KM3.xmi to DSL model",
+      "skill_file": ".opencode/skills/mde-apply/SKILL.md",
+      "score": 0.5,
+      "expected_apis": [
+        {
+          "api_name": "KM32EMF.get_tool",
+          "arguments": ""
+        },
+        {
+          "api_name": "KM32DSL.apply_tool",
+          "arguments": "./atl_zoo/DSLBridge/MetamodelBridge/Models/SimpleExample/DSL2EMF/SimpleExampleMM-KM3.xmi"
+        }
+      ],
+      "actual_calls": [
+        {
+          "api_name": "apply_KM32EMF_transformation_tool",
+          "arguments": {
+            "file_path": "./atl_zoo/KM32EMF/Sample-KM3.xmi"
+          }
+        },
+        {
+          "api_name": "apply_KM32DSL_transformation_tool",
+          "arguments": {
+            "file_path": "./atl_zoo/DSLBridge/MetamodelBridge/Models/SimpleExample/DSL2EMF/SimpleExampleMM-KM3.xmi"
+          }
+        }
+      ],
+      "agent_exception": null,
+      "refine_status": "rewritten",
+      "rewritten": true,
+      "step": 9,
+      "heldout_avg": 0.725
+    },
+    {
+      "pos": 22,
+      "train_index": 43,
+      "level": 2,
+      "instruction": "Show the configuration for transforming a XML to a Ant and then display the settings for converting a SimpleClass to a SimpleRDBMS",
+      "skill_file": ".opencode/skills/mde-get/SKILL.md",
+      "score": 1.0,
+      "expected_apis": [
+        {
+          "api_name": "list_transformation_XML2Ant_tool",
+          "arguments": ""
+        },
+        {
+          "api_name": "list_transformation_SimpleClass2SimpleRDBMS_tool",
+          "arguments": ""
+        }
+      ],
+      "actual_calls": [
+        {
+          "api_name": "list_transformation_XML2Ant_tool",
+          "arguments": {}
+        },
+        {
+          "api_name": "list_transformation_SimpleClass2SimpleRDBMS_tool",
+          "arguments": {}
+        }
+      ],
+      "agent_exception": null,
+      "refine_status": null,
+      "rewritten": false,
+      "step": 9,
+      "heldout_avg": 0.725
+    },
+    {
+      "pos": 23,
+      "train_index": 61,
+      "level": 3,
+      "instruction": "Execute transformation of the ./atl_zoo/Ant2Maven/example/build1.xmi model into Ant format, then transform the ./atl_zoo/SimpleClass2SimpleRDBMS/Sample-SimpleClass.xmi model into SimpleRDBMS format",
+      "skill_file": ".opencode/skills/mde-apply/SKILL.md",
+      "score": 1.0,
+      "expected_apis": [
+        {
+          "api_name": "apply_XML2Ant_transformation_tool",
+          "arguments": "./atl_zoo/Ant2Maven/example/build1.xmi"
+        },
+        {
+          "api_name": "apply_SimpleClass2SimpleRDBMS_transformation_tool",
+          "arguments": "./atl_zoo/SimpleClass2SimpleRDBMS/Sample-SimpleClass.xmi"
+        }
+      ],
+      "actual_calls": [
+        {
+          "api_name": "apply_Ant2Maven_transformation_tool",
+          "arguments": {
+            "file_path": "./atl_zoo/Ant2Maven/example/build1.xmi"
+          }
+        },
+        {
+          "api_name": "apply_XML2Ant_transformation_tool",
+          "arguments": {
+            "file_path": "./atl_zoo/Ant2Maven/example/build1.xmi"
+          }
+        },
+        {
+          "api_name": "apply_SimpleClass2SimpleRDBMS_transformation_tool",
+          "arguments": {
+            "file_path": "./atl_zoo/SimpleClass2SimpleRDBMS/Sample-SimpleClass.xmi"
+          }
+        }
+      ],
+      "agent_exception": null,
+      "refine_status": null,
+      "rewritten": false,
+      "step": 9,
+      "heldout_avg": 0.725
+    },
+    {
+      "pos": 24,
+      "train_index": 69,
+      "level": 3,
+      "instruction": "Depict the transformation operation that converts file ./atl_zoo/SimpleClass2SimpleRDBMS/Sample-SimpleClass.xmi to SimpleRDBMS model",
+      "skill_file": ".opencode/skills/mde-get/SKILL.md",
+      "score": 1.0,
+      "expected_apis": [
+        {
+          "api_name": "list_transformation_SimpleClass2SimpleRDBMS_tool",
+          "arguments": ""
+        }
+      ],
+      "actual_calls": [
+        {
+          "api_name": "list_transformation_SimpleClass2SimpleRDBMS_tool",
+          "arguments": {}
+        }
+      ],
+      "agent_exception": null,
+      "refine_status": null,
+      "rewritten": false,
+      "step": 9,
+      "heldout_avg": 0.725
+    },
+    {
+      "pos": 25,
+      "train_index": 4,
+      "level": 1,
+      "instruction": "apply PNML2XML to ./atl_zoo/Grafcet2PetriNet/Models/XML2PNML_example.xmi once then get the configuration for Mantis2XML",
+      "skill_file": ".opencode/skills/mde-get/SKILL.md",
+      "score": 1.0,
+      "expected_apis": [
+        {
+          "api_name": "apply_PNML2XML_transformation_tool",
+          "arguments": "./atl_zoo/Grafcet2PetriNet/Models/XML2PNML_example.xmi"
+        },
+        {
+          "api_name": "list_transformation_Mantis2XML_tool",
+          "arguments": ""
+        }
+      ],
+      "actual_calls": [
+        {
+          "api_name": "apply_PNML2XML_transformation_tool",
+          "arguments": {
+            "file_path": "./atl_zoo/Grafcet2PetriNet/Models/XML2PNML_example.xmi"
+          }
+        },
+        {
+          "api_name": "list_transformation_PNML2XML_tool",
+          "arguments": {}
+        },
+        {
+          "api_name": "apply_PNML2XML_transformation_tool",
+          "arguments": {
+            "file_path": "/Users/zakariahachm/Downloads/atl_zoo/Grafcet2PetriNet/Models/XML2PNML_example.xmi"
+          }
+        },
+        {
+          "api_name": "list_transformation_Mantis2XML_tool",
+          "arguments": {}
+        }
+      ],
+      "agent_exception": null,
+      "refine_status": null,
+      "rewritten": false,
+      "step": 9,
+      "heldout_avg": 0.725
+    },
+    {
+      "pos": 26,
+      "train_index": 80,
+      "level": 3,
+      "instruction": "Change the content of the model situated at ./atl_zoo/SoftwareQualityControl2MantisBTFile/modelsExamples/MantisExample.xmi into a new form, represented as XML",
+      "skill_file": ".opencode/skills/mde-apply/SKILL.md",
+      "score": 1.0,
+      "expected_apis": [
+        {
+          "api_name": "apply_Mantis2XML_transformation_tool",
+          "arguments": "./atl_zoo/SoftwareQualityControl2MantisBTFile/modelsExamples/MantisExample.xmi"
+        }
+      ],
+      "actual_calls": [
+        {
+          "api_name": "extract_input_metamodel_name",
+          "arguments": {
+            "file_path": "./atl_zoo/SoftwareQualityControl2MantisBTFile/modelsExamples/MantisExample.xmi"
+          }
+        },
+        {
+          "api_name": "list_transformation_Mantis2XML_tool",
+          "arguments": {}
+        },
+        {
+          "api_name": "apply_Mantis2XML_transformation_tool",
+          "arguments": {
+            "file_path": "./atl_zoo/SoftwareQualityControl2MantisBTFile/modelsExamples/MantisExample.xmi"
+          }
+        },
+        {
+          "api_name": "apply_Mantis2XML_transformation_tool",
+          "arguments": {
+            "file_path": "/Users/zakariahachm/Downloads/atl_zoo/SoftwareQualityControl2MantisBTFile/modelsExamples/MantisExample.xmi"
+          }
+        }
+      ],
+      "agent_exception": null,
+      "refine_status": null,
+      "rewritten": false,
+      "step": 9,
+      "heldout_avg": 0.725
+    },
+    {
+      "pos": 27,
+      "train_index": 18,
+      "level": 1,
+      "instruction": "Execute SimpleClass2SimpleRDBMS from ./atl_zoo/SimpleClass2SimpleRDBMS/Sample-SimpleClass.xmi and capture output.",
+      "skill_file": ".opencode/skills/mde-apply/SKILL.md",
+      "score": 1.0,
+      "expected_apis": [
+        {
+          "api_name": "apply_SimpleClass2SimpleRDBMS_transformation_tool",
+          "arguments": "./atl_zoo/SimpleClass2SimpleRDBMS/Sample-SimpleClass.xmi"
+        }
+      ],
+      "actual_calls": [
+        {
+          "api_name": "apply_SimpleClass2SimpleRDBMS_transformation_tool",
+          "arguments": {
+            "file_path": "./atl_zoo/SimpleClass2SimpleRDBMS/Sample-SimpleClass.xmi"
+          }
+        }
+      ],
+      "agent_exception": null,
+      "refine_status": null,
+      "rewritten": false,
+      "step": 9,
+      "heldout_avg": 0.725
+    },
+    {
+      "pos": 28,
+      "train_index": 40,
+      "level": 2,
+      "instruction": "To complete the task, first get the required configuration, then apply it to transform a KM3 into a EMF model once, after which you can transform ./atl_zoo/DSLBridge/MetamodelBridge/Models/SimpleExample/DSL2EMF/SimpleExampleMM-KM3.xmi from this model KM3 to a DSL model",
+      "skill_file": ".opencode/skills/mde-get/SKILL.md",
+      "score": 1.0,
+      "expected_apis": [
+        {
+          "api_name": "list_transformation_KM32EMF_tool",
+          "arguments": ""
+        },
+        {
+          "api_name": "apply_KM32DSL_transformation_tool",
+          "arguments": "./atl_zoo/DSLBridge/MetamodelBridge/Models/SimpleExample/DSL2EMF/SimpleExampleMM-KM3.xmi"
+        }
+      ],
+      "actual_calls": [
+        {
+          "api_name": "list_transformation_KM32EMF_tool",
+          "arguments": {}
+        },
+        {
+          "api_name": "list_transformation_KM32DSL_tool",
+          "arguments": {}
+        },
+        {
+          "api_name": "apply_KM32EMF_transformation_tool",
+          "arguments": {
+            "file_path": "./Sample-KM3.xmi"
+          }
+        },
+        {
+          "api_name": "list_transformation_samples_tool",
+          "arguments": {
+            "transformation_name": "KM32EMF"
+          }
+        },
+        {
+          "api_name": "apply_KM32EMF_transformation_tool",
+          "arguments": {
+            "file_path": "/Users/zakariahachm/Downloads/atl_zoo/KM32EMF/Sample-KM3.xmi"
+          }
+        },
+        {
+          "api_name": "apply_KM32EMF_transformation_tool",
+          "arguments": {
+            "file_path": "/Users/zakariahachm/Downloads/atl_zoo/KM32EMF/Sample-KM3.xmi"
+          }
+        },
+        {
+          "api_name": "apply_KM32DSL_transformation_tool",
+          "arguments": {
+            "file_path": "./atl_zoo/DSLBridge/MetamodelBridge/Models/SimpleExample/DSL2EMF/SimpleExampleMM-KM3.xmi"
+          }
+        },
+        {
+          "api_name": "apply_KM32DSL_transformation_tool",
+          "arguments": {
+            "file_path": "/Users/zakariahachm/Downloads/atl_zoo/DSLBridge/MetamodelBridge/Models/SimpleExample/DSL2EMF/SimpleExampleMM-KM3.xmi"
+          }
+        }
+      ],
+      "agent_exception": null,
+      "refine_status": null,
+      "rewritten": false,
+      "step": 9,
+      "heldout_avg": 0.725
+    },
+    {
+      "pos": 29,
+      "train_index": 64,
+      "level": 3,
+      "instruction": "Detail the transformation steps that change file ./atl_zoo/KM32EMF/Sample-KM3.xmi to EMF model, then transform model ./atl_zoo/DSLBridge/MetamodelBridge/Models/SimpleExample/DSL2EMF/SimpleExampleMM-KM3.xmi to DSL model",
+      "skill_file": ".opencode/skills/mde-get/SKILL.md",
+      "score": 0.5,
+      "expected_apis": [
+        {
+          "api_name": "list_transformation_KM32EMF_tool",
+          "arguments": ""
+        },
+        {
+          "api_name": "apply_KM32DSL_transformation_tool",
+          "arguments": "./atl_zoo/DSLBridge/MetamodelBridge/Models/SimpleExample/DSL2EMF/SimpleExampleMM-KM3.xmi"
+        }
+      ],
+      "actual_calls": [
+        {
+          "api_name": "list_transformation_KM32EMF_tool",
+          "arguments": {}
+        },
+        {
+          "api_name": "list_transformation_KM32DSL_tool",
+          "arguments": {}
+        }
+      ],
+      "agent_exception": null,
+      "refine_status": "rewritten",
+      "rewritten": true,
+      "step": 10,
+      "heldout_avg": 0.8
+    },
+    {
+      "pos": 30,
+      "train_index": 3,
+      "level": 1,
+      "instruction": "Perform PNML2XML operation on data at ./atl_zoo/Grafcet2PetriNet/Models/XML2PNML_example.xmi.",
+      "skill_file": ".opencode/skills/mde-apply/SKILL.md",
+      "score": 1.0,
+      "expected_apis": [
+        {
+          "api_name": "PNML2XML.apply_tool",
+          "arguments": "./atl_zoo/Grafcet2PetriNet/Models/XML2PNML_example.xmi"
+        }
+      ],
+      "actual_calls": [
+        {
+          "api_name": "apply_PNML2XML_transformation_tool",
+          "arguments": {
+            "file_path": "./atl_zoo/Grafcet2PetriNet/Models/XML2PNML_example.xmi"
+          }
+        }
+      ],
+      "agent_exception": null,
+      "refine_status": null,
+      "rewritten": false,
+      "step": 10,
+      "heldout_avg": 0.8
+    },
+    {
+      "pos": 31,
+      "train_index": 55,
+      "level": 2,
+      "instruction": "Convert the PNML model stored at ./atl_zoo/Grafcet2PetriNet/Models/XML2PNML_example.xmi into a XML model.",
+      "skill_file": ".opencode/skills/mde-apply/SKILL.md",
+      "score": 1.0,
+      "expected_apis": [
+        {
+          "api_name": "PNML2XML.apply_tool",
+          "arguments": "./atl_zoo/Grafcet2PetriNet/Models/XML2PNML_example.xmi"
+        }
+      ],
+      "actual_calls": [
+        {
+          "api_name": "apply_PNML2XML_transformation_tool",
+          "arguments": {
+            "file_path": "./atl_zoo/Grafcet2PetriNet/Models/XML2PNML_example.xmi"
+          }
+        }
+      ],
+      "agent_exception": null,
+      "refine_status": null,
+      "rewritten": false,
+      "step": 10,
+      "heldout_avg": 0.8
+    },
+    {
+      "pos": 32,
+      "train_index": 39,
+      "level": 2,
+      "instruction": "Explain the step-by-step process for configuring a Mantis model to be transformed into a XML model",
+      "skill_file": ".opencode/skills/mde-get/SKILL.md",
+      "score": 0.0,
+      "expected_apis": [
+        {
+          "api_name": "list_transformation_Mantis2XML_tool",
+          "arguments": ""
+        }
+      ],
+      "actual_calls": [],
+      "agent_exception": null,
+      "refine_status": "unchanged",
+      "rewritten": false,
+      "step": 10,
+      "heldout_avg": 0.8
+    },
+    {
+      "pos": 33,
+      "train_index": 34,
+      "level": 2,
+      "instruction": "Now, show me the required settings for transforming a PNML into a XML model and then apply them to transform ./atl_zoo/SoftwareQualityControl2MantisBTFile/modelsExamples/MantisExample.xmi from this model Mantis to a XML model",
+      "skill_file": ".opencode/skills/mde-apply/SKILL.md",
+      "score": 0.5,
+      "expected_apis": [
+        {
+          "api_name": "PNML2XML.get_tool",
+          "arguments": ""
+        },
+        {
+          "api_name": "Mantis2XML.apply_tool",
+          "arguments": "./atl_zoo/SoftwareQualityControl2MantisBTFile/modelsExamples/MantisExample.xmi"
+        }
+      ],
+      "actual_calls": [
+        {
+          "api_name": "list_transformation_PNML2XML_tool",
+          "arguments": {}
+        },
+        {
+          "api_name": "apply_PNML2XML_transformation_tool",
+          "arguments": {
+            "file_path": "./atl_zoo/SoftwareQualityControl2MantisBTFile/modelsExamples/MantisExample.xmi"
+          }
+        }
+      ],
+      "agent_exception": null,
+      "refine_status": "refine_error: APIConnectionError: Connection error.",
+      "rewritten": false,
+      "step": 10,
+      "heldout_avg": 0.8
+    },
+    {
+      "pos": 34,
+      "train_index": 24,
+      "level": 1,
+      "instruction": "Show me the full configuration specifications for the SimpleClass2SimpleRDBMS transformation.",
+      "skill_file": ".opencode/skills/mde-get/SKILL.md",
+      "score": 1.0,
+      "expected_apis": [
+        {
+          "api_name": "list_transformation_SimpleClass2SimpleRDBMS_tool",
+          "arguments": ""
+        }
+      ],
+      "actual_calls": [
+        {
+          "api_name": "list_transformation_SimpleClass2SimpleRDBMS_tool",
+          "arguments": {}
+        }
+      ],
+      "agent_exception": null,
+      "refine_status": null,
+      "rewritten": false,
+      "step": 10,
+      "heldout_avg": 0.8
+    },
+    {
+      "pos": 35,
+      "train_index": 2,
+      "level": 1,
+      "instruction": "Display the configuration parameters for the KM32DSL transformation.",
+      "skill_file": ".opencode/skills/mde-apply/SKILL.md",
+      "score": 1.0,
+      "expected_apis": [
+        {
+          "api_name": "KM32DSL.get_tool",
+          "arguments": ""
+        }
+      ],
+      "actual_calls": [
+        {
+          "api_name": "list_transformation_KM32DSL_tool",
+          "arguments": {}
+        }
+      ],
+      "agent_exception": null,
+      "refine_status": null,
+      "rewritten": false,
+      "step": 10,
+      "heldout_avg": 0.8
+    },
+    {
+      "pos": 36,
+      "train_index": 20,
+      "level": 1,
+      "instruction": "Execute KM32DSL from ./atl_zoo/DSLBridge/MetamodelBridge/Models/SimpleExample/DSL2EMF/SimpleExampleMM-KM3.xmi and capture output.",
+      "skill_file": ".opencode/skills/mde-apply/SKILL.md",
+      "score": 1.0,
+      "expected_apis": [
+        {
+          "api_name": "KM32DSL.apply_tool",
+          "arguments": "./atl_zoo/DSLBridge/MetamodelBridge/Models/SimpleExample/DSL2EMF/SimpleExampleMM-KM3.xmi"
+        }
+      ],
+      "actual_calls": [
+        {
+          "api_name": "apply_KM32DSL_transformation_tool",
+          "arguments": {
+            "file_path": "./atl_zoo/DSLBridge/MetamodelBridge/Models/SimpleExample/DSL2EMF/SimpleExampleMM-KM3.xmi"
+          }
+        }
+      ],
+      "agent_exception": null,
+      "refine_status": null,
+      "rewritten": false,
+      "step": 10,
+      "heldout_avg": 0.8
+    },
+    {
+      "pos": 37,
+      "train_index": 78,
+      "level": 3,
+      "instruction": "Transform the model ./atl_zoo/Grafcet2PetriNet/Models/XML2PNML_example.xmi to a XML model, then show the transformation that would convert file ./atl_zoo/SoftwareQualityControl2MantisBTFile/modelsExamples/MantisExample.xmi to a XML model",
+      "skill_file": ".opencode/skills/mde-get/SKILL.md",
+      "score": 0.5,
+      "expected_apis": [
+        {
+          "api_name": "apply_PNML2XML_transformation_tool",
+          "arguments": "./atl_zoo/Grafcet2PetriNet/Models/XML2PNML_example.xmi"
+        },
+        {
+          "api_name": "list_transformation_Mantis2XML_tool",
+          "arguments": ""
+        }
+      ],
+      "actual_calls": [
+        {
+          "api_name": "apply_PNML2XML_transformation_tool",
+          "arguments": {
+            "file_path": "./atl_zoo/Grafcet2PetriNet/Models/XML2PNML_example.xmi"
+          }
+        },
+        {
+          "api_name": "apply_XML2PNML_transformation_tool",
+          "arguments": {
+            "file_path": "./atl_zoo/Grafcet2PetriNet/Models/XML2PNML_example.xmi"
+          }
+        },
+        {
+          "api_name": "list_transformation_samples_tool",
+          "arguments": {}
+        },
+        {
+          "api_name": "apply_XML2PNML_transformation_tool",
+          "arguments": {
+            "file_path": "/Users/zakariahachm/Downloads/atl_zoo/Grafcet2PetriNet/Models/PNML2XML_example.xmi"
+          }
+        },
+        {
+          "api_name": "apply_Mantis2XML_transformation_tool",
+          "arguments": {
+            "file_path": "/Users/monkey/Downloads/atl_zoo/SoftwareQualityControl2MantisBTFile/modelsExamples/MantisExample.xmi"
+          }
+        }
+      ],
+      "agent_exception": null,
+      "refine_status": "rewritten",
+      "rewritten": true,
+      "step": 11,
+      "heldout_avg": 0.775
+    },
+    {
+      "pos": 38,
+      "train_index": 10,
+      "level": 1,
+      "instruction": "Convert the structure of ./atl_zoo/SimpleClass2SimpleRDBMS/Sample-SimpleClass.xmi using SimpleClass2SimpleRDBMS technique.",
+      "skill_file": ".opencode/skills/mde-apply/SKILL.md",
+      "score": 1.0,
+      "expected_apis": [
+        {
+          "api_name": "apply_SimpleClass2SimpleRDBMS_transformation_tool",
+          "arguments": "./atl_zoo/SimpleClass2SimpleRDBMS/Sample-SimpleClass.xmi"
+        }
+      ],
+      "actual_calls": [
+        {
+          "api_name": "apply_SimpleClass2SimpleRDBMS_transformation_tool",
+          "arguments": {
+            "file_path": "./atl_zoo/SimpleClass2SimpleRDBMS/Sample-SimpleClass.xmi"
+          }
+        }
+      ],
+      "agent_exception": null,
+      "refine_status": null,
+      "rewritten": false,
+      "step": 11,
+      "heldout_avg": 0.775
+    },
+    {
+      "pos": 39,
+      "train_index": 30,
+      "level": 2,
+      "instruction": "After obtaining the configuration, I need you to show me the configuration settings of the transformation that transforms a XML into a Ant model and then transform ./atl_zoo/SimpleClass2SimpleRDBMS/Sample-SimpleClass.xmi from this model SimpleClass to a SimpleRDBMS model",
+      "skill_file": ".opencode/skills/mde-get/SKILL.md",
+      "score": 1.0,
+      "expected_apis": [
+        {
+          "api_name": "list_transformation_XML2Ant_tool",
+          "arguments": ""
+        },
+        {
+          "api_name": "apply_SimpleClass2SimpleRDBMS_transformation_tool",
+          "arguments": "./atl_zoo/SimpleClass2SimpleRDBMS/Sample-SimpleClass.xmi"
+        }
+      ],
+      "actual_calls": [
+        {
+          "api_name": "list_transformation_XML2Ant_tool",
+          "arguments": {}
+        },
+        {
+          "api_name": "apply_SimpleClass2SimpleRDBMS_transformation_tool",
+          "arguments": {
+            "file_path": "./atl_zoo/SimpleClass2SimpleRDBMS/Sample-SimpleClass.xmi"
+          }
+        },
+        {
+          "api_name": "list_transformation_SimpleClass2SimpleRDBMS_tool",
+          "arguments": {}
+        }
+      ],
+      "agent_exception": null,
+      "refine_status": null,
+      "rewritten": false,
+      "step": 11,
+      "heldout_avg": 0.775
+    },
+    {
+      "pos": 40,
+      "train_index": 47,
+      "level": 2,
+      "instruction": "Transform the XML model ./atl_zoo/Ant2Maven/example/build1.xmi to Ant then compare the configurations of the transformation that transforms a SimpleClass into a SimpleRDBMS",
+      "skill_file": ".opencode/skills/mde-get/SKILL.md",
+      "score": 1.0,
+      "expected_apis": [
+        {
+          "api_name": "apply_XML2Ant_transformation_tool",
+          "arguments": "./atl_zoo/Ant2Maven/example/build1.xmi"
+        },
+        {
+          "api_name": "list_transformation_SimpleClass2SimpleRDBMS_tool",
+          "arguments": ""
+        }
+      ],
+      "actual_calls": [
+        {
+          "api_name": "apply_XML2Ant_transformation_tool",
+          "arguments": {
+            "file_path": "./atl_zoo/Ant2Maven/example/build1.xmi"
+          }
+        },
+        {
+          "api_name": "list_transformation_samples_tool",
+          "arguments": {
+            "transformation_name": "XML2Ant"
+          }
+        },
+        {
+          "api_name": "apply_XML2Ant_transformation_tool",
+          "arguments": {
+            "file_path": "/Users/zakariahachm/Downloads/atl_zoo/Ant2Maven/example/build1.xmi"
+          }
+        },
+        {
+          "api_name": "list_transformation_SimpleClass2SimpleRDBMS_tool",
+          "arguments": {}
+        }
+      ],
+      "agent_exception": null,
+      "refine_status": null,
+      "rewritten": false,
+      "step": 11,
+      "heldout_avg": 0.775
+    },
+    {
+      "pos": 41,
+      "train_index": 19,
+      "level": 1,
+      "instruction": "Show me the full configuration specifications for the SimpleClass2SimpleRDBMS transformation.",
+      "skill_file": ".opencode/skills/mde-apply/SKILL.md",
+      "score": 1.0,
+      "expected_apis": [
+        {
+          "api_name": "SimpleClass2SimpleRDBMS.get_tool",
+          "arguments": ""
+        }
+      ],
+      "actual_calls": [
+        {
+          "api_name": "list_transformation_SimpleClass2SimpleRDBMS_tool",
+          "arguments": {}
+        }
+      ],
+      "agent_exception": null,
+      "refine_status": null,
+      "rewritten": false,
+      "step": 11,
+      "heldout_avg": 0.775
+    },
+    {
+      "pos": 42,
+      "train_index": 35,
+      "level": 2,
+      "instruction": "Transform the KM3 model situated on ./atl_zoo/DSLBridge/MetamodelBridge/Models/SimpleExample/DSL2EMF/SimpleExampleMM-KM3.xmi into a DSL format, ensuring compatibility.",
+      "skill_file": ".opencode/skills/mde-apply/SKILL.md",
+      "score": 1.0,
+      "expected_apis": [
+        {
+          "api_name": "KM32DSL.apply_tool",
+          "arguments": "./atl_zoo/DSLBridge/MetamodelBridge/Models/SimpleExample/DSL2EMF/SimpleExampleMM-KM3.xmi"
+        }
+      ],
+      "actual_calls": [
+        {
+          "api_name": "apply_KM32DSL_transformation_tool",
+          "arguments": {
+            "file_path": "./atl_zoo/DSLBridge/MetamodelBridge/Models/SimpleExample/DSL2EMF/SimpleExampleMM-KM3.xmi"
+          }
+        }
+      ],
+      "agent_exception": null,
+      "refine_status": null,
+      "rewritten": false,
+      "step": 11,
+      "heldout_avg": 0.775
+    },
+    {
+      "pos": 43,
+      "train_index": 36,
+      "level": 2,
+      "instruction": "Describe the settings needed to transform SimpleClass into an SimpleRDBMS model",
+      "skill_file": ".opencode/skills/mde-get/SKILL.md",
+      "score": 1.0,
+      "expected_apis": [
+        {
+          "api_name": "list_transformation_SimpleClass2SimpleRDBMS_tool",
+          "arguments": ""
+        }
+      ],
+      "actual_calls": [
+        {
+          "api_name": "list_transformation_SimpleClass2SimpleRDBMS_tool",
+          "arguments": {}
+        }
+      ],
+      "agent_exception": null,
+      "refine_status": null,
+      "rewritten": false,
+      "step": 11,
+      "heldout_avg": 0.775
+    },
+    {
+      "pos": 44,
+      "train_index": 6,
+      "level": 1,
+      "instruction": "Transform ./atl_zoo/KM32EMF/Sample-KM3.xmi using KM32EMF then transform ./atl_zoo/DSLBridge/MetamodelBridge/Models/SimpleExample/DSL2EMF/SimpleExampleMM-KM3.xmi using KM32DSL,",
+      "skill_file": ".opencode/skills/mde-apply/SKILL.md",
+      "score": 1.0,
+      "expected_apis": [
+        {
+          "api_name": "apply_KM32EMF_transformation_tool",
+          "arguments": "./atl_zoo/KM32EMF/Sample-KM3.xmi"
+        },
+        {
+          "api_name": "apply_KM32DSL_transformation_tool",
+          "arguments": "./atl_zoo/DSLBridge/MetamodelBridge/Models/SimpleExample/DSL2EMF/SimpleExampleMM-KM3.xmi"
+        }
+      ],
+      "actual_calls": [
+        {
+          "api_name": "apply_KM32EMF_transformation_tool",
+          "arguments": {
+            "file_path": "./atl_zoo/KM32EMF/Sample-KM3.xmi"
+          }
+        },
+        {
+          "api_name": "apply_KM32DSL_transformation_tool",
+          "arguments": {
+            "file_path": "./atl_zoo/DSLBridge/MetamodelBridge/Models/SimpleExample/DSL2EMF/SimpleExampleMM-KM3.xmi"
+          }
+        }
+      ],
+      "agent_exception": null,
+      "refine_status": null,
+      "rewritten": false,
+      "step": 11,
+      "heldout_avg": 0.775
+    },
+    {
+      "pos": 45,
+      "train_index": 22,
+      "level": 1,
+      "instruction": "Implement KM32DSL on the data at ./atl_zoo/DSLBridge/MetamodelBridge/Models/SimpleExample/DSL2EMF/SimpleExampleMM-KM3.xmi.",
+      "skill_file": ".opencode/skills/mde-apply/SKILL.md",
+      "score": 1.0,
+      "expected_apis": [
+        {
+          "api_name": "KM32DSL.apply_tool",
+          "arguments": "./atl_zoo/DSLBridge/MetamodelBridge/Models/SimpleExample/DSL2EMF/SimpleExampleMM-KM3.xmi"
+        }
+      ],
+      "actual_calls": [
+        {
+          "api_name": "apply_KM32DSL_transformation_tool",
+          "arguments": {
+            "file_path": "./atl_zoo/DSLBridge/MetamodelBridge/Models/SimpleExample/DSL2EMF/SimpleExampleMM-KM3.xmi"
+          }
+        }
+      ],
+      "agent_exception": null,
+      "refine_status": null,
+      "rewritten": false,
+      "step": 11,
+      "heldout_avg": 0.775
+    },
+    {
+      "pos": 46,
+      "train_index": 5,
+      "level": 1,
+      "instruction": "Apply PNML2XML to ./atl_zoo/Grafcet2PetriNet/Models/XML2PNML_example.xmi and then apply Mantis2XML to ./atl_zoo/SoftwareQualityControl2MantisBTFile/modelsExamples/MantisExample.xmi.",
+      "skill_file": ".opencode/skills/mde-apply/SKILL.md",
+      "score": 1.0,
+      "expected_apis": [
+        {
+          "api_name": "apply_PNML2XML_transformation_tool",
+          "arguments": "./atl_zoo/Grafcet2PetriNet/Models/XML2PNML_example.xmi"
+        },
+        {
+          "api_name": "apply_Mantis2XML_transformation_tool",
+          "arguments": "./atl_zoo/SoftwareQualityControl2MantisBTFile/modelsExamples/MantisExample.xmi"
+        }
+      ],
+      "actual_calls": [
+        {
+          "api_name": "apply_PNML2XML_transformation_tool",
+          "arguments": {
+            "file_path": "./atl_zoo/Grafcet2PetriNet/Models/XML2PNML_example.xmi"
+          }
+        },
+        {
+          "api_name": "apply_Mantis2XML_transformation_tool",
+          "arguments": {
+            "file_path": "./atl_zoo/SoftwareQualityControl2MantisBTFile/modelsExamples/MantisExample.xmi"
+          }
+        }
+      ],
+      "agent_exception": null,
+      "refine_status": null,
+      "rewritten": false,
+      "step": 11,
+      "heldout_avg": 0.775
+    },
+    {
+      "pos": 47,
+      "train_index": 79,
+      "level": 3,
+      "instruction": "Convert the model at ./atl_zoo/Ant2Maven/example/build1.xmi into Ant format, then display the transformation needed to convert file ./atl_zoo/SimpleClass2SimpleRDBMS/Sample-SimpleClass.xmi into SimpleRDBMS format",
+      "skill_file": ".opencode/skills/mde-apply/SKILL.md",
+      "score": 0.5,
+      "expected_apis": [
+        {
+          "api_name": "XML2Ant.apply_tool",
+          "arguments": "./atl_zoo/Ant2Maven/example/build1.xmi"
+        },
+        {
+          "api_name": "SimpleClass2SimpleRDBMS.get_tool",
+          "arguments": ""
+        }
+      ],
+      "actual_calls": [
+        {
+          "api_name": "apply_Ant2Maven_transformation_tool",
+          "arguments": {
+            "file_path": "./atl_zoo/Ant2Maven/example/build1.xmi"
+          }
+        },
+        {
+          "api_name": "apply_XML2Ant_transformation_tool",
+          "arguments": {
+            "file_path": "./atl_zoo/Ant2Maven/example/build1.xmi"
+          }
+        },
+        {
+          "api_name": "apply_Ant2Maven_transformation_tool",
+          "arguments": {
+            "file_path": "atl_zoo/Ant2Maven/example/build1.xmi"
+          }
+        },
+        {
+          "api_name": "apply_Ant2Maven_transformation_tool",
+          "arguments": {
+            "file_path": "./atl_zoo/Ant2Maven/example/build1.xmi"
+          }
+        },
+        {
+          "api_name": "list_transformation_samples_tool",
+          "arguments": {
+            "transformation_name": "Ant2Maven"
+          }
+        }
+      ],
+      "agent_exception": null,
+      "refine_status": "rewritten",
+      "rewritten": true,
+      "step": 12,
+      "heldout_avg": 0.75
+    },
+    {
+      "pos": 48,
+      "train_index": 33,
+      "level": 2,
+      "instruction": "Explain the step-by-step process for configuring a SimpleClass model to be transformed into a SimpleRDBMS model",
+      "skill_file": ".opencode/skills/mde-apply/SKILL.md",
+      "score": 0.0,
+      "expected_apis": [
+        {
+          "api_name": "SimpleClass2SimpleRDBMS.get_tool",
+          "arguments": ""
+        }
+      ],
+      "actual_calls": [],
+      "agent_exception": null,
+      "refine_status": "rewritten",
+      "rewritten": true,
+      "step": 13,
+      "heldout_avg": 0.7
+    },
+    {
+      "pos": 49,
+      "train_index": 48,
+      "level": 2,
+      "instruction": "KM3 model ./atl_zoo/KM32EMF/Sample-KM3.xmi should transform into EMF and its configuration compared to that of transforming a KM3 into a DSL",
+      "skill_file": ".opencode/skills/mde-apply/SKILL.md",
+      "score": 0.5,
+      "expected_apis": [
+        {
+          "api_name": "KM32EMF.apply_tool",
+          "arguments": "./atl_zoo/KM32EMF/Sample-KM3.xmi"
+        },
+        {
+          "api_name": "KM32DSL.get_tool",
+          "arguments": ""
+        }
+      ],
+      "actual_calls": [
+        {
+          "api_name": "apply_KM32EMF_transformation_tool",
+          "arguments": {
+            "file_path": "./atl_zoo/KM32EMF/Sample-KM3.xmi"
+          }
+        },
+        {
+          "api_name": "list_transformation_KM32EMF_tool",
+          "arguments": {}
+        }
+      ],
+      "agent_exception": null,
+      "refine_status": "rewritten",
+      "rewritten": true,
+      "step": 14,
+      "heldout_avg": 0.7
+    },
+    {
+      "pos": 50,
+      "train_index": 25,
+      "level": 1,
+      "instruction": "Apply KM32DSL to ./atl_zoo/DSLBridge/MetamodelBridge/Models/SimpleExample/DSL2EMF/SimpleExampleMM-KM3.xmi after displaying its configuration, which is KM32EMF.",
+      "skill_file": ".opencode/skills/mde-get/SKILL.md",
+      "score": 1.0,
+      "expected_apis": [
+        {
+          "api_name": "list_transformation_KM32EMF_tool",
+          "arguments": ""
+        },
+        {
+          "api_name": "apply_KM32DSL_transformation_tool",
+          "arguments": "./atl_zoo/DSLBridge/MetamodelBridge/Models/SimpleExample/DSL2EMF/SimpleExampleMM-KM3.xmi"
+        }
+      ],
+      "actual_calls": [
+        {
+          "api_name": "list_transformation_KM32EMF_tool",
+          "arguments": {}
+        },
+        {
+          "api_name": "apply_KM32DSL_transformation_tool",
+          "arguments": {
+            "file_path": "./atl_zoo/DSLBridge/MetamodelBridge/Models/SimpleExample/DSL2EMF/SimpleExampleMM-KM3.xmi"
+          }
+        }
+      ],
+      "agent_exception": null,
+      "refine_status": null,
+      "rewritten": false,
+      "step": 14,
+      "heldout_avg": 0.7
+    },
+    {
+      "pos": 51,
+      "train_index": 52,
+      "level": 2,
+      "instruction": "Show me the configuration for transforming PNML to XML and then show me the settings for converting Mantis to XML",
+      "skill_file": ".opencode/skills/mde-apply/SKILL.md",
+      "score": 1.0,
+      "expected_apis": [
+        {
+          "api_name": "PNML2XML.get_tool",
+          "arguments": ""
+        },
+        {
+          "api_name": "Mantis2XML.get_tool",
+          "arguments": ""
+        }
+      ],
+      "actual_calls": [
+        {
+          "api_name": "list_transformation_PNML2XML_tool",
+          "arguments": {}
+        },
+        {
+          "api_name": "list_transformation_Mantis2XML_tool",
+          "arguments": {}
+        }
+      ],
+      "agent_exception": null,
+      "refine_status": null,
+      "rewritten": false,
+      "step": 14,
+      "heldout_avg": 0.7
+    },
+    {
+      "pos": 52,
+      "train_index": 23,
+      "level": 1,
+      "instruction": "Get the results of applying XML2Ant to ./atl_zoo/Ant2Maven/example/build1.xmi and then review SimpleClass2SimpleRDBMS configuration",
+      "skill_file": ".opencode/skills/mde-apply/SKILL.md",
+      "score": 1.0,
+      "expected_apis": [
+        {
+          "api_name": "XML2Ant.apply_tool",
+          "arguments": "./atl_zoo/Ant2Maven/example/build1.xmi"
+        },
+        {
+          "api_name": "SimpleClass2SimpleRDBMS.get_tool",
+          "arguments": ""
+        }
+      ],
+      "actual_calls": [
+        {
+          "api_name": "apply_XML2Ant_transformation_tool",
+          "arguments": {
+            "file_path": "./atl_zoo/Ant2Maven/example/build1.xmi"
+          }
+        },
+        {
+          "api_name": "list_transformation_XML2Ant_tool",
+          "arguments": {}
+        },
+        {
+          "api_name": "apply_XML2Ant_transformation_tool",
+          "arguments": {
+            "file_path": "/Users/zakariahachm/Downloads/atl_zoo/Ant2Maven/example/build1.xmi"
+          }
+        },
+        {
+          "api_name": "list_transformation_SimpleClass2SimpleRDBMS_tool",
+          "arguments": {}
+        }
+      ],
+      "agent_exception": null,
+      "refine_status": null,
+      "rewritten": false,
+      "step": 14,
+      "heldout_avg": 0.7
+    },
+    {
+      "pos": 53,
+      "train_index": 17,
+      "level": 1,
+      "instruction": "Transform ./atl_zoo/Ant2Maven/example/build1.xmi using XML2Ant and then apply transformations to ./atl_zoo/SimpleClass2SimpleRDBMS/Sample-SimpleClass.xmi using SimpleClass2SimpleRDBMS.",
+      "skill_file": ".opencode/skills/mde-apply/SKILL.md",
+      "score": 0.5,
+      "expected_apis": [
+        {
+          "api_name": "XML2Ant.apply_tool",
+          "arguments": "./atl_zoo/Ant2Maven/example/build1.xmi"
+        },
+        {
+          "api_name": "SimpleClass2SimpleRDBMS.apply_tool",
+          "arguments": "./atl_zoo/SimpleClass2SimpleRDBMS/Sample-SimpleClass.xmi"
+        }
+      ],
+      "actual_calls": [
+        {
+          "api_name": "apply_XML2Ant_transformation_tool",
+          "arguments": {
+            "file_path": "./atl_zoo/Ant2Maven/example/build1.xmi"
+          }
+        },
+        {
+          "api_name": "apply_XML2Ant_transformation_tool",
+          "arguments": {
+            "file_path": "atl_zoo/Ant2Maven/example/build1.xmi"
+          }
+        },
+        {
+          "api_name": "apply_XML2Ant_transformation_tool",
+          "arguments": {
+            "file_path": "./atl_zoo/Ant2Maven/example/build1.xmi"
+          }
+        }
+      ],
+      "agent_exception": null,
+      "refine_status": "rewritten",
+      "rewritten": true,
+      "step": 15,
+      "heldout_avg": 0.675
+    },
+    {
+      "pos": 54,
+      "train_index": 26,
+      "level": 1,
+      "instruction": "After showing us the details of KM32EMF, transform ./atl_zoo/DSLBridge/MetamodelBridge/Models/SimpleExample/DSL2EMF/SimpleExampleMM-KM3.xmi with KM32DSL.",
+      "skill_file": ".opencode/skills/mde-get/SKILL.md",
+      "score": 1.0,
+      "expected_apis": [
+        {
+          "api_name": "list_transformation_KM32EMF_tool",
+          "arguments": ""
+        },
+        {
+          "api_name": "apply_KM32DSL_transformation_tool",
+          "arguments": "./atl_zoo/DSLBridge/MetamodelBridge/Models/SimpleExample/DSL2EMF/SimpleExampleMM-KM3.xmi"
+        }
+      ],
+      "actual_calls": [
+        {
+          "api_name": "list_transformation_KM32EMF_tool",
+          "arguments": {}
+        },
+        {
+          "api_name": "apply_KM32DSL_transformation_tool",
+          "arguments": {
+            "file_path": "./atl_zoo/DSLBridge/MetamodelBridge/Models/SimpleExample/DSL2EMF/SimpleExampleMM-KM3.xmi"
+          }
+        }
+      ],
+      "agent_exception": null,
+      "refine_status": null,
+      "rewritten": false,
+      "step": 15,
+      "heldout_avg": 0.675
+    },
+    {
+      "pos": 55,
+      "train_index": 76,
+      "level": 3,
+      "instruction": "Show the mapping rules used to transform file ./atl_zoo/Ant2Maven/example/build1.xmi to Ant model, then apply transformation to the model at ./atl_zoo/SimpleClass2SimpleRDBMS/Sample-SimpleClass.xmi to create a SimpleRDBMS model",
+      "skill_file": ".opencode/skills/mde-get/SKILL.md",
+      "score": 0.5,
+      "expected_apis": [
+        {
+          "api_name": "list_transformation_XML2Ant_tool",
+          "arguments": ""
+        },
+        {
+          "api_name": "apply_SimpleClass2SimpleRDBMS_transformation_tool",
+          "arguments": "./atl_zoo/SimpleClass2SimpleRDBMS/Sample-SimpleClass.xmi"
+        }
+      ],
+      "actual_calls": [
+        {
+          "api_name": "list_transformation_Ant2Maven_tool",
+          "arguments": {}
+        },
+        {
+          "api_name": "list_transformation_XML2Ant_tool",
+          "arguments": {}
+        }
+      ],
+      "agent_exception": null,
+      "refine_status": "rewritten",
+      "rewritten": true,
+      "step": 16,
+      "heldout_avg": 0.725
+    },
+    {
+      "pos": 56,
+      "train_index": 21,
+      "level": 1,
+      "instruction": "Transform ./atl_zoo/KM32EMF/Sample-KM3.xmi with KM32EMF and once you're done check the KM32DSL config",
+      "skill_file": ".opencode/skills/mde-apply/SKILL.md",
+      "score": 1.0,
+      "expected_apis": [
+        {
+          "api_name": "KM32EMF.apply_tool",
+          "arguments": "./atl_zoo/KM32EMF/Sample-KM3.xmi"
+        },
+        {
+          "api_name": "KM32DSL.get_tool",
+          "arguments": ""
+        }
+      ],
+      "actual_calls": [
+        {
+          "api_name": "apply_KM32EMF_transformation_tool",
+          "arguments": {
+            "file_path": "./atl_zoo/KM32EMF/Sample-KM3.xmi"
+          }
+        },
+        {
+          "api_name": "list_transformation_KM32EMF_tool",
+          "arguments": {}
+        },
+        {
+          "api_name": "apply_KM32EMF_transformation_tool",
+          "arguments": {
+            "file_path": "/Users/zakariahachm/Downloads/atl_zoo/KM32EMF/Sample-KM3.xmi"
+          }
+        },
+        {
+          "api_name": "list_transformation_KM32DSL_tool",
+          "arguments": {}
+        }
+      ],
+      "agent_exception": null,
+      "refine_status": null,
+      "rewritten": false,
+      "step": 16,
+      "heldout_avg": 0.725
+    },
+    {
+      "pos": 57,
+      "train_index": 59,
+      "level": 3,
+      "instruction": "Reveal the transformation rules for converting file ./atl_zoo/KM32EMF/Sample-KM3.xmi to EMF model format",
+      "skill_file": ".opencode/skills/mde-get/SKILL.md",
+      "score": 1.0,
+      "expected_apis": [
+        {
+          "api_name": "list_transformation_KM32EMF_tool",
+          "arguments": ""
+        }
+      ],
+      "actual_calls": [
+        {
+          "api_name": "list_transformation_KM32EMF_tool",
+          "arguments": {}
+        }
+      ],
+      "agent_exception": null,
+      "refine_status": null,
+      "rewritten": false,
+      "step": 16,
+      "heldout_avg": 0.725
+    },
+    {
+      "pos": 58,
+      "train_index": 32,
+      "level": 2,
+      "instruction": "Morph the SimpleClass model present in ./atl_zoo/SimpleClass2SimpleRDBMS/Sample-SimpleClass.xmi to align with the requirements of the SimpleRDBMS model.",
+      "skill_file": ".opencode/skills/mde-apply/SKILL.md",
+      "score": 0.0,
+      "expected_apis": [
+        {
+          "api_name": "apply_SimpleClass2SimpleRDBMS_transformation_tool",
+          "arguments": "./atl_zoo/SimpleClass2SimpleRDBMS/Sample-SimpleClass.xmi"
+        }
+      ],
+      "actual_calls": [],
+      "agent_exception": null,
+      "refine_status": "rewritten",
+      "rewritten": true,
+      "step": 17,
+      "heldout_avg": 0.725
+    },
+    {
+      "pos": 59,
+      "train_index": 44,
+      "level": 2,
+      "instruction": "Convert the Mantis model stored at ./atl_zoo/SoftwareQualityControl2MantisBTFile/modelsExamples/MantisExample.xmi into a XML model.",
+      "skill_file": ".opencode/skills/mde-apply/SKILL.md",
+      "score": 1.0,
+      "expected_apis": [
+        {
+          "api_name": "Mantis2XML.apply_tool",
+          "arguments": "./atl_zoo/SoftwareQualityControl2MantisBTFile/modelsExamples/MantisExample.xmi"
+        }
+      ],
+      "actual_calls": [
+        {
+          "api_name": "apply_Mantis2XML_transformation_tool",
+          "arguments": {
+            "file_path": "./atl_zoo/SoftwareQualityControl2MantisBTFile/modelsExamples/MantisExample.xmi"
+          }
+        }
+      ],
+      "agent_exception": null,
+      "refine_status": null,
+      "rewritten": false,
+      "step": 17,
+      "heldout_avg": 0.725
+    },
+    {
+      "pos": 60,
+      "train_index": 58,
+      "level": 3,
+      "instruction": "Reveal the transformation that changes the file ./atl_zoo/KM32EMF/Sample-KM3.xmi to EMF model format, then convert the model ./atl_zoo/DSLBridge/MetamodelBridge/Models/SimpleExample/DSL2EMF/SimpleExampleMM-KM3.xmi to DSL model format",
+      "skill_file": ".opencode/skills/mde-get/SKILL.md",
+      "score": 1.0,
+      "expected_apis": [
+        {
+          "api_name": "list_transformation_KM32EMF_tool",
+          "arguments": ""
+        },
+        {
+          "api_name": "apply_KM32DSL_transformation_tool",
+          "arguments": "./atl_zoo/DSLBridge/MetamodelBridge/Models/SimpleExample/DSL2EMF/SimpleExampleMM-KM3.xmi"
+        }
+      ],
+      "actual_calls": [
+        {
+          "api_name": "list_transformation_KM32EMF_tool",
+          "arguments": {}
+        },
+        {
+          "api_name": "apply_KM32DSL_transformation_tool",
+          "arguments": {
+            "file_path": "./atl_zoo/DSLBridge/MetamodelBridge/Models/SimpleExample/DSL2EMF/SimpleExampleMM-KM3.xmi"
+          }
+        }
+      ],
+      "agent_exception": null,
+      "refine_status": null,
+      "rewritten": false,
+      "step": 17,
+      "heldout_avg": 0.725
+    },
+    {
+      "pos": 61,
+      "train_index": 53,
+      "level": 2,
+      "instruction": "Transform the KM3 model at ./atl_zoo/KM32EMF/Sample-KM3.xmi to EMF and subsequently transform the KM3 model at ./atl_zoo/DSLBridge/MetamodelBridge/Models/SimpleExample/DSL2EMF/SimpleExampleMM-KM3.xmi to DSL",
+      "skill_file": ".opencode/skills/mde-apply/SKILL.md",
+      "score": 0.5,
+      "expected_apis": [
+        {
+          "api_name": "apply_KM32EMF_transformation_tool",
+          "arguments": "./atl_zoo/KM32EMF/Sample-KM3.xmi"
+        },
+        {
+          "api_name": "apply_KM32DSL_transformation_tool",
+          "arguments": "./atl_zoo/DSLBridge/MetamodelBridge/Models/SimpleExample/DSL2EMF/SimpleExampleMM-KM3.xmi"
+        }
+      ],
+      "actual_calls": [
+        {
+          "api_name": "apply_KM32EMF_transformation_tool",
+          "arguments": {
+            "file_path": "./atl_zoo/KM32EMF/Sample-KM3.xmi"
+          }
+        },
+        {
+          "api_name": "apply_KM32EMF_transformation_tool",
+          "arguments": {
+            "file_path": "./atl_zoo/KM32EMF/Sample-KM3.xmi"
+          }
+        }
+      ],
+      "agent_exception": null,
+      "refine_status": "rewritten",
+      "rewritten": true,
+      "step": 18,
+      "heldout_avg": 0.75
+    },
+    {
+      "pos": 62,
+      "train_index": 68,
+      "level": 3,
+      "instruction": "Transform the model stored at ./atl_zoo/Grafcet2PetriNet/Models/XML2PNML_example.xmi into a XML model, then demonstrate the transformation that would convert file ./atl_zoo/SoftwareQualityControl2MantisBTFile/modelsExamples/MantisExample.xmi into a XML model",
+      "skill_file": ".opencode/skills/mde-apply/SKILL.md",
+      "score": 0.5,
+      "expected_apis": [
+        {
+          "api_name": "PNML2XML.apply_tool",
+          "arguments": "./atl_zoo/Grafcet2PetriNet/Models/XML2PNML_example.xmi"
+        },
+        {
+          "api_name": "Mantis2XML.get_tool",
+          "arguments": ""
+        }
+      ],
+      "actual_calls": [
+        {
+          "api_name": "apply_PNML2XML_transformation_tool",
+          "arguments": {
+            "file_path": "./atl_zoo/Grafcet2PetriNet/Models/XML2PNML_example.xmi"
+          }
+        }
+      ],
+      "agent_exception": null,
+      "refine_status": "rewritten",
+      "rewritten": true,
+      "step": 19,
+      "heldout_avg": 0.775
+    },
+    {
+      "pos": 63,
+      "train_index": 75,
+      "level": 3,
+      "instruction": "Modify the components of the model located at ./atl_zoo/SoftwareQualityControl2MantisBTFile/modelsExamples/MantisExample.xmi, transforming it into XML",
+      "skill_file": ".opencode/skills/mde-apply/SKILL.md",
+      "score": 1.0,
+      "expected_apis": [
+        {
+          "api_name": "Mantis2XML.apply_tool",
+          "arguments": "./atl_zoo/SoftwareQualityControl2MantisBTFile/modelsExamples/MantisExample.xmi"
+        }
+      ],
+      "actual_calls": [
+        {
+          "api_name": "list_transformation_Mantis2XML_tool",
+          "arguments": {}
+        },
+        {
+          "api_name": "apply_Mantis2XML_transformation_tool",
+          "arguments": {
+            "file_path": "./atl_zoo/SoftwareQualityControl2MantisBTFile/modelsExamples/MantisExample.xmi"
+          }
+        },
+        {
+          "api_name": "apply_Mantis2XML_transformation_tool",
+          "arguments": {
+            "file_path": "/Users/zakariahachm/Downloads/atl_zoo/SoftwareQualityControl2MantisBTFile/modelsExamples/MantisExample.xmi"
+          }
+        }
+      ],
+      "agent_exception": null,
+      "refine_status": null,
+      "rewritten": false,
+      "step": 19,
+      "heldout_avg": 0.775
+    },
+    {
+      "pos": 64,
+      "train_index": 13,
+      "level": 1,
+      "instruction": "Apply PNML2XML to ./atl_zoo/Grafcet2PetriNet/Models/XML2PNML_example.xmi followed by applying Mantis2XML to ./atl_zoo/SoftwareQualityControl2MantisBTFile/modelsExamples/MantisExample.xmi",
+      "skill_file": ".opencode/skills/mde-apply/SKILL.md",
+      "score": 1.0,
+      "expected_apis": [
+        {
+          "api_name": "PNML2XML.apply_tool",
+          "arguments": "./atl_zoo/Grafcet2PetriNet/Models/XML2PNML_example.xmi"
+        },
+        {
+          "api_name": "Mantis2XML.apply_tool",
+          "arguments": "./atl_zoo/SoftwareQualityControl2MantisBTFile/modelsExamples/MantisExample.xmi"
+        }
+      ],
+      "actual_calls": [
+        {
+          "api_name": "apply_PNML2XML_transformation_tool",
+          "arguments": {
+            "file_path": "./atl_zoo/Grafcet2PetriNet/Models/XML2PNML_example.xmi"
+          }
+        },
+        {
+          "api_name": "list_transformation_Mantis2XML_tool",
+          "arguments": {}
+        },
+        {
+          "api_name": "apply_Mantis2XML_transformation_tool",
+          "arguments": {
+            "file_path": "./atl_zoo/SoftwareQualityControl2MantisBTFile/modelsExamples/MantisExample.xmi"
+          }
+        }
+      ],
+      "agent_exception": null,
+      "refine_status": null,
+      "rewritten": false,
+      "step": 19,
+      "heldout_avg": 0.775
+    },
+    {
+      "pos": 65,
+      "train_index": 37,
+      "level": 2,
+      "instruction": "Explain how to configure transformation from SimpleClass to SimpleRDBMS model",
+      "skill_file": ".opencode/skills/mde-apply/SKILL.md",
+      "score": 1.0,
+      "expected_apis": [
+        {
+          "api_name": "SimpleClass2SimpleRDBMS.get_tool",
+          "arguments": ""
+        }
+      ],
+      "actual_calls": [
+        {
+          "api_name": "list_transformation_SimpleClass2SimpleRDBMS_tool",
+          "arguments": {}
+        }
+      ],
+      "agent_exception": null,
+      "refine_status": null,
+      "rewritten": false,
+      "step": 19,
+      "heldout_avg": 0.775
+    },
+    {
+      "pos": 66,
+      "train_index": 15,
+      "level": 1,
+      "instruction": "Transform ./atl_zoo/KM32EMF/Sample-KM3.xmi with KM32EMF and once you're done check the KM32DSL config",
+      "skill_file": ".opencode/skills/mde-get/SKILL.md",
+      "score": 1.0,
+      "expected_apis": [
+        {
+          "api_name": "apply_KM32EMF_transformation_tool",
+          "arguments": "./atl_zoo/KM32EMF/Sample-KM3.xmi"
+        },
+        {
+          "api_name": "list_transformation_KM32DSL_tool",
+          "arguments": ""
+        }
+      ],
+      "actual_calls": [
+        {
+          "api_name": "apply_KM32EMF_transformation_tool",
+          "arguments": {
+            "file_path": "./atl_zoo/KM32EMF/Sample-KM3.xmi"
+          }
+        },
+        {
+          "api_name": "list_transformation_KM32EMF_tool",
+          "arguments": {}
+        },
+        {
+          "api_name": "list_transformation_KM32DSL_tool",
+          "arguments": {}
+        }
+      ],
+      "agent_exception": null,
+      "refine_status": null,
+      "rewritten": false,
+      "step": 19,
+      "heldout_avg": 0.775
+    },
+    {
+      "pos": 67,
+      "train_index": 11,
+      "level": 1,
+      "instruction": "Apply Mantis2XML to ./atl_zoo/SoftwareQualityControl2MantisBTFile/modelsExamples/MantisExample.xmi after you show me its configuration as PNML2XML.",
+      "skill_file": ".opencode/skills/mde-apply/SKILL.md",
+      "score": 0.5,
+      "expected_apis": [
+        {
+          "api_name": "PNML2XML.get_tool",
+          "arguments": ""
+        },
+        {
+          "api_name": "Mantis2XML.apply_tool",
+          "arguments": "./atl_zoo/SoftwareQualityControl2MantisBTFile/modelsExamples/MantisExample.xmi"
+        }
+      ],
+      "actual_calls": [
+        {
+          "api_name": "apply_PNML2XML_transformation_tool",
+          "arguments": {
+            "file_path": "./atl_zoo/SoftwareQualityControl2MantisBTFile/modelsExamples/MantisExample.xmi"
+          }
+        },
+        {
+          "api_name": "apply_Mantis2XML_transformation_tool",
+          "arguments": {
+            "file_path": "./atl_zoo/SoftwareQualityControl2MantisBTFile/modelsExamples/MantisExample.xmi"
+          }
+        }
+      ],
+      "agent_exception": null,
+      "refine_status": "rewritten",
+      "rewritten": true,
+      "step": 20,
+      "heldout_avg": 0.65
+    },
+    {
+      "pos": 68,
+      "train_index": 1,
+      "level": 1,
+      "instruction": "Transform ./atl_zoo/DSLBridge/MetamodelBridge/Models/SimpleExample/DSL2EMF/SimpleExampleMM-KM3.xmi using KM32DSL as soon as we show you the transformation settings of KM32EMF.",
+      "skill_file": ".opencode/skills/mde-get/SKILL.md",
+      "score": 1.0,
+      "expected_apis": [
+        {
+          "api_name": "list_transformation_KM32EMF_tool",
+          "arguments": ""
+        },
+        {
+          "api_name": "apply_KM32DSL_transformation_tool",
+          "arguments": "./atl_zoo/DSLBridge/MetamodelBridge/Models/SimpleExample/DSL2EMF/SimpleExampleMM-KM3.xmi"
+        }
+      ],
+      "actual_calls": [
+        {
+          "api_name": "list_transformation_KM32EMF_tool",
+          "arguments": {}
+        },
+        {
+          "api_name": "apply_KM32DSL_transformation_tool",
+          "arguments": {
+            "file_path": "./atl_zoo/DSLBridge/MetamodelBridge/Models/SimpleExample/DSL2EMF/SimpleExampleMM-KM3.xmi"
+          }
+        },
+        {
+          "api_name": "list_transformation_samples_tool",
+          "arguments": {
+            "transformation_name": "KM32DSL"
+          }
+        },
+        {
+          "api_name": "apply_KM32DSL_transformation_tool",
+          "arguments": {
+            "file_path": "/Users/zakariahachm/Downloads/atl_zoo/DSLBridge/MetamodelBridge/Models/SimpleExample/DSL2EMF/SimpleExampleMM-KM3.xmi"
+          }
+        }
+      ],
+      "agent_exception": null,
+      "refine_status": null,
+      "rewritten": false,
+      "step": 20,
+      "heldout_avg": 0.65
+    },
+    {
+      "pos": 69,
+      "train_index": 31,
+      "level": 2,
+      "instruction": "Once I have the necessary configuration for transforming a XML into a Ant model, apply this to transform ./atl_zoo/SimpleClass2SimpleRDBMS/Sample-SimpleClass.xmi from this model SimpleClass to a SimpleRDBMS model",
+      "skill_file": ".opencode/skills/mde-apply/SKILL.md",
+      "score": 0.5,
+      "expected_apis": [
+        {
+          "api_name": "XML2Ant.get_tool",
+          "arguments": ""
+        },
+        {
+          "api_name": "SimpleClass2SimpleRDBMS.apply_tool",
+          "arguments": "./atl_zoo/SimpleClass2SimpleRDBMS/Sample-SimpleClass.xmi"
+        }
+      ],
+      "actual_calls": [
+        {
+          "api_name": "apply_SimpleClass2SimpleRDBMS_transformation_tool",
+          "arguments": {
+            "file_path": "./atl_zoo/SimpleClass2SimpleRDBMS/Sample-SimpleClass.xmi"
+          }
+        }
+      ],
+      "agent_exception": null,
+      "refine_status": "rewritten",
+      "rewritten": true,
+      "step": 21,
+      "heldout_avg": 0.825
+    },
+    {
+      "pos": 70,
+      "train_index": 57,
+      "level": 3,
+      "instruction": "Convert the existing model at ./atl_zoo/KM32EMF/Sample-KM3.xmi into the EMF model type, then convert the existing model at ./atl_zoo/DSLBridge/MetamodelBridge/Models/SimpleExample/DSL2EMF/SimpleExampleMM-KM3.xmi into the DSL model type",
+      "skill_file": ".opencode/skills/mde-apply/SKILL.md",
+      "score": 1.0,
+      "expected_apis": [
+        {
+          "api_name": "KM32EMF.apply_tool",
+          "arguments": "./atl_zoo/KM32EMF/Sample-KM3.xmi"
+        },
+        {
+          "api_name": "KM32DSL.apply_tool",
+          "arguments": "./atl_zoo/DSLBridge/MetamodelBridge/Models/SimpleExample/DSL2EMF/SimpleExampleMM-KM3.xmi"
+        }
+      ],
+      "actual_calls": [
+        {
+          "api_name": "apply_KM32EMF_transformation_tool",
+          "arguments": {
+            "file_path": "./atl_zoo/KM32EMF/Sample-KM3.xmi"
+          }
+        },
+        {
+          "api_name": "apply_KM32EMF_transformation_tool",
+          "arguments": {
+            "file_path": "atl_zoo/KM32EMF/Sample-KM3.xmi"
+          }
+        },
+        {
+          "api_name": "apply_KM32EMF_transformation_tool",
+          "arguments": {
+            "file_path": "./atl_zoo/KM32EMF/Sample-KM3.xmi"
+          }
+        },
+        {
+          "api_name": "apply_KM32DSL_transformation_tool",
+          "arguments": {
+            "file_path": "./atl_zoo/DSLBridge/MetamodelBridge/Models/SimpleExample/DSL2EMF/SimpleExampleMM-KM3.xmi"
+          }
+        },
+        {
+          "api_name": "apply_KM32EMF_transformation_tool",
+          "arguments": {
+            "file_path": "./datasets/ATL/atl_zoo/KM32EMF/Sample-KM3.xmi"
+          }
+        }
+      ],
+      "agent_exception": null,
+      "refine_status": null,
+      "rewritten": false,
+      "step": 21,
+      "heldout_avg": 0.825
+    },
+    {
+      "pos": 71,
+      "train_index": 63,
+      "level": 3,
+      "instruction": "Demonstrate the transformation process that converts file ./atl_zoo/SimpleClass2SimpleRDBMS/Sample-SimpleClass.xmi to SimpleRDBMS model type",
+      "skill_file": ".opencode/skills/mde-apply/SKILL.md",
+      "score": 1.0,
+      "expected_apis": [
+        {
+          "api_name": "SimpleClass2SimpleRDBMS.get_tool",
+          "arguments": ""
+        }
+      ],
+      "actual_calls": [
+        {
+          "api_name": "apply_SimpleClass2SimpleRDBMS_transformation_tool",
+          "arguments": {
+            "file_path": "./atl_zoo/SimpleClass2SimpleRDBMS/Sample-SimpleClass.xmi"
+          }
+        },
+        {
+          "api_name": "apply_SimpleClass2SimpleRDBMS_transformation_tool",
+          "arguments": {
+            "file_path": "atl_zoo/SimpleClass2SimpleRDBMS/Sample-SimpleClass.xmi"
+          }
+        },
+        {
+          "api_name": "list_transformation_SimpleClass2SimpleRDBMS_tool",
+          "arguments": {}
+        }
+      ],
+      "agent_exception": null,
+      "refine_status": null,
+      "rewritten": false,
+      "step": 21,
+      "heldout_avg": 0.825
+    },
+    {
+      "pos": 72,
+      "train_index": 71,
+      "level": 3,
+      "instruction": "Update the model metatype from ./atl_zoo/SoftwareQualityControl2MantisBTFile/modelsExamples/MantisExample.xmi with a new structure in XML format",
+      "skill_file": ".opencode/skills/mde-apply/SKILL.md",
+      "score": 1.0,
+      "expected_apis": [
+        {
+          "api_name": "Mantis2XML.apply_tool",
+          "arguments": "./atl_zoo/SoftwareQualityControl2MantisBTFile/modelsExamples/MantisExample.xmi"
+        }
+      ],
+      "actual_calls": [
+        {
+          "api_name": "apply_Mantis2XML_transformation_tool",
+          "arguments": {
+            "file_path": "./atl_zoo/SoftwareQualityControl2MantisBTFile/modelsExamples/MantisExample.xmi"
+          }
+        },
+        {
+          "api_name": "apply_Mantis2XML_transformation_tool",
+          "arguments": {
+            "file_path": "/Users/zakariahachm/Documents/Phd_Zakaria/MESA/atl_zoo/SoftwareQualityControl2MantisBTFile/modelsExamples/MantisExample.xmi"
+          }
+        },
+        {
+          "api_name": "list_transformation_Mantis2XML_tool",
+          "arguments": {}
+        },
+        {
+          "api_name": "apply_Mantis2XML_transformation_tool",
+          "arguments": {
+            "file_path": "/Users/zakariahachm/Downloads/atl_zoo/SoftwareQualityControl2MantisBTFile/modelsExamples/MantisExample.xmi"
+          }
+        }
+      ],
+      "agent_exception": null,
+      "refine_status": null,
+      "rewritten": false,
+      "step": 21,
+      "heldout_avg": 0.825
+    },
+    {
+      "pos": 73,
+      "train_index": 54,
+      "level": 2,
+      "instruction": "Show me the configuration that transforms a PNML into a XML, then show me the configuration that converts a Mantis into a XML",
+      "skill_file": ".opencode/skills/mde-get/SKILL.md",
+      "score": 1.0,
+      "expected_apis": [
+        {
+          "api_name": "list_transformation_PNML2XML_tool",
+          "arguments": ""
+        },
+        {
+          "api_name": "list_transformation_Mantis2XML_tool",
+          "arguments": ""
+        }
+      ],
+      "actual_calls": [
+        {
+          "api_name": "list_transformation_PNML2XML_tool",
+          "arguments": {}
+        },
+        {
+          "api_name": "list_transformation_Mantis2XML_tool",
+          "arguments": {}
+        }
+      ],
+      "agent_exception": null,
+      "refine_status": null,
+      "rewritten": false,
+      "step": 21,
+      "heldout_avg": 0.825
+    },
+    {
+      "pos": 74,
+      "train_index": 72,
+      "level": 3,
+      "instruction": "Present the transformation that changes the file ./atl_zoo/DSLBridge/MetamodelBridge/Models/SimpleExample/DSL2EMF/SimpleExampleMM-KM3.xmi into a DSL model",
+      "skill_file": ".opencode/skills/mde-apply/SKILL.md",
+      "score": 0.0,
+      "expected_apis": [
+        {
+          "api_name": "KM32DSL.get_tool",
+          "arguments": ""
+        }
+      ],
+      "actual_calls": [
+        {
+          "api_name": "apply_KM32DSL_transformation_tool",
+          "arguments": {
+            "file_path": "./atl_zoo/DSLBridge/MetamodelBridge/Models/SimpleExample/DSL2EMF/SimpleExampleMM-KM3.xmi"
+          }
+        }
+      ],
+      "agent_exception": null,
+      "refine_status": "rewritten",
+      "rewritten": true,
+      "step": 22,
+      "heldout_avg": 0.8
+    },
+    {
+      "pos": 75,
+      "train_index": 29,
+      "level": 2,
+      "instruction": "Show the configuration for transforming a PNML to a XML and then display the settings for converting a Mantis to a XML",
+      "skill_file": ".opencode/skills/mde-get/SKILL.md",
+      "score": 1.0,
+      "expected_apis": [
+        {
+          "api_name": "list_transformation_PNML2XML_tool",
+          "arguments": ""
+        },
+        {
+          "api_name": "list_transformation_Mantis2XML_tool",
+          "arguments": ""
+        }
+      ],
+      "actual_calls": [
+        {
+          "api_name": "list_transformation_PNML2XML_tool",
+          "arguments": {}
+        },
+        {
+          "api_name": "list_transformation_Mantis2XML_tool",
+          "arguments": {}
+        }
+      ],
+      "agent_exception": null,
+      "refine_status": null,
+      "rewritten": false,
+      "step": 22,
+      "heldout_avg": 0.8
+    },
+    {
+      "pos": 76,
+      "train_index": 14,
+      "level": 1,
+      "instruction": "Get the detailed configuration parameters for the KM32EMF transformation.",
+      "skill_file": ".opencode/skills/mde-get/SKILL.md",
+      "score": 1.0,
+      "expected_apis": [
+        {
+          "api_name": "list_transformation_KM32EMF_tool",
+          "arguments": ""
+        }
+      ],
+      "actual_calls": [
+        {
+          "api_name": "list_transformation_KM32EMF_tool",
+          "arguments": {}
+        }
+      ],
+      "agent_exception": null,
+      "refine_status": null,
+      "rewritten": false,
+      "step": 22,
+      "heldout_avg": 0.8
+    },
+    {
+      "pos": 77,
+      "train_index": 66,
+      "level": 3,
+      "instruction": "Demonstrate how file ./atl_zoo/KM32EMF/Sample-KM3.xmi is transformed into a EMF model, then demonstrate how file ./atl_zoo/DSLBridge/MetamodelBridge/Models/SimpleExample/DSL2EMF/SimpleExampleMM-KM3.xmi is transformed into a DSL model",
+      "skill_file": ".opencode/skills/mde-apply/SKILL.md",
+      "score": 0.0,
+      "expected_apis": [
+        {
+          "api_name": "KM32EMF.get_tool",
+          "arguments": ""
+        },
+        {
+          "api_name": "KM32DSL.get_tool",
+          "arguments": ""
+        }
+      ],
+      "actual_calls": [
+        {
+          "api_name": "apply_KM32EMF_transformation_tool",
+          "arguments": {
+            "file_path": "./atl_zoo/KM32EMF/Sample-KM3.xmi"
+          }
+        },
+        {
+          "api_name": "apply_KM32EMF_transformation_tool",
+          "arguments": {
+            "file_path": "atl_zoo/KM32EMF/Sample-KM3.xmi"
+          }
+        },
+        {
+          "api_name": "apply_KM32DSL_transformation_tool",
+          "arguments": {
+            "file_path": "./atl_zoo/DSLBridge/MetamodelBridge/Models/SimpleExample/DSL2EMF/SimpleBrand-KM3.xmi"
+          }
+        },
+        {
+          "api_name": "apply_KM32DSL_transformation_tool",
+          "arguments": {
+            "file_path": "./atl_zoo/DSLBridge/MetamodelBridge/Models/SimpleExample/DSL2EMF/SimpleExampleMM-KM3.xmi"
+          }
+        }
+      ],
+      "agent_exception": null,
+      "refine_status": "rewritten",
+      "rewritten": true,
+      "step": 23,
+      "heldout_avg": 0.8
+    },
+    {
+      "pos": 78,
+      "train_index": 65,
+      "level": 3,
+      "instruction": "Present the transformation that converts file ./atl_zoo/KM32EMF/Sample-KM3.xmi to a EMF model, then present the transformation that converts file ./atl_zoo/DSLBridge/MetamodelBridge/Models/SimpleExample/DSL2EMF/SimpleExampleMM-KM3.xmi to a DSL model",
+      "skill_file": ".opencode/skills/mde-get/SKILL.md",
+      "score": 0.0,
+      "expected_apis": [
+        {
+          "api_name": "list_transformation_KM32EMF_tool",
+          "arguments": ""
+        },
+        {
+          "api_name": "list_transformation_KM32DSL_tool",
+          "arguments": ""
+        }
+      ],
+      "actual_calls": [
+        {
+          "api_name": "apply_KM32EMF_transformation_tool",
+          "arguments": {
+            "file_path": "./atl_zoo/KM32EMF/Sample-KM3.xmi"
+          }
+        },
+        {
+          "api_name": "apply_KM32DSL_transformation_tool",
+          "arguments": {
+            "file_path": "./atl_zoo/DSLBridge/MetamodelBridge/Models/SimpleExample/DSL2EMF/SimpleExampleMM-KM3.xmi"
+          }
+        },
+        {
+          "api_name": "list_transformation_samples_tool",
+          "arguments": {}
+        }
+      ],
+      "agent_exception": null,
+      "refine_status": "rewritten",
+      "rewritten": true,
+      "step": 24,
+      "heldout_avg": 0.8
+    },
+    {
+      "pos": 79,
+      "train_index": 41,
+      "level": 2,
+      "instruction": "Transform KM3 model at ./atl_zoo/KM32EMF/Sample-KM3.xmi to EMF then transform KM3 model at ./atl_zoo/DSLBridge/MetamodelBridge/Models/SimpleExample/DSL2EMF/SimpleExampleMM-KM3.xmi to DSL",
+      "skill_file": ".opencode/skills/mde-apply/SKILL.md",
+      "score": 1.0,
+      "expected_apis": [
+        {
+          "api_name": "KM32EMF.apply_tool",
+          "arguments": "./atl_zoo/KM32EMF/Sample-KM3.xmi"
+        },
+        {
+          "api_name": "KM32DSL.apply_tool",
+          "arguments": "./atl_zoo/DSLBridge/MetamodelBridge/Models/SimpleExample/DSL2EMF/SimpleExampleMM-KM3.xmi"
+        }
+      ],
+      "actual_calls": [
+        {
+          "api_name": "apply_KM32EMF_transformation_tool",
+          "arguments": {
+            "file_path": "./atl_zoo/KM32EMF/Sample-KM3.xmi"
+          }
+        },
+        {
+          "api_name": "apply_KM32DSL_transformation_tool",
+          "arguments": {
+            "file_path": "./atl_zoo/DSLBridge/MetamodelBridge/Models/SimpleExample/DSL2EMF/SimpleExampleMM-KM3.xmi"
+          }
+        }
+      ],
+      "agent_exception": null,
+      "refine_status": null,
+      "rewritten": false,
+      "step": 24,
+      "heldout_avg": 0.8
+    },
+    {
+      "pos": 80,
+      "train_index": 16,
+      "level": 1,
+      "instruction": "Obtain the parameters of PNML2XML next to display Mantis2XML's settings",
+      "skill_file": ".opencode/skills/mde-get/SKILL.md",
+      "score": 1.0,
+      "expected_apis": [
+        {
+          "api_name": "list_transformation_PNML2XML_tool",
+          "arguments": ""
+        },
+        {
+          "api_name": "list_transformation_Mantis2XML_tool",
+          "arguments": ""
+        }
+      ],
+      "actual_calls": [
+        {
+          "api_name": "list_transformation_PNML2XML_tool",
+          "arguments": {}
+        },
+        {
+          "api_name": "list_transformation_Mantis2XML_tool",
+          "arguments": {}
+        }
+      ],
+      "agent_exception": null,
+      "refine_status": null,
+      "rewritten": false,
+      "step": 24,
+      "heldout_avg": 0.8
+    }
+  ],
+  "steps": [
+    {
+      "step": 0,
+      "after_pos": 0,
+      "train_index": null,
+      "level": null,
+      "skill_file": null,
+      "test_avg": 0.675,
+      "delta_vs_prev": null,
+      "delta_vs_initial": 0.0,
+      "test_scores": [
+        1.0,
+        1.0,
+        1.0,
+        0.0,
+        1.0,
+        0.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        0.5,
+        0.5,
+        0.5,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "step": 1,
+      "after_pos": 3,
+      "train_index": 42,
+      "level": 2,
+      "skill_file": ".opencode/skills/mde-apply/SKILL.md",
+      "test_avg": 0.775,
+      "delta_vs_prev": 0.1,
+      "delta_vs_initial": 0.1,
+      "test_scores": [
+        1.0,
+        1.0,
+        1.0,
+        0.0,
+        1.0,
+        1.0,
+        1.0,
+        0.5,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        0.5,
+        0.0,
+        1.0,
+        0.0,
+        1.0,
+        0.5,
+        1.0
+      ]
+    },
+    {
+      "step": 2,
+      "after_pos": 7,
+      "train_index": 70,
+      "level": 3,
+      "skill_file": ".opencode/skills/mde-apply/SKILL.md",
+      "test_avg": 0.75,
+      "delta_vs_prev": -0.025,
+      "delta_vs_initial": 0.075,
+      "test_scores": [
+        1.0,
+        1.0,
+        1.0,
+        0.0,
+        0.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        0.5,
+        0.0,
+        1.0,
+        0.0,
+        1.0,
+        0.5,
+        1.0
+      ]
+    },
+    {
+      "step": 3,
+      "after_pos": 9,
+      "train_index": 60,
+      "level": 3,
+      "skill_file": ".opencode/skills/mde-get/SKILL.md",
+      "test_avg": 0.775,
+      "delta_vs_prev": 0.025,
+      "delta_vs_initial": 0.1,
+      "test_scores": [
+        1.0,
+        1.0,
+        1.0,
+        0.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        0.5,
+        0.5,
+        1.0,
+        0.0,
+        0.0,
+        0.5,
+        1.0
+      ]
+    },
+    {
+      "step": 4,
+      "after_pos": 12,
+      "train_index": 62,
+      "level": 3,
+      "skill_file": ".opencode/skills/mde-apply/SKILL.md",
+      "test_avg": 0.725,
+      "delta_vs_prev": -0.05,
+      "delta_vs_initial": 0.05,
+      "test_scores": [
+        1.0,
+        0.5,
+        1.0,
+        0.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        0.5,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.5,
+        1.0
+      ]
+    },
+    {
+      "step": 5,
+      "after_pos": 13,
+      "train_index": 45,
+      "level": 2,
+      "skill_file": ".opencode/skills/mde-get/SKILL.md",
+      "test_avg": 0.75,
+      "delta_vs_prev": 0.025,
+      "delta_vs_initial": 0.075,
+      "test_scores": [
+        1.0,
+        1.0,
+        1.0,
+        0.0,
+        0.5,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        0.5,
+        0.5,
+        1.0,
+        0.0,
+        0.0,
+        0.5,
+        1.0
+      ]
+    },
+    {
+      "step": 6,
+      "after_pos": 14,
+      "train_index": 77,
+      "level": 3,
+      "skill_file": ".opencode/skills/mde-apply/SKILL.md",
+      "test_avg": 0.75,
+      "delta_vs_prev": 0.0,
+      "delta_vs_initial": 0.075,
+      "test_scores": [
+        1.0,
+        1.0,
+        1.0,
+        0.0,
+        1.0,
+        1.0,
+        1.0,
+        0.5,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.5,
+        1.0
+      ]
+    },
+    {
+      "step": 7,
+      "after_pos": 16,
+      "train_index": 56,
+      "level": 3,
+      "skill_file": ".opencode/skills/mde-apply/SKILL.md",
+      "test_avg": 0.7,
+      "delta_vs_prev": -0.05,
+      "delta_vs_initial": 0.025,
+      "test_scores": [
+        1.0,
+        0.5,
+        1.0,
+        0.0,
+        0.5,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        0.5,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.5,
+        1.0
+      ]
+    },
+    {
+      "step": 8,
+      "after_pos": 20,
+      "train_index": 74,
+      "level": 3,
+      "skill_file": ".opencode/skills/mde-get/SKILL.md",
+      "test_avg": 0.8,
+      "delta_vs_prev": 0.1,
+      "delta_vs_initial": 0.125,
+      "test_scores": [
+        1.0,
+        1.0,
+        1.0,
+        0.0,
+        0.5,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        0.5,
+        1.0,
+        0.0,
+        0.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "step": 9,
+      "after_pos": 21,
+      "train_index": 73,
+      "level": 3,
+      "skill_file": ".opencode/skills/mde-apply/SKILL.md",
+      "test_avg": 0.725,
+      "delta_vs_prev": -0.075,
+      "delta_vs_initial": 0.05,
+      "test_scores": [
+        1.0,
+        0.5,
+        1.0,
+        0.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        0.5,
+        0.5,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "step": 10,
+      "after_pos": 29,
+      "train_index": 64,
+      "level": 3,
+      "skill_file": ".opencode/skills/mde-get/SKILL.md",
+      "test_avg": 0.8,
+      "delta_vs_prev": 0.075,
+      "delta_vs_initial": 0.125,
+      "test_scores": [
+        1.0,
+        1.0,
+        1.0,
+        0.0,
+        1.0,
+        1.0,
+        1.0,
+        0.5,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        0.5,
+        0.5,
+        1.0,
+        0.0,
+        1.0,
+        0.5,
+        1.0
+      ]
+    },
+    {
+      "step": 11,
+      "after_pos": 37,
+      "train_index": 78,
+      "level": 3,
+      "skill_file": ".opencode/skills/mde-get/SKILL.md",
+      "test_avg": 0.775,
+      "delta_vs_prev": -0.025,
+      "delta_vs_initial": 0.1,
+      "test_scores": [
+        1.0,
+        1.0,
+        1.0,
+        0.0,
+        0.5,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        0.5,
+        1.0,
+        0.0,
+        0.0,
+        0.5,
+        1.0
+      ]
+    },
+    {
+      "step": 12,
+      "after_pos": 47,
+      "train_index": 79,
+      "level": 3,
+      "skill_file": ".opencode/skills/mde-apply/SKILL.md",
+      "test_avg": 0.75,
+      "delta_vs_prev": -0.025,
+      "delta_vs_initial": 0.075,
+      "test_scores": [
+        1.0,
+        1.0,
+        1.0,
+        0.0,
+        0.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        0.5,
+        0.5,
+        1.0,
+        0.0,
+        1.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "step": 13,
+      "after_pos": 48,
+      "train_index": 33,
+      "level": 2,
+      "skill_file": ".opencode/skills/mde-apply/SKILL.md",
+      "test_avg": 0.7,
+      "delta_vs_prev": -0.05,
+      "delta_vs_initial": 0.025,
+      "test_scores": [
+        1.0,
+        0.5,
+        1.0,
+        0.0,
+        0.5,
+        1.0,
+        1.0,
+        0.5,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        0.5,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "step": 14,
+      "after_pos": 49,
+      "train_index": 48,
+      "level": 2,
+      "skill_file": ".opencode/skills/mde-apply/SKILL.md",
+      "test_avg": 0.7,
+      "delta_vs_prev": 0.0,
+      "delta_vs_initial": 0.025,
+      "test_scores": [
+        1.0,
+        1.0,
+        1.0,
+        0.0,
+        0.5,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        0.5,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "step": 15,
+      "after_pos": 53,
+      "train_index": 17,
+      "level": 1,
+      "skill_file": ".opencode/skills/mde-apply/SKILL.md",
+      "test_avg": 0.675,
+      "delta_vs_prev": -0.025,
+      "delta_vs_initial": 0.0,
+      "test_scores": [
+        0.0,
+        1.0,
+        1.0,
+        0.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        0.5,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "step": 16,
+      "after_pos": 55,
+      "train_index": 76,
+      "level": 3,
+      "skill_file": ".opencode/skills/mde-get/SKILL.md",
+      "test_avg": 0.725,
+      "delta_vs_prev": 0.05,
+      "delta_vs_initial": 0.05,
+      "test_scores": [
+        1.0,
+        0.5,
+        1.0,
+        0.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        0.5,
+        0.5,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "step": 17,
+      "after_pos": 58,
+      "train_index": 32,
+      "level": 2,
+      "skill_file": ".opencode/skills/mde-apply/SKILL.md",
+      "test_avg": 0.725,
+      "delta_vs_prev": 0.0,
+      "delta_vs_initial": 0.05,
+      "test_scores": [
+        1.0,
+        1.0,
+        1.0,
+        0.0,
+        0.5,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        0.5,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.5,
+        1.0
+      ]
+    },
+    {
+      "step": 18,
+      "after_pos": 61,
+      "train_index": 53,
+      "level": 2,
+      "skill_file": ".opencode/skills/mde-apply/SKILL.md",
+      "test_avg": 0.75,
+      "delta_vs_prev": 0.025,
+      "delta_vs_initial": 0.075,
+      "test_scores": [
+        1.0,
+        1.0,
+        1.0,
+        0.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        0.5,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.5,
+        1.0
+      ]
+    },
+    {
+      "step": 19,
+      "after_pos": 62,
+      "train_index": 68,
+      "level": 3,
+      "skill_file": ".opencode/skills/mde-apply/SKILL.md",
+      "test_avg": 0.775,
+      "delta_vs_prev": 0.025,
+      "delta_vs_initial": 0.1,
+      "test_scores": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        0.5,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "step": 20,
+      "after_pos": 67,
+      "train_index": 11,
+      "level": 1,
+      "skill_file": ".opencode/skills/mde-apply/SKILL.md",
+      "test_avg": 0.65,
+      "delta_vs_prev": -0.125,
+      "delta_vs_initial": -0.025,
+      "test_scores": [
+        1.0,
+        1.0,
+        1.0,
+        0.0,
+        0.5,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        0.5,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "step": 21,
+      "after_pos": 69,
+      "train_index": 31,
+      "level": 2,
+      "skill_file": ".opencode/skills/mde-apply/SKILL.md",
+      "test_avg": 0.825,
+      "delta_vs_prev": 0.175,
+      "delta_vs_initial": 0.15,
+      "test_scores": [
+        1.0,
+        1.0,
+        1.0,
+        0.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        0.5,
+        0.0,
+        1.0,
+        0.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "step": 22,
+      "after_pos": 74,
+      "train_index": 72,
+      "level": 3,
+      "skill_file": ".opencode/skills/mde-apply/SKILL.md",
+      "test_avg": 0.8,
+      "delta_vs_prev": -0.025,
+      "delta_vs_initial": 0.125,
+      "test_scores": [
+        1.0,
+        1.0,
+        1.0,
+        0.0,
+        0.5,
+        1.0,
+        1.0,
+        0.5,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        0.0,
+        1.0,
+        0.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "step": 23,
+      "after_pos": 77,
+      "train_index": 66,
+      "level": 3,
+      "skill_file": ".opencode/skills/mde-apply/SKILL.md",
+      "test_avg": 0.8,
+      "delta_vs_prev": 0.0,
+      "delta_vs_initial": 0.125,
+      "test_scores": [
+        1.0,
+        0.5,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        0.5,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        0.5,
+        0.5,
+        1.0,
+        0.0,
+        1.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "step": 24,
+      "after_pos": 78,
+      "train_index": 65,
+      "level": 3,
+      "skill_file": ".opencode/skills/mde-get/SKILL.md",
+      "test_avg": 0.8,
+      "delta_vs_prev": 0.0,
+      "delta_vs_initial": 0.125,
+      "test_scores": [
+        1.0,
+        1.0,
+        1.0,
+        0.0,
+        0.5,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        0.0,
+        1.0,
+        0.0,
+        1.0,
+        0.5,
+        1.0
+      ]
+    }
+  ],
+  "cur_item": 80,
+  "cur_result": null,
+  "cur_refine_status": null,
+  "cur_test_scores": [],
+  "runs_done": 580,
+  "run_seconds": 26412.483962535858,
+  "skill_apply": "---\nname: mde-apply\ndescription: Apply an ATL transformation to a source model\n---\n\nYou are a Model-Driven Engineering agent with access to an ATL MCP server.\n\n## CRITICAL RULES\n- You MUST use ONLY the MCP tools provided by the `atl_server` to perform transformations.\n- The ONLY way to apply transformations is through the MCP tools available to you.\n\n## Available MCP Tools\n- `apply_KM32DSL_transformation_tool` — Input metamodel: KM3, Output metamodel: DSL. This tool transforms KM3 model into DSL model.\n- `apply_KM32EMF_transformation_tool` — Input metamodel: KM3, Output metamodel: EMF. This tool transforms KM3 model into EMF model.\n- `xml2ant_tool` — Transforms XML models into Ant models.\n- `simpleclass2simplerdbms_tool` — Transforms SimpleClass models into SimpleRDBMS models.\n- `simpleclass2simplerdbms_list_tool` — Lists available transformations for SimpleClass to SimpleRDBMS.\n- `xml2ant_list_tool` — Lists available transformations for XML to Ant.\n- `km32dsl_apply_tool` — Applies KM3 to DSL transformation.\n- `km32emf_list_tool` — Lists available KM3 to EMF transformations.\n- `simpleclass2simplerdbms_apply_tool` — Applies SimpleClass to SimpleRDBMS transformation.\n- `xml2ant_apply_tool` — Applies XML to Ant transformation.\n- `simpleclass2simplerdbms_apply_tool` — Applies SimpleClass to SimpleRDBMS transformation.\n- `xml2ant_apply_tool` — Applies XML to Ant transformation.\n- `km32dsl_apply_tool` — Applies KM3 to DSL transformation.\n- `km32emf_list_tool` — Lists available KM3 to EMF transformations.\n- `simpleclass2simplerdbms_list_tool` — Lists available SimpleClass to SimpleRDBMS transformations.\n- `xml2ant_apply_tool` — Applies XML to Ant transformation.\n- `simpleclass2simplerdbms_list_tool` — Lists available SimpleClass to SimpleRDBMS transformations.\n- `km32dsl_list_tool` — Lists available KM3 to DSL transformations.\n- `km32emf_apply_tool` — Applies KM3 to EMF transformation.\n- `simpleclass2simplerdbms_apply_tool` — Applies SimpleClass to SimpleRDBMS transformation.\n- `xml2ant_apply_tool` — Applies XML to Ant transformation.\n- `simpleclass2simplerdbms_apply_tool` — Applies SimpleClass to SimpleRDBMS transformation.\n- `km32dsl_apply_tool` — Applies KM3 to DSL transformation.\n- `km32emf_apply_tool` — Applies KM3 to EMF transformation.  \n- `km32dsl_apply_tool` — Applies KM3 to DSL transformation.\n- `mantis2xml_list_tool` — Lists available transformations for Mantis models to XML.\n- `pnml2xml_apply_tool` — Applies PNML to XML transformation.\n- `mantis2xml_apply_tool` — Applies Mantis to XML transformation.\n- `pnml2xml_list_tool` — Lists available PNML to XML transformations.\n- `simpleclass2simplerdbms_apply_tool` — Applies SimpleClass to SimpleRDBMS transformation.\n- `xml2ant_list_tool` — Lists available transformations for XML to Ant.\n- `km32dsl_list_tool` — Lists available KM3 to DSL transformations.\n- `km32dsl_list_tool` — Lists available KM3 to DSL transformations.\n- `km32emf_list_tool` — Lists available KM3 to EMF transformations.",
+  "skill_get": "---\nname: mde-get\ndescription: List and retrieve available ATL transformation samples and inputs\n---\n\nYou are a Model-Driven Engineering agent with access to an ATL MCP server.\n\n## CRITICAL RULES\n- You MUST use ONLY the MCP tools provided by the `atl_server`.\n- You MUST NOT attempt to run Python scripts directly.\n\n## Available MCP Tools\n- `list_transformation_samples_tool` — List sample source model paths for enabled transformations. Optionally provide a transformation_name to filter the results.\n- `list_transformation_KM32DSL_tool` — Displays details of transformation KM32DSL that transforms KM3 model into DSL model.\n- `mantis2xml.list_tool` — List available transformations or samples related to converting Mantis models to XML format.\n- `pnml2xml.list_tool` — List available transformations or samples related to converting PNML models to XML format.\n- `pnml2xml.apply_tool` — Apply transformations related to converting PNML models to XML format.\n- `simpleclass2simplerdbms.list_tool` — List available transformations or samples related to converting SimpleClass models to SimpleRDBMS models.\n- `xml2ant.apply_tool` — Apply transformations related to converting XML models to Ant models.\n- `km32dsl.apply_tool` — Apply transformations that convert KM3 models into DSL models.\n- `km32emf.list_tool` — List available transformations or samples related to converting KM3 models to EMF models.\n- `pnml2xml.apply_tool` — Apply transformations related to converting PNML models to XML format.\n- `mantis2xml.apply_tool` — Apply transformations related to converting Mantis models to XML format.\n- `samples.list_tool` — List available sample models for transformations.\n- `xml2pnml.apply_tool` — Apply transformations related to converting XML models to PNML format.\n- `simpleclass2simplerdbms.apply_tool` — Apply transformations related to converting SimpleClass models to SimpleRDBMS models.\n- `xml2ant.list_tool` — List available transformations or samples related to converting XML models to Ant models.\n- `km32dsl.list_tool` — List available transformations or samples related to converting KM3 models to DSL models."
+}

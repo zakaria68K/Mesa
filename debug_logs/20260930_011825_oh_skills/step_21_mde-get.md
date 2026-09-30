@@ -25,4 +25,3 @@ You are a Model-Driven Engineering agent with access to an ATL MCP server.
 - `xml2pnml.apply_tool` — Apply transformations related to converting XML models to PNML format.
 - `simpleclass2simplerdbms.apply_tool` — Apply transformations related to converting SimpleClass models to SimpleRDBMS models.
 - `xml2ant.list_tool` — List available transformations or samples related to converting XML models to Ant models.
-- `km32dsl.list_tool` — List available transformations or samples related to converting KM3 models to DSL models.

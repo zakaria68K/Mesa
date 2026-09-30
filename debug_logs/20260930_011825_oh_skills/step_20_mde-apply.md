@@ -39,8 +39,3 @@ You are a Model-Driven Engineering agent with access to an ATL MCP server.
 - `pnml2xml_apply_tool` — Applies PNML to XML transformation.
 - `mantis2xml_apply_tool` — Applies Mantis to XML transformation.
 - `pnml2xml_list_tool` — Lists available PNML to XML transformations.
-- `simpleclass2simplerdbms_apply_tool` — Applies SimpleClass to SimpleRDBMS transformation.
-- `xml2ant_list_tool` — Lists available transformations for XML to Ant.
-- `km32dsl_list_tool` — Lists available KM3 to DSL transformations.
-- `km32dsl_list_tool` — Lists available KM3 to DSL transformations.
-- `km32emf_list_tool` — Lists available KM3 to EMF transformations.

@@ -1,0 +1,44 @@
+======================================================================
+ATL ONLINE SPECIALIZATION — HELD-OUT EVALUATION — SUMMARY
+======================================================================
+Run ID                  : 20260930_011825
+Train order             : shuffled, seed 2026
+Train samples           : 80
+Train avg (prequential) : 0.77
+Failures                : 26  (score 0.0: 11 | score 0.5: 15)
+Refinements             : {'rewritten': 24, 'unchanged': 1, 'refine_error': 1}
+Held-out evaluations    : 25
+Total agent runs        : 580
+Total agent time        : 7:20:12
+
+Held-out test avg — initial skill : 0.68
+Held-out test avg — final skill   : 0.80
+Best step                         : 21 (after train sample 69) avg=0.82
+
+step | after sample | orig idx | level | skill      | test_avg | delta
+   0 |            0 |        - |     - | -          |     0.68 | 
+   1 |            3 |       42 |     2 | mde-apply  |     0.78 | +0.10
+   2 |            7 |       70 |     3 | mde-apply  |     0.75 | -0.03
+   3 |            9 |       60 |     3 | mde-get    |     0.78 | +0.03
+   4 |           12 |       62 |     3 | mde-apply  |     0.72 | -0.05
+   5 |           13 |       45 |     2 | mde-get    |     0.75 | +0.03
+   6 |           14 |       77 |     3 | mde-apply  |     0.75 | +0.00
+   7 |           16 |       56 |     3 | mde-apply  |     0.70 | -0.05
+   8 |           20 |       74 |     3 | mde-get    |     0.80 | +0.10
+   9 |           21 |       73 |     3 | mde-apply  |     0.72 | -0.07
+  10 |           29 |       64 |     3 | mde-get    |     0.80 | +0.07
+  11 |           37 |       78 |     3 | mde-get    |     0.78 | -0.03
+  12 |           47 |       79 |     3 | mde-apply  |     0.75 | -0.03
+  13 |           48 |       33 |     2 | mde-apply  |     0.70 | -0.05
+  14 |           49 |       48 |     2 | mde-apply  |     0.70 | +0.00
+  15 |           53 |       17 |     1 | mde-apply  |     0.68 | -0.03
+  16 |           55 |       76 |     3 | mde-get    |     0.72 | +0.05
+  17 |           58 |       32 |     2 | mde-apply  |     0.72 | +0.00
+  18 |           61 |       53 |     2 | mde-apply  |     0.75 | +0.03
+  19 |           62 |       68 |     3 | mde-apply  |     0.78 | +0.03
+  20 |           67 |       11 |     1 | mde-apply  |     0.65 | -0.12
+  21 |           69 |       31 |     2 | mde-apply  |     0.82 | +0.17
+  22 |           74 |       72 |     3 | mde-apply  |     0.80 | -0.03
+  23 |           77 |       66 |     3 | mde-apply  |     0.80 | +0.00
+  24 |           78 |       65 |     3 | mde-get    |     0.80 | +0.00
+======================================================================
