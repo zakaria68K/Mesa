@@ -67,7 +67,7 @@ def plot(run_id: str, steps: list[dict], items: list[dict] | None) -> None:
 
     # Held-out avg of the current skill
     ax.step(xs, ys, where="post", color=BLUE, linewidth=2.2,
-            label=f"Held-out avg (20 samples) — final = {final:.2f}")
+            label=f"Held-out avg (20 samples): final = {final:.2f}")
     ax.plot(xs[:-1], ys[:-1], "o", color=BLUE, markersize=4.5,
             markeredgecolor="white", markeredgewidth=1)
     ax.axhline(initial, color=BLUE, linestyle="-.", linewidth=0.9, alpha=0.6,
