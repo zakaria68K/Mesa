@@ -512,12 +512,12 @@ class MetaAgent:
             messages=[
                 {
                     "role": "user",
-                    "content": f"""You are improving an AI agent skill file based on observed failures.
+                    "content": f"""You are refining an AI agent skill file based on observed failures.
 
 Current SKILL.md:
 {prompt_content}
 
-Observed failure patterns (expected tool sequence vs what agent actually called):
+Observed failure patterns (expected behavior vs what the agent actually did):
 {json.dumps(top_patterns, indent=2)}
 
 Concrete failing examples:
@@ -526,15 +526,15 @@ Concrete failing examples:
 Tools completely missing from the skill:
 {json.dumps(missing_tools, indent=2)}
 
-Analyze the failures and rewrite the skill to fix:
-1. The agent stops after one tool call — add explicit sequencing rules showing which tools must be called together and in what order
-2. The agent calls the wrong tool — add clarifications distinguishing similar tools
-3. Add any missing tools under ## Available MCP Tools with a one-line description
+Analyze the failures and refine the skill so the agent:
+1. Completes multi-step tasks: add rules on which operations must follow each other and in what order
+2. Chooses the right operation with correct arguments: clarify the difference between similar operations
+3. Can reach every needed tool: complete ## Available MCP Tools only if a failure requires it
 
 Rules:
 - Return ONLY raw markdown, no code fences, no ```markdown, no ``` wrapping
 - Do NOT change the frontmatter (--- block at the top)
-- Do NOT remove any existing tool entries
+- Keep refinements minimal and general, do not copy the failing examples into the skill
 - Return the FULL updated SKILL.md
 """
                 }
