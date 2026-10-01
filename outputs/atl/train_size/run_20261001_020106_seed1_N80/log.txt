@@ -1,0 +1,23 @@
+REFINE | N=80 | skill=.opencode/skills/mde-get/SKILL.md | errors=10 | categories=10 | status=rewritten
+REFINE | N=80 | skill=.opencode/skills/mde-apply/SKILL.md | errors=25 | categories=23 | status=rewritten
+TEST | N=80 | test=1/20 | score=1.00 | expected=['apply_SimpleClass2SimpleRDBMS_transformation_tool'] | actual=['apply_SimpleClass2SimpleRDBMS_transformation_tool']
+TEST | N=80 | test=2/20 | score=1.00 | expected=['apply_XML2Ant_transformation_tool', 'apply_SimpleClass2SimpleRDBMS_transformation_tool'] | actual=['apply_XML2Ant_transformation_tool', 'apply_SimpleClass2SimpleRDBMS_transformation_tool']
+TEST | N=80 | test=3/20 | score=1.00 | expected=['apply_KM32EMF_transformation_tool', 'list_transformation_KM32DSL_tool'] | actual=['apply_KM32EMF_transformation_tool', 'list_transformation_samples_tool', 'apply_KM32EMF_transformation_tool', 'list_transformation_KM32DSL_tool']
+TEST | N=80 | test=4/20 | score=0.00 | expected=['apply_PNML2XML_transformation_tool'] | actual=['extract_input_metamodel_name']
+TEST | N=80 | test=5/20 | score=1.00 | expected=['apply_PNML2XML_transformation_tool', 'list_transformation_Mantis2XML_tool'] | actual=['apply_PNML2XML_transformation_tool', 'list_transformation_PNML2XML_tool', 'apply_PNML2XML_transformation_tool', 'list_transformation_Mantis2XML_tool']
+TEST | N=80 | test=6/20 | score=1.00 | expected=['XML2Ant.apply_tool'] | actual=['apply_XML2Ant_transformation_tool']
+TEST | N=80 | test=7/20 | score=1.00 | expected=['KM32EMF.apply_tool'] | actual=['apply_KM32EMF_transformation_tool']
+TEST | N=80 | test=8/20 | score=0.50 | expected=['PNML2XML.apply_tool', 'Mantis2XML.apply_tool'] | actual=['apply_PNML2XML_transformation_tool']
+TEST | N=80 | test=9/20 | score=1.00 | expected=['list_transformation_KM32EMF_tool', 'list_transformation_KM32DSL_tool'] | actual=['list_transformation_KM32EMF_tool', 'list_transformation_KM32DSL_tool']
+TEST | N=80 | test=10/20 | score=1.00 | expected=['PNML2XML.get_tool', 'Mantis2XML.get_tool'] | actual=['list_transformation_PNML2XML_tool', 'list_transformation_Mantis2XML_tool']
+TEST | N=80 | test=11/20 | score=1.00 | expected=['apply_XML2Ant_transformation_tool'] | actual=['apply_XML2Ant_transformation_tool']
+TEST | N=80 | test=12/20 | score=1.00 | expected=['XML2Ant.get_tool', 'SimpleClass2SimpleRDBMS.apply_tool'] | actual=['list_transformation_XML2Ant_tool', 'apply_SimpleClass2SimpleRDBMS_transformation_tool']
+TEST | N=80 | test=13/20 | score=1.00 | expected=['list_transformation_KM32EMF_tool', 'apply_KM32DSL_transformation_tool'] | actual=['list_transformation_KM32EMF_tool', 'apply_KM32DSL_transformation_tool']
+TEST | N=80 | test=14/20 | score=0.50 | expected=['apply_KM32EMF_transformation_tool', 'apply_KM32DSL_transformation_tool'] | actual=['apply_KM32EMF_transformation_tool', 'apply_KM32EMF_transformation_tool']
+TEST | N=80 | test=15/20 | score=0.50 | expected=['apply_XML2Ant_transformation_tool', 'list_transformation_SimpleClass2SimpleRDBMS_tool'] | actual=['apply_Ant2Maven_transformation_tool', 'list_transformation_SimpleClass2SimpleRDBMS_tool', 'list_transformation_samples_tool', 'apply_Ant2Maven_transformation_tool', 'apply_SimpleClass2SimpleRDBMS_transformation_tool']
+TEST | N=80 | test=16/20 | score=1.00 | expected=['KM32DSL.apply_tool'] | actual=['apply_KM32DSL_transformation_tool', 'apply_KM32DSL_transformation_tool']
+TEST | N=80 | test=17/20 | score=0.00 | expected=['KM32DSL.get_tool'] | actual=[]
+TEST | N=80 | test=18/20 | score=0.00 | expected=['PNML2XML.get_tool'] | actual=[]
+TEST | N=80 | test=19/20 | score=0.00 | expected=['list_transformation_XML2Ant_tool', 'list_transformation_SimpleClass2SimpleRDBMS_tool'] | actual=['list_transformation_Ant2Maven_tool']
+TEST | N=80 | test=20/20 | score=1.00 | expected=['XML2Ant.get_tool'] | actual=['list_transformation_XML2Ant_tool']
+N=80 DONE | errors=35 | test_avg=0.72

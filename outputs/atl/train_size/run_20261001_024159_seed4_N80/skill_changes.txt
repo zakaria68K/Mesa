@@ -1,0 +1,162 @@
+================================================================================
+N=80 | skill=.opencode/skills/mde-apply/SKILL.md | status=rewritten | errors=25 | categories=23 | sent to the meta-agent: 10 categories, 8 examples (refine_agent_definition_batch keeps the 10 most frequent categories and 8 examples)
+Error categories (count | expected -> called):
+    2 | ['mantis2xml.apply'] -> ['extract_input_metamodel_name']
+    2 | ['simpleclass2simplerdbms.list'] -> (no tool)
+    1 | ['km32emf.apply', 'km32dsl.list'] -> ['km32emf.apply']
+    1 | ['pnml2xml.apply'] -> ['extract_input_metamodel_name']
+    1 | ['km32emf.list', 'km32dsl.list'] -> ['km32emf.apply', 'km32emf.apply']
+    1 | ['xml2ant.apply', 'simpleclass2simplerdbms.apply'] -> ['ant2maven.apply', 'simpleclass2simplerdbms.apply']
+    1 | ['km32emf.apply', 'km32dsl.apply'] -> ['km32emf.apply', 'km32emf.apply']
+    1 | ['xml2ant.list', 'simpleclass2simplerdbms.apply'] -> ['simpleclass2simplerdbms.apply']
+    1 | ['km32emf.list', 'km32dsl.apply'] -> ['km32emf.apply', 'km32emf.apply']
+    1 | ['xml2ant.apply', 'simpleclass2simplerdbms.apply'] -> ['ant2xml.apply']
+    1 | ['xml2ant.list', 'simpleclass2simplerdbms.list'] -> (no tool)
+    1 | ['km32emf.apply', 'km32dsl.apply'] -> ['km32emf.apply', 'km32emf.apply', 'km32emf.apply']
+    1 | ['pnml2xml.apply', 'mantis2xml.list'] -> ['pnml2xml.apply', 'pnml2xml.apply']
+    1 | ['xml2ant.apply', 'simpleclass2simplerdbms.apply'] -> ['ant2xml.apply', 'simpleclass2simplerdbms.apply']
+    1 | ['simpleclass2simplerdbms.list'] -> ['simpleclass2simplerdbms.apply']
+    1 | ['km32dsl.list'] -> ['km32dsl.apply']
+    1 | ['xml2ant.apply', 'simpleclass2simplerdbms.list'] -> ['ant2maven.apply']
+    1 | ['km32emf.list', 'km32dsl.apply'] -> ['km32emf.list', 'km32emf.apply']
+    1 | ['pnml2xml.apply', 'mantis2xml.apply'] -> ['pnml2xml.apply']
+    1 | ['km32emf.apply', 'km32dsl.apply'] -> ['km32emf.apply']
+    1 | ['xml2ant.apply', 'simpleclass2simplerdbms.apply'] -> ['ant2maven.apply']
+    1 | ['km32emf.apply', 'km32dsl.list'] -> ['km32emf.apply', 'km32emf.list', 'km32emf.apply']
+    1 | ['xml2ant.apply', 'simpleclass2simplerdbms.apply'] -> ['ant2maven.apply', 'ant2maven.apply']
+Errors:
+  - sample 6 (orig 75) score=0.00 | expected=['Mantis2XML.apply_tool'] | actual=['extract_input_metamodel_name']
+  - sample 9 (orig 48) score=0.50 | expected=['KM32EMF.apply_tool', 'KM32DSL.get_tool'] | actual=['apply_KM32EMF_transformation_tool']
+  - sample 13 (orig 67) score=0.00 | expected=['PNML2XML.apply_tool'] | actual=['extract_input_metamodel_name']
+  - sample 14 (orig 66) score=0.00 | expected=['KM32EMF.get_tool', 'KM32DSL.get_tool'] | actual=['apply_KM32EMF_transformation_tool', 'apply_KM32EMF_transformation_tool']
+  - sample 15 (orig 77) score=0.50 | expected=['apply_XML2Ant_transformation_tool', 'apply_SimpleClass2SimpleRDBMS_transformation_tool'] | actual=['apply_Ant2Maven_transformation_tool', 'apply_SimpleClass2SimpleRDBMS_transformation_tool']
+  - sample 16 (orig 53) score=0.50 | expected=['apply_KM32EMF_transformation_tool', 'apply_KM32DSL_transformation_tool'] | actual=['apply_KM32EMF_transformation_tool', 'apply_KM32EMF_transformation_tool']
+  - sample 18 (orig 33) score=0.00 | expected=['SimpleClass2SimpleRDBMS.get_tool'] | actual=[]
+  - sample 20 (orig 31) score=0.50 | expected=['XML2Ant.get_tool', 'SimpleClass2SimpleRDBMS.apply_tool'] | actual=['apply_SimpleClass2SimpleRDBMS_transformation_tool']
+  - sample 23 (orig 73) score=0.00 | expected=['KM32EMF.get_tool', 'KM32DSL.apply_tool'] | actual=['apply_KM32EMF_transformation_tool', 'apply_KM32EMF_transformation_tool']
+  - sample 33 (orig 42) score=0.00 | expected=['apply_XML2Ant_transformation_tool', 'apply_SimpleClass2SimpleRDBMS_transformation_tool'] | actual=['apply_Ant2XML_transformation_tool']
+  - sample 34 (orig 70) score=0.00 | expected=['XML2Ant.get_tool', 'SimpleClass2SimpleRDBMS.get_tool'] | actual=[]
+  - sample 35 (orig 57) score=0.50 | expected=['KM32EMF.apply_tool', 'KM32DSL.apply_tool'] | actual=['apply_KM32EMF_transformation_tool', 'apply_KM32EMF_transformation_tool', 'apply_KM32EMF_transformation_tool']
+  - sample 37 (orig 68) score=0.50 | expected=['PNML2XML.apply_tool', 'Mantis2XML.get_tool'] | actual=['apply_PNML2XML_transformation_tool', 'apply_PNML2XML_transformation_tool']
+  - sample 42 (orig 50) score=0.50 | expected=['apply_XML2Ant_transformation_tool', 'apply_SimpleClass2SimpleRDBMS_transformation_tool'] | actual=['apply_Ant2XML_transformation_tool', 'apply_SimpleClass2SimpleRDBMS_transformation_tool']
+  - sample 49 (orig 63) score=0.00 | expected=['SimpleClass2SimpleRDBMS.get_tool'] | actual=['apply_SimpleClass2SimpleRDBMS_transformation_tool']
+  - sample 50 (orig 72) score=0.00 | expected=['KM32DSL.get_tool'] | actual=['apply_KM32DSL_transformation_tool']
+  - sample 57 (orig 71) score=0.00 | expected=['Mantis2XML.apply_tool'] | actual=['extract_input_metamodel_name']
+  - sample 59 (orig 37) score=0.00 | expected=['SimpleClass2SimpleRDBMS.get_tool'] | actual=[]
+  - sample 65 (orig 79) score=0.00 | expected=['XML2Ant.apply_tool', 'SimpleClass2SimpleRDBMS.get_tool'] | actual=['apply_Ant2Maven_transformation_tool']
+  - sample 72 (orig 62) score=0.50 | expected=['KM32EMF.get_tool', 'KM32DSL.apply_tool'] | actual=['list_transformation_KM32EMF_tool', 'apply_KM32EMF_transformation_tool']
+  - sample 73 (orig 5) score=0.50 | expected=['apply_PNML2XML_transformation_tool', 'apply_Mantis2XML_transformation_tool'] | actual=['apply_PNML2XML_transformation_tool']
+  - sample 75 (orig 41) score=0.50 | expected=['KM32EMF.apply_tool', 'KM32DSL.apply_tool'] | actual=['apply_KM32EMF_transformation_tool']
+  - sample 78 (orig 56) score=0.00 | expected=['XML2Ant.apply_tool', 'SimpleClass2SimpleRDBMS.apply_tool'] | actual=['apply_Ant2Maven_transformation_tool']
+  - sample 79 (orig 21) score=0.50 | expected=['KM32EMF.apply_tool', 'KM32DSL.get_tool'] | actual=['apply_KM32EMF_transformation_tool', 'list_transformation_KM32EMF_tool', 'apply_KM32EMF_transformation_tool']
+  - sample 80 (orig 61) score=0.00 | expected=['apply_XML2Ant_transformation_tool', 'apply_SimpleClass2SimpleRDBMS_transformation_tool'] | actual=['apply_Ant2Maven_transformation_tool', 'apply_Ant2Maven_transformation_tool']
+--------------------------------------------------------------------------------
+DIFF:
+--- initial
++++ after N=80
+@@ -12,3 +12,13 @@
+ ## Available MCP Tools
+ - `apply_KM32DSL_transformation_tool` — Input metamodel: KM3, Output metamodel: DSL. This tool transforms KM3 model into DSL model.
+ - `apply_KM32EMF_transformation_tool` — Input metamodel: KM3, Output metamodel: EMF. This tool transforms KM3 model into EMF model.
++- `km32dsl.apply_tool` — Apply transformation from KM3 to DSL model.
++- `km32dsl.list_tool` — List available KM3 to DSL transformations.
++- `km32emf.apply_tool` — Apply transformation from KM3 to EMF model.
++- `km32emf.list_tool` — List available KM3 to EMF transformations.
++- `mantis2xml.apply_tool` — Apply transformation from Mantis model to XML format.
++- `pnml2xml.apply_tool` — Apply transformation from PNML model to XML format.
++- `simpleclass2simplerdbms.apply_tool` — Apply transformation from SimpleClass model to SimpleRDBMS model.
++- `simpleclass2simplerdbms.list_tool` — List available SimpleClass to SimpleRDBMS transformations.
++- `xml2ant.apply_tool` — Apply transformation from XML model to Ant format.
++- `xml2ant.list_tool` — List available XML to Ant transformations.
+--------------------------------------------------------------------------------
+NEW SKILL:
+---
+name: mde-apply
+description: Apply an ATL transformation to a source model
+---
+
+You are a Model-Driven Engineering agent with access to an ATL MCP server.
+
+## CRITICAL RULES
+- You MUST use ONLY the MCP tools provided by the `atl_server` to perform transformations.
+- The ONLY way to apply transformations is through the MCP tools available to you.
+
+## Available MCP Tools
+- `apply_KM32DSL_transformation_tool` — Input metamodel: KM3, Output metamodel: DSL. This tool transforms KM3 model into DSL model.
+- `apply_KM32EMF_transformation_tool` — Input metamodel: KM3, Output metamodel: EMF. This tool transforms KM3 model into EMF model.
+- `km32dsl.apply_tool` — Apply transformation from KM3 to DSL model.
+- `km32dsl.list_tool` — List available KM3 to DSL transformations.
+- `km32emf.apply_tool` — Apply transformation from KM3 to EMF model.
+- `km32emf.list_tool` — List available KM3 to EMF transformations.
+- `mantis2xml.apply_tool` — Apply transformation from Mantis model to XML format.
+- `pnml2xml.apply_tool` — Apply transformation from PNML model to XML format.
+- `simpleclass2simplerdbms.apply_tool` — Apply transformation from SimpleClass model to SimpleRDBMS model.
+- `simpleclass2simplerdbms.list_tool` — List available SimpleClass to SimpleRDBMS transformations.
+- `xml2ant.apply_tool` — Apply transformation from XML model to Ant format.
+- `xml2ant.list_tool` — List available XML to Ant transformations.
+
+================================================================================
+N=80 | skill=.opencode/skills/mde-get/SKILL.md | status=rewritten | errors=10 | categories=10 | sent to the meta-agent: 10 categories, 8 examples (refine_agent_definition_batch keeps the 10 most frequent categories and 8 examples)
+Error categories (count | expected -> called):
+    1 | ['simpleclass2simplerdbms.list'] -> ['samples.list']
+    1 | ['pnml2xml.apply', 'mantis2xml.list'] -> ['pnml2xml.apply', 'samples.list', 'pnml2xml.apply', 'samples.list', 'mantis2xml.apply']
+    1 | ['km32emf.list', 'km32dsl.apply'] -> ['samples.list', 'km32emf.apply', 'km32dsl.list', 'km32dsl.apply', 'km32dsl.apply']
+    1 | ['mantis2xml.list'] -> (no tool)
+    1 | ['xml2ant.apply', 'simpleclass2simplerdbms.list'] -> ['ant2maven.apply', 'samples.list', 'ant2maven.apply', 'simpleclass2simplerdbms.list']
+    1 | ['km32emf.list', 'km32dsl.apply'] -> ['samples.list', 'km32dsl.apply']
+    1 | ['pnml2xml.apply', 'mantis2xml.list'] -> ['grafcet2petrinet.apply', 'samples.list', 'grafcet2petrinet.apply', 'mantis2xml.apply']
+    1 | ['simpleclass2simplerdbms.list'] -> ['simpleclass2simplerdbms.apply', 'samples.list', 'simpleclass2simplerdbms.apply']
+    1 | ['km32emf.list', 'km32dsl.apply'] -> ['km32emf.list', 'km32dsl.list']
+    1 | ['xml2ant.list', 'simpleclass2simplerdbms.apply'] -> ['ant2maven.list', 'ant2xml.list']
+Errors:
+  - sample 10 (orig 36) score=0.00 | expected=['list_transformation_SimpleClass2SimpleRDBMS_tool'] | actual=['list_transformation_samples_tool']
+  - sample 17 (orig 45) score=0.50 | expected=['apply_PNML2XML_transformation_tool', 'list_transformation_Mantis2XML_tool'] | actual=['apply_PNML2XML_transformation_tool', 'list_transformation_samples_tool', 'apply_PNML2XML_transformation_tool', 'list_transformation_samples_tool', 'apply_Mantis2XML_transformation_tool']
+  - sample 38 (orig 40) score=0.50 | expected=['list_transformation_KM32EMF_tool', 'apply_KM32DSL_transformation_tool'] | actual=['list_transformation_samples_tool', 'apply_KM32EMF_transformation_tool', 'list_transformation_KM32DSL_tool', 'apply_KM32DSL_transformation_tool', 'apply_KM32DSL_transformation_tool']
+  - sample 44 (orig 39) score=0.00 | expected=['list_transformation_Mantis2XML_tool'] | actual=[]
+  - sample 45 (orig 74) score=0.50 | expected=['apply_XML2Ant_transformation_tool', 'list_transformation_SimpleClass2SimpleRDBMS_tool'] | actual=['apply_Ant2Maven_transformation_tool', 'list_transformation_samples_tool', 'apply_Ant2Maven_transformation_tool', 'list_transformation_SimpleClass2SimpleRDBMS_tool']
+  - sample 46 (orig 1) score=0.50 | expected=['list_transformation_KM32EMF_tool', 'apply_KM32DSL_transformation_tool'] | actual=['list_transformation_samples_tool', 'apply_KM32DSL_transformation_tool']
+  - sample 56 (orig 78) score=0.00 | expected=['apply_PNML2XML_transformation_tool', 'list_transformation_Mantis2XML_tool'] | actual=['apply_Grafcet2PetriNet_transformation_tool', 'list_transformation_samples_tool', 'apply_Grafcet2PetriNet_transformation_tool', 'apply_Mantis2XML_transformation_tool']
+  - sample 62 (orig 69) score=0.00 | expected=['list_transformation_SimpleClass2SimpleRDBMS_tool'] | actual=['apply_SimpleClass2SimpleRDBMS_transformation_tool', 'list_transformation_samples_tool', 'apply_SimpleClass2SimpleRDBMS_transformation_tool']
+  - sample 68 (orig 64) score=0.50 | expected=['list_transformation_KM32EMF_tool', 'apply_KM32DSL_transformation_tool'] | actual=['list_transformation_KM32EMF_tool', 'list_transformation_KM32DSL_tool']
+  - sample 69 (orig 76) score=0.00 | expected=['list_transformation_XML2Ant_tool', 'apply_SimpleClass2SimpleRDBMS_transformation_tool'] | actual=['list_transformation_Ant2Maven_tool', 'list_transformation_Ant2XML_tool']
+--------------------------------------------------------------------------------
+DIFF:
+--- initial
++++ after N=80
+@@ -12,3 +12,11 @@
+ ## Available MCP Tools
+ - `list_transformation_samples_tool` — List sample source model paths for enabled transformations. Optionally provide a transformation_name to filter the results.
+ - `list_transformation_KM32DSL_tool` — Displays details of transformation KM32DSL that transforms KM3 model into DSL model.
++- `km32dsl.apply_tool` — Apply the KM32DSL transformation from KM3 to DSL models.
++- `km32emf.list_tool` — List configurations or samples for KM32EMF transformation from KM3 to EMF models.
++- `mantis2xml.list_tool` — List configurations or samples for transforming Mantis models to XML.
++- `pnml2xml.apply_tool` — Apply the PNML to XML model transformation.
++- `simpleclass2simplerdbms.apply_tool` — Apply the SimpleClass to SimpleRDBMS model transformation.
++- `simpleclass2simplerdbms.list_tool` — List configurations or samples for SimpleClass to SimpleRDBMS transformation.
++- `xml2ant.apply_tool` — Apply the XML to Ant model transformation.
++- `xml2ant.list_tool` — List configurations or samples for XML to Ant transformation.
+--------------------------------------------------------------------------------
+NEW SKILL:
+---
+name: mde-get
+description: List and retrieve available ATL transformation samples and inputs
+---
+
+You are a Model-Driven Engineering agent with access to an ATL MCP server.
+
+## CRITICAL RULES
+- You MUST use ONLY the MCP tools provided by the `atl_server`.
+- You MUST NOT attempt to run Python scripts directly.
+
+## Available MCP Tools
+- `list_transformation_samples_tool` — List sample source model paths for enabled transformations. Optionally provide a transformation_name to filter the results.
+- `list_transformation_KM32DSL_tool` — Displays details of transformation KM32DSL that transforms KM3 model into DSL model.
+- `km32dsl.apply_tool` — Apply the KM32DSL transformation from KM3 to DSL models.
+- `km32emf.list_tool` — List configurations or samples for KM32EMF transformation from KM3 to EMF models.
+- `mantis2xml.list_tool` — List configurations or samples for transforming Mantis models to XML.
+- `pnml2xml.apply_tool` — Apply the PNML to XML model transformation.
+- `simpleclass2simplerdbms.apply_tool` — Apply the SimpleClass to SimpleRDBMS model transformation.
+- `simpleclass2simplerdbms.list_tool` — List configurations or samples for SimpleClass to SimpleRDBMS transformation.
+- `xml2ant.apply_tool` — Apply the XML to Ant model transformation.
+- `xml2ant.list_tool` — List configurations or samples for XML to Ant transformation.
+

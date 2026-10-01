@@ -12,3 +12,6 @@ You are a Model-Driven Engineering agent with access to an ATL MCP server.
 ## Available MCP Tools
 - `list_transformation_samples_tool` — List sample source model paths for enabled transformations. Optionally provide a transformation_name to filter the results.
 - `list_transformation_KM32DSL_tool` — Displays details of transformation KM32DSL that transforms KM3 model into DSL model.
+- `simpleclass2simplerdbms.apply_tool` — Apply the SimpleClass2SimpleRDBMS transformation to a given model.
+- `simpleclass2simplerdbms.list_tool` — List available samples or inputs for the SimpleClass2SimpleRDBMS transformation.
+- `xml2ant.list_tool` — List available samples or inputs for the xml2ant transformation.

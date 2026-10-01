@@ -1,0 +1,745 @@
+[
+  {
+    "n": 20,
+    "n_errors": 8,
+    "samples": [
+      1,
+      55,
+      16,
+      62,
+      54,
+      10,
+      29,
+      48,
+      5,
+      64,
+      53,
+      15,
+      7,
+      42,
+      28,
+      78,
+      43,
+      47,
+      11,
+      80
+    ],
+    "refine_status": {
+      "mde-get": "rewritten",
+      "mde-apply": "rewritten"
+    },
+    "categories": {
+      "mde-get": [
+        {
+          "count": 1,
+          "expected_tools": [
+            "km32emf.list",
+            "km32dsl.apply"
+          ],
+          "actual_tools": [
+            "samples.list",
+            "km32dsl.apply"
+          ]
+        },
+        {
+          "count": 1,
+          "expected_tools": [
+            "km32emf.list",
+            "km32dsl.apply"
+          ],
+          "actual_tools": [
+            "km32emf.list",
+            "km32dsl.list"
+          ]
+        },
+        {
+          "count": 1,
+          "expected_tools": [
+            "pnml2xml.apply",
+            "mantis2xml.list"
+          ],
+          "actual_tools": [
+            "grafcet2petrinet.apply",
+            "samples.list",
+            "grafcet2petrinet.apply",
+            "mantis2xml.apply"
+          ]
+        }
+      ],
+      "mde-apply": [
+        {
+          "count": 1,
+          "expected_tools": [
+            "km32emf.list",
+            "km32dsl.apply"
+          ],
+          "actual_tools": [
+            "km32emf.list",
+            "km32emf.apply"
+          ]
+        },
+        {
+          "count": 1,
+          "expected_tools": [
+            "km32emf.apply",
+            "km32dsl.list"
+          ],
+          "actual_tools": [
+            "km32emf.apply"
+          ]
+        },
+        {
+          "count": 1,
+          "expected_tools": [
+            "pnml2xml.apply",
+            "mantis2xml.apply"
+          ],
+          "actual_tools": [
+            "pnml2xml.apply"
+          ]
+        },
+        {
+          "count": 1,
+          "expected_tools": [
+            "km32emf.apply",
+            "km32dsl.apply"
+          ],
+          "actual_tools": [
+            "km32emf.apply",
+            "km32emf.apply"
+          ]
+        },
+        {
+          "count": 1,
+          "expected_tools": [
+            "xml2ant.apply",
+            "simpleclass2simplerdbms.apply"
+          ],
+          "actual_tools": [
+            "ant2xml.apply"
+          ]
+        }
+      ]
+    },
+    "n_categories": 8,
+    "test_avg": 0.725,
+    "test_scores": [
+      1.0,
+      0.5,
+      1.0,
+      0.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      0.5,
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      0.5,
+      1.0
+    ]
+  },
+  {
+    "n": 40,
+    "n_errors": 14,
+    "samples": [
+      8,
+      3,
+      6,
+      9,
+      70,
+      59,
+      18,
+      44,
+      33,
+      40,
+      51,
+      53,
+      43,
+      30,
+      54,
+      34,
+      80,
+      32,
+      39,
+      13,
+      55,
+      47,
+      75,
+      52,
+      26,
+      7,
+      48,
+      60,
+      4,
+      42,
+      79,
+      5,
+      69,
+      16,
+      27,
+      71,
+      57,
+      14,
+      61,
+      19
+    ],
+    "refine_status": {
+      "mde-apply": "rewritten",
+      "mde-get": "rewritten"
+    },
+    "categories": {
+      "mde-apply": [
+        {
+          "count": 2,
+          "expected_tools": [
+            "mantis2xml.apply"
+          ],
+          "actual_tools": [
+            "extract_input_metamodel_name"
+          ]
+        },
+        {
+          "count": 1,
+          "expected_tools": [
+            "xml2ant.list",
+            "simpleclass2simplerdbms.list"
+          ],
+          "actual_tools": []
+        },
+        {
+          "count": 1,
+          "expected_tools": [
+            "simpleclass2simplerdbms.list"
+          ],
+          "actual_tools": []
+        },
+        {
+          "count": 1,
+          "expected_tools": [
+            "km32emf.apply",
+            "km32dsl.apply"
+          ],
+          "actual_tools": [
+            "km32emf.apply",
+            "km32emf.apply"
+          ]
+        },
+        {
+          "count": 1,
+          "expected_tools": [
+            "km32emf.apply",
+            "km32dsl.list"
+          ],
+          "actual_tools": [
+            "km32emf.apply"
+          ]
+        },
+        {
+          "count": 1,
+          "expected_tools": [
+            "xml2ant.apply",
+            "simpleclass2simplerdbms.apply"
+          ],
+          "actual_tools": [
+            "ant2xml.apply"
+          ]
+        },
+        {
+          "count": 1,
+          "expected_tools": [
+            "xml2ant.apply",
+            "simpleclass2simplerdbms.list"
+          ],
+          "actual_tools": [
+            "ant2maven.apply"
+          ]
+        },
+        {
+          "count": 1,
+          "expected_tools": [
+            "pnml2xml.apply",
+            "mantis2xml.apply"
+          ],
+          "actual_tools": [
+            "pnml2xml.apply"
+          ]
+        },
+        {
+          "count": 1,
+          "expected_tools": [
+            "km32emf.apply",
+            "km32dsl.apply"
+          ],
+          "actual_tools": [
+            "km32emf.apply",
+            "km32emf.apply",
+            "km32emf.apply"
+          ]
+        },
+        {
+          "count": 1,
+          "expected_tools": [
+            "xml2ant.apply",
+            "simpleclass2simplerdbms.apply"
+          ],
+          "actual_tools": [
+            "ant2maven.apply",
+            "ant2maven.apply"
+          ]
+        }
+      ],
+      "mde-get": [
+        {
+          "count": 1,
+          "expected_tools": [
+            "km32emf.list",
+            "km32dsl.apply"
+          ],
+          "actual_tools": [
+            "samples.list",
+            "km32emf.apply",
+            "km32dsl.list",
+            "km32dsl.apply",
+            "km32dsl.apply"
+          ]
+        },
+        {
+          "count": 1,
+          "expected_tools": [
+            "mantis2xml.list"
+          ],
+          "actual_tools": []
+        },
+        {
+          "count": 1,
+          "expected_tools": [
+            "simpleclass2simplerdbms.list"
+          ],
+          "actual_tools": [
+            "simpleclass2simplerdbms.apply",
+            "samples.list",
+            "simpleclass2simplerdbms.apply"
+          ]
+        }
+      ]
+    },
+    "n_categories": 13,
+    "test_avg": 0.725,
+    "test_scores": [
+      1.0,
+      1.0,
+      1.0,
+      0.0,
+      0.5,
+      1.0,
+      1.0,
+      0.5,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      0.5,
+      0.5,
+      1.0,
+      0.0,
+      0.0,
+      0.5,
+      1.0
+    ]
+  },
+  {
+    "n": 60,
+    "n_errors": 27,
+    "samples": [
+      52,
+      66,
+      56,
+      70,
+      31,
+      54,
+      28,
+      9,
+      50,
+      15,
+      55,
+      13,
+      35,
+      21,
+      76,
+      62,
+      4,
+      46,
+      58,
+      77,
+      78,
+      37,
+      25,
+      43,
+      3,
+      26,
+      57,
+      64,
+      38,
+      45,
+      47,
+      51,
+      16,
+      6,
+      44,
+      32,
+      5,
+      8,
+      27,
+      11,
+      2,
+      80,
+      59,
+      7,
+      74,
+      41,
+      29,
+      48,
+      60,
+      53,
+      22,
+      63,
+      73,
+      34,
+      36,
+      79,
+      40,
+      67,
+      72,
+      75
+    ],
+    "refine_status": {
+      "mde-apply": "rewritten",
+      "mde-get": "rewritten"
+    },
+    "categories": {
+      "mde-apply": [
+        {
+          "count": 1,
+          "expected_tools": [
+            "km32emf.list",
+            "km32dsl.list"
+          ],
+          "actual_tools": [
+            "km32emf.apply",
+            "km32emf.apply"
+          ]
+        },
+        {
+          "count": 1,
+          "expected_tools": [
+            "xml2ant.apply",
+            "simpleclass2simplerdbms.apply"
+          ],
+          "actual_tools": [
+            "ant2maven.apply"
+          ]
+        },
+        {
+          "count": 1,
+          "expected_tools": [
+            "xml2ant.list",
+            "simpleclass2simplerdbms.list"
+          ],
+          "actual_tools": []
+        },
+        {
+          "count": 1,
+          "expected_tools": [
+            "xml2ant.list",
+            "simpleclass2simplerdbms.apply"
+          ],
+          "actual_tools": [
+            "simpleclass2simplerdbms.apply"
+          ]
+        },
+        {
+          "count": 1,
+          "expected_tools": [
+            "xml2ant.apply",
+            "simpleclass2simplerdbms.apply"
+          ],
+          "actual_tools": [
+            "ant2xml.apply",
+            "simpleclass2simplerdbms.apply"
+          ]
+        },
+        {
+          "count": 1,
+          "expected_tools": [
+            "km32emf.apply",
+            "km32dsl.list"
+          ],
+          "actual_tools": [
+            "km32emf.apply",
+            "km32emf.list",
+            "km32emf.apply"
+          ]
+        },
+        {
+          "count": 1,
+          "expected_tools": [
+            "km32emf.list",
+            "km32dsl.apply"
+          ],
+          "actual_tools": [
+            "km32emf.list",
+            "km32emf.apply"
+          ]
+        },
+        {
+          "count": 1,
+          "expected_tools": [
+            "xml2ant.apply",
+            "simpleclass2simplerdbms.apply"
+          ],
+          "actual_tools": [
+            "ant2maven.apply",
+            "simpleclass2simplerdbms.apply"
+          ]
+        },
+        {
+          "count": 1,
+          "expected_tools": [
+            "simpleclass2simplerdbms.list"
+          ],
+          "actual_tools": []
+        },
+        {
+          "count": 1,
+          "expected_tools": [
+            "km32emf.apply",
+            "km32dsl.apply"
+          ],
+          "actual_tools": [
+            "km32emf.apply",
+            "km32emf.apply",
+            "km32emf.apply"
+          ]
+        },
+        {
+          "count": 1,
+          "expected_tools": [
+            "pnml2xml.apply",
+            "mantis2xml.apply"
+          ],
+          "actual_tools": [
+            "pnml2xml.apply"
+          ]
+        },
+        {
+          "count": 1,
+          "expected_tools": [
+            "km32emf.apply",
+            "km32dsl.apply"
+          ],
+          "actual_tools": [
+            "km32emf.apply"
+          ]
+        },
+        {
+          "count": 1,
+          "expected_tools": [
+            "km32emf.apply",
+            "km32dsl.list"
+          ],
+          "actual_tools": [
+            "km32emf.apply"
+          ]
+        },
+        {
+          "count": 1,
+          "expected_tools": [
+            "km32emf.apply",
+            "km32dsl.apply"
+          ],
+          "actual_tools": [
+            "km32emf.apply",
+            "km32emf.apply"
+          ]
+        },
+        {
+          "count": 1,
+          "expected_tools": [
+            "simpleclass2simplerdbms.list"
+          ],
+          "actual_tools": [
+            "simpleclass2simplerdbms.apply"
+          ]
+        },
+        {
+          "count": 1,
+          "expected_tools": [
+            "km32emf.list",
+            "km32dsl.apply"
+          ],
+          "actual_tools": [
+            "km32emf.apply",
+            "km32emf.apply"
+          ]
+        },
+        {
+          "count": 1,
+          "expected_tools": [
+            "xml2ant.apply",
+            "simpleclass2simplerdbms.list"
+          ],
+          "actual_tools": [
+            "ant2maven.apply"
+          ]
+        },
+        {
+          "count": 1,
+          "expected_tools": [
+            "pnml2xml.apply"
+          ],
+          "actual_tools": [
+            "extract_input_metamodel_name"
+          ]
+        },
+        {
+          "count": 1,
+          "expected_tools": [
+            "km32dsl.list"
+          ],
+          "actual_tools": [
+            "km32dsl.apply"
+          ]
+        },
+        {
+          "count": 1,
+          "expected_tools": [
+            "mantis2xml.apply"
+          ],
+          "actual_tools": [
+            "extract_input_metamodel_name"
+          ]
+        }
+      ],
+      "mde-get": [
+        {
+          "count": 1,
+          "expected_tools": [
+            "xml2ant.list",
+            "simpleclass2simplerdbms.apply"
+          ],
+          "actual_tools": [
+            "ant2maven.list",
+            "ant2xml.list"
+          ]
+        },
+        {
+          "count": 1,
+          "expected_tools": [
+            "pnml2xml.apply",
+            "mantis2xml.list"
+          ],
+          "actual_tools": [
+            "grafcet2petrinet.apply",
+            "samples.list",
+            "grafcet2petrinet.apply",
+            "mantis2xml.apply"
+          ]
+        },
+        {
+          "count": 1,
+          "expected_tools": [
+            "km32emf.list",
+            "km32dsl.apply"
+          ],
+          "actual_tools": [
+            "km32emf.list",
+            "km32dsl.list"
+          ]
+        },
+        {
+          "count": 1,
+          "expected_tools": [
+            "pnml2xml.apply",
+            "mantis2xml.list"
+          ],
+          "actual_tools": [
+            "pnml2xml.apply",
+            "samples.list",
+            "pnml2xml.apply",
+            "samples.list",
+            "mantis2xml.apply"
+          ]
+        },
+        {
+          "count": 1,
+          "expected_tools": [
+            "xml2ant.apply",
+            "simpleclass2simplerdbms.list"
+          ],
+          "actual_tools": [
+            "ant2maven.apply",
+            "samples.list",
+            "ant2maven.apply",
+            "simpleclass2simplerdbms.list"
+          ]
+        },
+        {
+          "count": 1,
+          "expected_tools": [
+            "simpleclass2simplerdbms.list"
+          ],
+          "actual_tools": [
+            "samples.list"
+          ]
+        },
+        {
+          "count": 1,
+          "expected_tools": [
+            "km32emf.list",
+            "km32dsl.apply"
+          ],
+          "actual_tools": [
+            "samples.list",
+            "km32emf.apply",
+            "km32dsl.list",
+            "km32dsl.apply",
+            "km32dsl.apply"
+          ]
+        }
+      ]
+    },
+    "n_categories": 27,
+    "test_avg": 0.75,
+    "test_scores": [
+      1.0,
+      1.0,
+      1.0,
+      0.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      0.5,
+      0.5,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  }
+]

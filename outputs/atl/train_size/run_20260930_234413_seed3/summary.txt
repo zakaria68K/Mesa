@@ -1,0 +1,81 @@
+================================================================
+ATL TRAIN-SIZE EXPERIMENT — one rewrite from N random train samples
+================================================================
+Run ID           : 20260930_234413
+Selection        : random from the 80, independent draw per N, seed 3
+Phase 1 reused   : True
+Agent runs       : 60 (0:40:26)
+
+   N | errors used | categories | held-out avg
+  20 |          11 |         11 |         0.75
+  40 |          20 |         19 |         0.72
+  60 |          27 |         27 |         0.75
+
+Error categories given to the meta-agent (count | expected -> called):
+  N=20
+    mde-get:
+        1 | ['simpleclass2simplerdbms.list'] -> ['simpleclass2simplerdbms.apply', 'samples.list', 'simpleclass2simplerdbms.apply']
+        1 | ['km32emf.list', 'km32dsl.apply'] -> ['samples.list', 'km32dsl.apply']
+        1 | ['pnml2xml.apply', 'mantis2xml.list'] -> ['grafcet2petrinet.apply', 'samples.list', 'grafcet2petrinet.apply', 'mantis2xml.apply']
+        1 | ['km32emf.list', 'km32dsl.apply'] -> ['samples.list', 'km32emf.apply', 'km32dsl.list', 'km32dsl.apply', 'km32dsl.apply']
+    mde-apply:
+        1 | ['pnml2xml.apply'] -> ['extract_input_metamodel_name']
+        1 | ['km32emf.apply', 'km32dsl.apply'] -> ['km32emf.apply']
+        1 | ['xml2ant.apply', 'simpleclass2simplerdbms.apply'] -> ['ant2xml.apply']
+        1 | ['km32emf.list', 'km32dsl.apply'] -> ['km32emf.list', 'km32emf.apply']
+        1 | ['xml2ant.apply', 'simpleclass2simplerdbms.apply'] -> ['ant2xml.apply', 'simpleclass2simplerdbms.apply']
+        1 | ['pnml2xml.apply', 'mantis2xml.apply'] -> ['pnml2xml.apply']
+        1 | ['simpleclass2simplerdbms.list'] -> (no tool)
+  N=40
+    mde-get:
+        1 | ['pnml2xml.apply', 'mantis2xml.list'] -> ['pnml2xml.apply', 'samples.list', 'pnml2xml.apply', 'samples.list', 'mantis2xml.apply']
+        1 | ['pnml2xml.apply', 'mantis2xml.list'] -> ['grafcet2petrinet.apply', 'samples.list', 'grafcet2petrinet.apply', 'mantis2xml.apply']
+        1 | ['km32emf.list', 'km32dsl.apply'] -> ['samples.list', 'km32dsl.apply']
+        1 | ['simpleclass2simplerdbms.list'] -> ['samples.list']
+        1 | ['km32emf.list', 'km32dsl.apply'] -> ['samples.list', 'km32emf.apply', 'km32dsl.list', 'km32dsl.apply', 'km32dsl.apply']
+        1 | ['xml2ant.list', 'simpleclass2simplerdbms.apply'] -> ['ant2maven.list', 'ant2xml.list']
+    mde-apply:
+        2 | ['simpleclass2simplerdbms.list'] -> (no tool)
+        1 | ['xml2ant.apply', 'simpleclass2simplerdbms.apply'] -> ['ant2xml.apply']
+        1 | ['km32dsl.list'] -> ['km32dsl.apply']
+        1 | ['pnml2xml.apply', 'mantis2xml.list'] -> ['pnml2xml.apply', 'pnml2xml.apply']
+        1 | ['simpleclass2simplerdbms.list'] -> ['simpleclass2simplerdbms.apply']
+        1 | ['xml2ant.apply', 'simpleclass2simplerdbms.list'] -> ['ant2maven.apply']
+        1 | ['km32emf.apply', 'km32dsl.apply'] -> ['km32emf.apply']
+        1 | ['km32emf.apply', 'km32dsl.apply'] -> ['km32emf.apply', 'km32emf.apply', 'km32emf.apply']
+        1 | ['km32emf.apply', 'km32dsl.list'] -> ['km32emf.apply']
+        1 | ['mantis2xml.apply'] -> ['extract_input_metamodel_name']
+        1 | ['pnml2xml.apply', 'mantis2xml.apply'] -> ['pnml2xml.apply']
+        1 | ['km32emf.list', 'km32dsl.list'] -> ['km32emf.apply', 'km32emf.apply']
+        1 | ['xml2ant.apply', 'simpleclass2simplerdbms.apply'] -> ['ant2maven.apply', 'ant2maven.apply']
+  N=60
+    mde-apply:
+        1 | ['km32emf.apply', 'km32dsl.apply'] -> ['km32emf.apply', 'km32emf.apply', 'km32emf.apply']
+        1 | ['xml2ant.apply', 'simpleclass2simplerdbms.apply'] -> ['ant2maven.apply', 'ant2maven.apply']
+        1 | ['km32emf.list', 'km32dsl.apply'] -> ['km32emf.apply', 'km32emf.apply']
+        1 | ['km32emf.apply', 'km32dsl.apply'] -> ['km32emf.apply']
+        1 | ['km32emf.apply', 'km32dsl.list'] -> ['km32emf.apply']
+        1 | ['xml2ant.apply', 'simpleclass2simplerdbms.list'] -> ['ant2maven.apply']
+        1 | ['km32emf.apply', 'km32dsl.list'] -> ['km32emf.apply', 'km32emf.list', 'km32emf.apply']
+        1 | ['xml2ant.apply', 'simpleclass2simplerdbms.apply'] -> ['ant2maven.apply', 'simpleclass2simplerdbms.apply']
+        1 | ['xml2ant.list', 'simpleclass2simplerdbms.list'] -> (no tool)
+        1 | ['pnml2xml.apply'] -> ['extract_input_metamodel_name']
+        1 | ['pnml2xml.apply', 'mantis2xml.apply'] -> ['pnml2xml.apply']
+        1 | ['km32emf.list', 'km32dsl.list'] -> ['km32emf.apply', 'km32emf.apply']
+        1 | ['xml2ant.apply', 'simpleclass2simplerdbms.apply'] -> ['ant2xml.apply', 'simpleclass2simplerdbms.apply']
+        1 | ['km32dsl.list'] -> ['km32dsl.apply']
+        1 | ['simpleclass2simplerdbms.list'] -> ['simpleclass2simplerdbms.apply']
+        1 | ['xml2ant.apply', 'simpleclass2simplerdbms.apply'] -> ['ant2xml.apply']
+        1 | ['km32emf.list', 'km32dsl.apply'] -> ['km32emf.list', 'km32emf.apply']
+    mde-get:
+        1 | ['mantis2xml.list'] -> (no tool)
+        1 | ['km32emf.list', 'km32dsl.apply'] -> ['samples.list', 'km32emf.apply', 'km32dsl.list', 'km32dsl.apply', 'km32dsl.apply']
+        1 | ['pnml2xml.apply', 'mantis2xml.list'] -> ['grafcet2petrinet.apply', 'samples.list', 'grafcet2petrinet.apply', 'mantis2xml.apply']
+        1 | ['simpleclass2simplerdbms.list'] -> ['samples.list']
+        1 | ['km32emf.list', 'km32dsl.apply'] -> ['km32emf.list', 'km32dsl.list']
+        1 | ['km32emf.list', 'km32dsl.apply'] -> ['samples.list', 'km32dsl.apply']
+        1 | ['xml2ant.list', 'simpleclass2simplerdbms.apply'] -> ['ant2maven.list', 'ant2xml.list']
+        1 | ['simpleclass2simplerdbms.list'] -> ['simpleclass2simplerdbms.apply', 'samples.list', 'simpleclass2simplerdbms.apply']
+        1 | ['pnml2xml.apply', 'mantis2xml.list'] -> ['pnml2xml.apply', 'samples.list', 'pnml2xml.apply', 'samples.list', 'mantis2xml.apply']
+        1 | ['xml2ant.apply', 'simpleclass2simplerdbms.list'] -> ['ant2maven.apply', 'samples.list', 'ant2maven.apply', 'simpleclass2simplerdbms.list']
+================================================================

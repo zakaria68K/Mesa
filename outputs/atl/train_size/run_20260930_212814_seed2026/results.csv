@@ -1,0 +1,4 @@
+n,n_errors,n_categories,refine_status,test_avg
+20,8,8,mde-get: rewritten; mde-apply: rewritten,0.725
+40,14,13,mde-apply: rewritten; mde-get: rewritten,0.725
+60,27,27,mde-apply: rewritten; mde-get: rewritten,0.75
