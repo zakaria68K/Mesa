@@ -1,0 +1,44 @@
+{
+  "run_id": "20261027_160453",
+  "sets": {
+    "single": {
+      "samples": [
+        {
+          "instruction": "Apply Mantis2XML to ./atl_zoo/SoftwareQualityControl2MantisBTFile/modelsExamples/MantisExample.xmi",
+          "level": 1,
+          "pattern": "apply",
+          "expected": [
+            {
+              "api_name": "apply_Mantis2XML_transformation_tool",
+              "arguments": "./atl_zoo/SoftwareQualityControl2MantisBTFile/modelsExamples/MantisExample.xmi"
+            }
+          ],
+          "actual": [],
+          "answer": "",
+          "score": 0.0,
+          "error": null
+        },
+        {
+          "instruction": "Show me the configuration settings for the PNML2XML transformation",
+          "level": 1,
+          "pattern": "get",
+          "expected": [
+            {
+              "api_name": "list_transformation_PNML2XML_tool",
+              "arguments": ""
+            }
+          ],
+          "actual": [],
+          "answer": "",
+          "score": 0.0,
+          "error": null
+        }
+      ],
+      "summary": {
+        "accuracy": 0.0,
+        "fully_correct": 0,
+        "total": 2
+      }
+    }
+  }
+}

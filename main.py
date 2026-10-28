@@ -130,19 +130,16 @@ async def main():
     train_dataset, test_dataset = stratified_split(full_dataset, test_size=20)
     print(f"Train: {len(train_dataset)} | Test (held-out): {len(test_dataset)}")
 
+    registry = MegamodelRegistry()
+    await populate_registry(registry)
+    skill_generator = MegamodelToSkill(registry)
     if cp["phase"] == "baseline":
-        print("\nInitializing Megamodel Registry...")
-        registry = MegamodelRegistry()
-        await populate_registry(registry)
-        skill_generator = MegamodelToSkill(registry)
         skill_generator.generate_patterns()
         print("Skill files generated.")
     else:
-        print("\n> Resuming — skipping skill regeneration to preserve existing SKILL.md")
-        registry = MegamodelRegistry()
-        await populate_registry(registry)
+        print("\n> Resuming — syncing tools into existing SKILL.md instead of regenerating")
 
-    meta = MetaAgent()
+    meta = MetaAgent(sync_skills=skill_generator.sync_tools)
 
     # # ── PHASE 1: Baseline ────────────────────────────────────
     # if cp["phase"] == "baseline":

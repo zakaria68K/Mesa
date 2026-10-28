@@ -1,0 +1,157 @@
+{
+  "run_id": "20261027_160041",
+  "sets": {
+    "multi": {
+      "samples": [
+        {
+          "instruction": "First show me the configuration of Class2Relational and then transform ./atl_zoo/PNML2XML/modelsExamples/PetriNet2.xmi using PNML2XML transformation",
+          "level": 1,
+          "pattern": "get, apply",
+          "expected": [
+            {
+              "api_name": "list_transformation_Class2Relational_tool",
+              "arguments": ""
+            },
+            {
+              "api_name": "apply_PNML2XML_transformation_tool",
+              "arguments": "./atl_zoo/PNML2XML/modelsExamples/PetriNet2.xmi"
+            }
+          ],
+          "actual": [
+            {
+              "api_name": "list_transformation_Class2Relational_tool",
+              "arguments": {}
+            },
+            {
+              "api_name": "apply_PNML2XML_transformation_tool",
+              "arguments": {
+                "file_path": "./atl_zoo/PNML2XML/modelsExamples/PetriNet2.xmi"
+              }
+            }
+          ],
+          "score": 1.0,
+          "error": null
+        },
+        {
+          "instruction": "Compare the configurations of the Mantis2XML and MySQL2KM3 transformations",
+          "level": 1,
+          "pattern": "get, get",
+          "expected": [
+            {
+              "api_name": "list_transformation_Mantis2XML_tool",
+              "arguments": ""
+            },
+            {
+              "api_name": "list_transformation_MySQL2KM3_tool",
+              "arguments": ""
+            }
+          ],
+          "actual": [
+            {
+              "api_name": "list_transformation_Mantis2XML_tool",
+              "arguments": {}
+            },
+            {
+              "api_name": "list_transformation_MySQL2KM3_tool",
+              "arguments": {}
+            }
+          ],
+          "score": 1.0,
+          "error": null
+        },
+        {
+          "instruction": "Transform ./atl_zoo/KM32EMF/Sample-KM3.xmi with KM32DSL and then check the PNML2XML configuration",
+          "level": 1,
+          "pattern": "apply, get",
+          "expected": [
+            {
+              "api_name": "apply_KM32DSL_transformation_tool",
+              "arguments": "./atl_zoo/KM32EMF/Sample-KM3.xmi"
+            },
+            {
+              "api_name": "list_transformation_PNML2XML_tool",
+              "arguments": ""
+            }
+          ],
+          "actual": [
+            {
+              "api_name": "apply_KM32DSL_transformation_tool",
+              "arguments": {
+                "file_path": "./atl_zoo/KM32EMF/Sample-KM3.xmi"
+              }
+            },
+            {
+              "api_name": "list_transformation_PNML2XML_tool",
+              "arguments": {}
+            }
+          ],
+          "score": 1.0,
+          "error": null
+        },
+        {
+          "instruction": "Transform ./atl_zoo/Ant2Maven/Examples/input/Ant/build.xmi using Ant2Maven and then transform ./atl_zoo/BibTeX2DocBook/samples/sample1.xmi using BibTeX2DocBook",
+          "level": 1,
+          "pattern": "apply, apply",
+          "expected": [
+            {
+              "api_name": "apply_Ant2Maven_transformation_tool",
+              "arguments": "./atl_zoo/Ant2Maven/Examples/input/Ant/build.xmi"
+            },
+            {
+              "api_name": "apply_BibTeX2DocBook_transformation_tool",
+              "arguments": "./atl_zoo/BibTeX2DocBook/samples/sample1.xmi"
+            }
+          ],
+          "actual": [
+            {
+              "api_name": "apply_Ant2Maven_transformation_tool",
+              "arguments": {
+                "file_path": "./atl_zoo/Ant2Maven/Examples/input/Ant/build.xmi"
+              }
+            },
+            {
+              "api_name": "list_transformation_samples_tool",
+              "arguments": {}
+            }
+          ],
+          "score": 0.5,
+          "error": null
+        },
+        {
+          "instruction": "Show me the configuration settings of the transformation that transforms a Class into a Relational model and then transform ./atl_zoo/PNML2XML/modelsExamples/PetriNet2.xmi from a PNML model to a XML model",
+          "level": 2,
+          "pattern": "get, apply",
+          "expected": [
+            {
+              "api_name": "list_transformation_Class2Relational_tool",
+              "arguments": ""
+            },
+            {
+              "api_name": "apply_PNML2XML_transformation_tool",
+              "arguments": "./atl_zoo/PNML2XML/modelsExamples/PetriNet2.xmi"
+            }
+          ],
+          "actual": [
+            {
+              "api_name": "list_transformation_Class2Relational_tool",
+              "arguments": {}
+            },
+            {
+              "api_name": "apply_PNML2XML_transformation_tool",
+              "arguments": {
+                "file_path": "./atl_zoo/PNML2XML/modelsExamples/PetriNet2.xmi"
+              }
+            }
+          ],
+          "score": 1.0,
+          "error": null
+        }
+      ],
+      "summary": {
+        "accuracy": 0.9,
+        "fully_correct": 4,
+        "total": 5
+      }
+    }
+  }
+}

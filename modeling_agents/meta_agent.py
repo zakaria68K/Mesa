@@ -16,8 +16,10 @@ class MetaAgent:
     def __init__(self, agent_class=GenericModelingAgent,
         apply_skill=".opencode/skills/mde-apply/SKILL.md",
         get_skill=".opencode/skills/mde-get/SKILL.md",
-        iteration=0):
+        iteration=0,
+        sync_skills=None):
         self.apply_skill = apply_skill
+        self.sync_skills = sync_skills  # e.g. MegamodelToSkill.sync_tools
         self.get_skill = get_skill
         self.iteration = iteration
         self.agent = agent_class(
@@ -97,6 +99,9 @@ class MetaAgent:
                     results[idx] = (results[idx][0], r["score"], [])
             self._append_log(log_file, f"Resuming online specialization from sample {start_index}")
             print(f">>> Resuming online specialization from sample {start_index}")
+
+        if self.sync_skills:
+            self.sync_skills()
 
         self._append_log(log_file, "=" * 80)
         self._append_log(
@@ -282,6 +287,9 @@ class MetaAgent:
                         results[idx] = (results[idx][0], r["score"], [])
                 self._append_log(log_file, f"Resuming iteration {self.iteration} from sample {restored_sample} (mid-iteration checkpoint)")
                 print(f">>> Resuming iteration {self.iteration} from sample {restored_sample}")
+
+        if self.sync_skills:
+            self.sync_skills()
 
         self._append_log(log_file, "=" * 80)
         self._append_log(

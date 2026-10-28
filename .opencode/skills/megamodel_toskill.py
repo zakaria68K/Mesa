@@ -19,6 +19,8 @@ class MegamodelToSkill:
             f"name: {name}",
             f"description: {description}",
         ]
+        if metadata and "tools" in metadata:
+            lines.append(f"tools: {', '.join(metadata['tools'])}")
         lines.extend(["---", "", "You are a Model-Driven Engineering agent with access to an ATL MCP server.", ""])
         
         if rules:
@@ -49,6 +51,7 @@ class MegamodelToSkill:
         tools = []
         description = "List and retrieve available ATL transformation samples and inputs"
         server_name = "atl_server"
+        list_tools = []
         
         if self.registry:
             servers = list(self.registry.servers.keys())
@@ -69,7 +72,8 @@ class MegamodelToSkill:
             description,
             tools,
             [f"You MUST use ONLY the MCP tools provided by the `{server_name}`.", 
-             "You MUST NOT attempt to run Python scripts directly."]
+             "You MUST NOT attempt to run Python scripts directly."],
+            {"tools": [t.name for t in list_tools]}
         )
         return self.save_skill("mde-get", content)
 
@@ -78,6 +82,7 @@ class MegamodelToSkill:
         tools = []
         description = "Apply an ATL transformation to a source model"
         server_name = "atl_server"
+        apply_tools = []
         
         if self.registry:
             servers = list(self.registry.servers.keys())
@@ -98,9 +103,40 @@ class MegamodelToSkill:
             description,
             tools,
             [f"You MUST use ONLY the MCP tools provided by the `{server_name}` to perform transformations.",
-             "The ONLY way to apply transformations is through the MCP tools available to you."]
+             "The ONLY way to apply transformations is through the MCP tools available to you."],
+            {"tools": [t.name for t in apply_tools]}
         )
         return self.save_skill("mde-apply", content)
+
+    def sync_tools(self, base_dir: str = ".opencode/skills") -> None:
+        """Reflect tools added/removed in the registry into the (possibly refined) skills, keeping their rules"""
+        if not self.registry:
+            return
+        current = {t.name: getattr(t, 'description', 'No description') for t in self.registry.discover_tools() if hasattr(t, 'name')}
+        for name, keyword in (("mde-get", "list"), ("mde-apply", "apply")):
+            path = Path(base_dir) / name / "SKILL.md"
+            text = path.read_text()
+            match = re.search(r'^tools:(.*)$', text, flags=re.MULTILINE)
+            if not match:  # skill generated before sync existed, nothing to diff against
+                continue
+            known = {n.strip() for n in match.group(1).split(',') if n.strip()}
+            tools = [n for n in current if keyword in n.lower()]
+            added = [n for n in tools if n not in known]
+            removed = known - set(tools)
+            if not added and not removed:
+                continue
+            print(f">>> Syncing {name}: added={added} removed={sorted(removed)}")
+
+            lines = [l for l in text.splitlines() if not any(f"`{r}`" in l for r in removed)]
+            new_lines = [f"- `{n}` — {current[n]}" for n in added]
+            header = next((i for i, l in enumerate(lines) if l.strip() == "## Available MCP Tools"), None)
+            if header is None:
+                lines += ["", "## Available MCP Tools", *new_lines]
+            else:
+                lines[header + 1:header + 1] = new_lines
+            text = "\n".join(lines)
+            text = re.sub(r'^tools:.*$', f"tools: {', '.join(tools)}", text, count=1, flags=re.MULTILINE)
+            path.write_text(text)
 
     def generate_patterns(self, base_dir: str = ".opencode/skills") -> List[Path]:
         """Generate GET and APPLY pattern skill templates from megamodel"""
